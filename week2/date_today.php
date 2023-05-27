@@ -16,7 +16,7 @@
                 <button class="btn btn-lg btn-info" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <select name="Date" id="Date" class="bg-info border border-0">
                         <?php
-                        date_default_timezone_set("Asia/Singapore");
+                        date_default_timezone_set("Asia/Kuala_Lumpur");
                         $day = date("d");
                         echo "<option value='Dates'>Date $day</option>";
                         for ($i = 1; $i <= 31; $i++) {
