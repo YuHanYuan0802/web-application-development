@@ -19,7 +19,10 @@
         $date = date("d, Y");
         $day = date("(D)");
         $time = date("H:i:s");
-
+        echo "<div>";
+        echo "<span class='fw-bold' style='color:#af7b51'>$month </span>" . "<span class='fw-bold'>$date</span>" . " $day" . "<br>";
+        echo "$time";
+        echo "</div>";
         ?>
     </div>
 
