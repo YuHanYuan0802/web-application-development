@@ -15,6 +15,10 @@
     <div class="container-fluid h1">
         <?php
         date_default_timezone_set("Asia/Singapore");
+        $month = date("M");
+        $date = date("d, Y");
+        $day = date("(D)");
+        $time = date("H:i:s");
 
         ?>
     </div>
