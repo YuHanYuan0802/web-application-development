@@ -18,10 +18,12 @@
         $month = date("M");
         $date = date("d, Y");
         $day = date("(D)");
-        $time = date("H:i:s");
+        $hour = date("H");
+        $minute = date(":i");
+        $sec = date(":s");
         echo "<div>";
-        echo "<span class='fw-bold' style='color:#af7b51'>$month </span>" . "<span class='fw-bold'>$date</span>" . " $day" . "<br>";
-        echo "$time";
+        echo "<span class='fw-bold' style='color:#af7b51'>$month </span>" . "<span class='fw-bold'>$date</span>" . "<span style='color:rgb(7,55,99)'> $day</span>" . "<br>";
+        echo "<span style='color:rgb(91,15,0)'>$hour</span>" . "<span style='color:rgb(76,17,48)'>$minute</span>" . "$sec";
         echo "</div>";
         ?>
     </div>
