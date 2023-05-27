@@ -14,7 +14,7 @@
 <body>
     <div class="container-fluid h1">
         <?php
-        date_default_timezone_set("Asia/Singapore");
+        date_default_timezone_set("Asia/Kuala_Lumpur");
         $month = date("M");
         $date = date("d, Y");
         $day = date("(D)");
@@ -22,7 +22,7 @@
         $minute = date(":i");
         $sec = date(":s");
         echo "<div>";
-        echo "<span class='fw-bold' style='color:#af7b51'>$month </span>" . "<span class='fw-bold'>$date</span>" . "<span style='color:rgb(7,55,99)'> $day</span>" . "<br>";
+        echo "<span class='fw-bold text-uppercase' style='color:#af7b51'>$month </span>" . "<span class='fw-bold'>$date</span>" . "<span style='color:rgb(7,55,99)'> $day</span>" . "<br>";
         echo "<span style='color:rgb(91,15,0)'>$hour</span>" . "<span style='color:rgb(76,17,48)'>$minute</span>" . "$sec";
         echo "</div>";
         ?>
