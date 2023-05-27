@@ -17,6 +17,8 @@
                     <select name="Date" id="Date" class="bg-info border border-0">
                         <?php
                         date_default_timezone_set("Asia/Singapore");
+                        $day = date("d");
+                        echo "<option value='Dates'>Date $day</option>";
                         for ($i = 1; $i <= 31; $i++) {
                             echo "<option value='Dates'>Date $i</option>";
                         }
@@ -31,7 +33,10 @@
                 <button class="btn btn-lg btn-warning" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <select name="Month" id="Month" class="bg-warning border border-0">
                         <?php
+                        $nummonth = date("m");
+                        $i = $nummonth - 1;
                         $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+                        echo "<option value='Dates'>$month[$i]</option>";
                         for ($i=0; $i<=11; $i++){
                             echo "<option value='Dates'>$month[$i]</option>";
                         }
@@ -46,6 +51,8 @@
                 <button class="btn btn-lg btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <select name="Year" id="Year" class="bg-danger border border-0">
                         <?php
+                        $year = date("Y");
+                        echo "<option value='Years'>Year $year</option>";
                         for ($i = 1900; $i <= 2023; $i++) {
                             echo "<option value='Years'>Year $i</option>";
                         }
