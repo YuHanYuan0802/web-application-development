@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible">
@@ -8,16 +9,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <title>NameResult</title>
 </head>
+
 <body>
-<?php
+    <?php
     $first = $_POST["firstname"];
     $last = $_POST["lastname"];
-    if (ctype_alpha($first) && ctype_alpha($last)) {
-        echo ucwords("<div class='fs-3'>$first $last</div>");
-    }
-    else {
+    if (ctype_alpha(str_replace(' ', '', $first)) && ctype_alpha(str_replace(' ', '', $last))) {
+        echo "<span class='fs-3'>";
+        echo ucwords($first);
+        echo " ";
+        echo ucwords($last);
+        echo "</span>";
+    } else {
         echo "<h3 class='text-danger'> Please enter your name. </h3>";
     }
     ?>
 </body>
+
 </html>
