@@ -12,8 +12,8 @@
 <?php
     $first = $_POST["firstname"];
     $last = $_POST["lastname"];
-    if (is_numeric($a) && is_numeric($b)) {
-        echo "<div class='fs-3'>$</div>";
+    if (is_string($first) && is_string($last)) {
+        echo "<div class='fs-3'>$first . $last</div>";
     } else {
         echo "<h3 class='text-danger'> Please enter your name. </h3>";
     }
