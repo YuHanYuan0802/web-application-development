@@ -12,9 +12,10 @@
 <?php
     $first = $_POST["firstname"];
     $last = $_POST["lastname"];
-    if (is_string($first) && is_string($last)) {
-        echo "<div class='fs-3'>$first . $last</div>";
-    } else {
+    if (ctype_alpha($first) && ctype_alpha($last)) {
+        echo ucwords("<div class='fs-3'>$first $last</div>");
+    }
+    else {
         echo "<h3 class='text-danger'> Please enter your name. </h3>";
     }
     ?>
