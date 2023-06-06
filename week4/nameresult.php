@@ -9,6 +9,14 @@
     <title>NameResult</title>
 </head>
 <body>
-    
+<?php
+    $first = $_POST["firstname"];
+    $last = $_POST["lastname"];
+    if (is_numeric($a) && is_numeric($b)) {
+        echo "<div class='fs-3'>$</div>";
+    } else {
+        echo "<h3 class='text-danger'> Please enter your name. </h3>";
+    }
+    ?>
 </body>
 </html>
