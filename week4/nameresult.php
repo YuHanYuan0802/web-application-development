@@ -20,7 +20,11 @@
         echo " ";
         echo ucwords($last);
         echo "</span>";
-    } else {
+    }
+    else if(empty($first) || empty($last)){
+        echo "<h3 class='text-danger'> Please enter your name. </h3>";
+    }
+    else {
         echo "<h3 class='text-danger'> Please enter your name. </h3>";
     }
     ?>
