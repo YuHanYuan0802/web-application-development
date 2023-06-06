@@ -12,8 +12,8 @@
 
 <body>
     <form action="sumresult.php" class="fs-3" method="post">
-        Number 1: <input type="text" name="number1" style="font-size: large;"><br>
-        Number 2: <input type="text" name="number2" style="font-size: large;"><br>
+        Number 1: <input type="text" name="number1" class="fs-3"><br>
+        Number 2: <input type="text" name="number2" class="fs-3"><br>
         <input type="submit" class="fs-3"><br>
     </form>
 </body>
