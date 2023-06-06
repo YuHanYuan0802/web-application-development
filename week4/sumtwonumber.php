@@ -11,11 +11,25 @@
 </head>
 
 <body>
-    <form action="sumresult.php" class="fs-3" method="post">
+    <form action="" class="fs-3" method="post">
         Number 1: <input type="text" name="number1" class="fs-3"><br>
         Number 2: <input type="text" name="number2" class="fs-3"><br>
-        <input type="submit" class="fs-3"><br>
+        <input type="submit" name="submit" class="fs-3"><br>
     </form>
+
+    <?php
+    if (isset($_POST['submit'])) {
+        $a = $_POST["number1"];
+        $b = $_POST["number2"];
+
+        if (is_numeric($a) && is_numeric($b)) {
+            $c = $a + $b;
+            echo "<div class='fs-3'>Your total number is: $c </div>";
+        } else {
+            echo "<h3 class='text-danger'> Please fill in a number. </h3>";
+        }
+    }
+    ?>
 </body>
 
 </html>
