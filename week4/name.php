@@ -9,6 +9,10 @@
     <title>FullName</title>
 </head>
 <body>
-    
+<form action="nameresult.php" class="fs-3" method="post">
+        First Name: <input type="text" name="firstname" class="fs-3"><br>
+        Last Name: <input type="text" name="lastname" class="fs-3"><br>
+        <input type="submit" class="fs-3"><br>
+    </form>
 </body>
 </html>
