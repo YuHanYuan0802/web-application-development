@@ -23,9 +23,9 @@
         $last = $_POST["lastname"];
         if (ctype_alpha(str_replace(' ', '', $first)) && ctype_alpha(str_replace(' ', '', $last))) {
             echo "<span class='fs-3'>";
-            echo ucwords($first);
+            echo ucwords(strtolower($first));
             echo " ";
-            echo ucwords($last);
+            echo ucwords(strtolower($last));
             echo "</span>";
         } else if (empty($first) || empty($last)) {
             echo "<h3 class='text-danger'> Please enter your name. </h3>";
