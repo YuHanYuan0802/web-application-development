@@ -19,12 +19,12 @@
 
     <?php
     if (isset($_POST['submit'])) {
-        $a = $_POST["number1"];
-        $b = $_POST["number2"];
+        $firstnum = $_POST["number1"];
+        $secondnum = $_POST["number2"];
 
-        if (is_numeric($a) && is_numeric($b)) {
-            $c = $a + $b;
-            echo "<div class='fs-3'>Your total number is: $c </div>";
+        if (is_numeric($firstnum) && is_numeric($secondnum)) {
+            $total = $firstnum + $secondnum;
+            echo "<div class='fs-3'>Your total number is: $total </div>";
         } else {
             echo "<h3 class='text-danger'> Please fill in a number. </h3>";
         }
