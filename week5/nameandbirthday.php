@@ -63,17 +63,17 @@
             echo " ";
             echo ucwords(strtolower($last));
             echo " ";
-            echo $date . $month . $year . "<br>Age: " . $age;
+            echo $date . " " . $month . " " . $year . " " . "<br>Age: " . $age;
             echo "</div><br>";
             if ($age >= 18) {
-                echo "<div class='fs-3, text-center'>Welcome</div>";
+                echo "<div class='text-center'><h3 class='text-success'>Welcome</h3></div>";
             } else {
-                echo "<div class='fs-3, text-center'>Under 18 years old</div>";
+                echo "<div class='text-center'><h3 class='text-danger'>Under 18 years old</h3></div>";
             }
         } else if (empty($first) || empty($last)) {
-            echo "<h3 class='text-center, text-danger'> Please enter your name. </h3>";
+            echo "<div class='text-center'> <h3 class='text-danger'>Please enter your name. </h3></div>";
         } else {
-            echo "<h3 class='text-center, text-danger'> Please enter your name. </h3>";
+            echo "<div class='text-center'> <h3 class='text-danger'>Please enter your name. </h3></div>";
         }
     }
     ?>
