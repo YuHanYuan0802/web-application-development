@@ -26,6 +26,7 @@
             echo "<div class='text-center fs-3'>";
             echo "Welcome ";
             echo ucwords(strtolower($firstname));
+            echo " ";
             echo ucwords(strtolower($lastname)) . "<br>";
             echo "Your birthday is ";
             echo $date . " " . $month . " " . $year . "<br>";
