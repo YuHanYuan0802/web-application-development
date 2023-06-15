@@ -38,11 +38,11 @@
                 echo "Invalid username, please try again <br>";
             }
             if ($password == $cfmpassword) {
-                $symbol = preg_match('/[+$()%@#]/', $password); 
-                $uppercase = preg_match('/[A-Z]{6,}/', $password);
-                $lowercase = preg_match('/[a-z]{6,}/', $password);
-                $number =  preg_match('/[0-9]{6,}/', $password);
-                if ($symbol || $uppercase || $lowercase || $number) {
+                $symbol = preg_match('/[+$()%@#]/', $password); //check the string have included those invalid symbols.
+                $uppercase = preg_match('/[A-Z]{6,}/', $password); //check all uppercase without lowercase and number.
+                $lowercase = preg_match('/[a-z]{6,}/', $password); //check all lowercase without uppercase and number.
+                $number =  preg_match('/[0-9]{6,}/', $password); //check all number without uppercase and lowercase.
+                if ($symbol || $uppercase || $lowercase || $number) { //if matches any word, symbol or number case return invalid.
                     echo "<div>";
                     echo "Invalid password " . "$cfmpassword";
                     echo "</div>";
