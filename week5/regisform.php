@@ -11,16 +11,28 @@
 
 <body>
     <div class="container">
-        <form>
+        <form action="regissuccess.php" method="post" class="needs-validation was-validated">
             <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstname" required>
+                <input type="text" class="form-control" id="firstname" name="firstname" required>
                 <div id="emailHelp" class="form-text">Your first name.</div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your first name.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" required>
+                <input type="text" class="form-control" id="lastname" name="lastname" required>
                 <div id="emailHelp" class="form-text">Your last name.</div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your last name.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="birthday" class="form-label">Choose your birthday</label><br>
@@ -61,19 +73,19 @@
             <div class="mb-3 row">
                 <label for="gender" class="form-label">Gender</label><br>
                 <div class="form-check col ms-3">
-                    <input class="form-check-input" type="radio" name="gender" id="male">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male" checked>
                     <label class="form-check-label" for="male">
                         Male
                     </label>
                 </div>
                 <div class="form-check col">
-                    <input class="form-check-input" type="radio" name="gender" id="female">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
                     <label class="form-check-label" for="female">
                         Female
                     </label>
                 </div>
                 <div class="form-check col">
-                    <input class="form-check-input" type="radio" name="gender" id="other">
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="Other">
                     <label class="form-check-label" for="other">
                         Other
                     </label>
@@ -81,32 +93,41 @@
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" minlength="6" required>
+                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" minlength="6" name="username" required>
                 <div id="emailHelp" class="form-text">Your username.</div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your username.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="InputPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" id="InputPassword" minlength="6" required>
+                <input type="password" class="form-control" id="InputPassword" minlength="6" name="password" required>
                 <div id="emailHelp" class="form-text">Your password.</div>
             </div>
             <div class="mb-3">
                 <label for="ConfirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="ConfirmPassword" required>
+                <input type="password" class="form-control" id="ConfirmPassword" name="confirmpassword" required>
                 <div id="emailHelp" class="form-text">Confirm your password.</div>
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="Check">
-                <label class="form-check-label" for="Check">Check me out</label>
             </div>
             <div class="mb-3">
                 <label for="InputEmail" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" required>
+                <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your email.
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="mb-2">
+                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+            </div>
         </form>
     </div>
-
 </body>
 
 </html>
