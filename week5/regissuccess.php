@@ -52,7 +52,7 @@
                     echo "</div>";
                 }
             } else{
-                echo "Please enter the same password";
+                echo "Please enter the same password<br>";
             }
             echo "Your email address is: " . $email;
             echo "</div>";
