@@ -122,7 +122,7 @@
         $uppercase = preg_match('/[A-Z]{6,}/', $password); //check all uppercase without lowercase and number.
         $lowercase = preg_match('/[a-z]{6,}/', $password); //check all lowercase without uppercase and number.
         $number =  preg_match('/[0-9]{6,}/', $password); //check all number without uppercase and lowercase.
-        $userpattern = '/^[a-zA-Z][a-zA-Z0-9_-]{5,}$/';
+        $userpattern = '/^[a-zA-Z][a-zA-Z0-9_-]{5,}$/'; //using delimiter like / is to differentiate between string and expression.
         $namecase = 0;
         $passcase = 0;
         $cfmcase = 0;
