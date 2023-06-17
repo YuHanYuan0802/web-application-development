@@ -128,18 +128,20 @@
         $cfmcase = 0;
         if (!preg_match($userpattern, $username)) {
             $namecase = 1;
-        } 
+        } else {
+            $namecase = 2;
+        }
 
         if ($symbol || $uppercase || $lowercase || $number) { //if matches any word, symbol or number case return true.
             $passcase = 1;
-        } 
+        } else {
+            $passcase = 2;
+        }
 
         if ($password != $confirmpassword) { //if not matches with previous password return true.
             $cfmcase = 1;
-        }
-
-        if ($namecase != 1 && $passcase != 1 && $cfmcase != 1) {
-            $namecase = 2;
+        } else {
+            $cfmcase = 2;
         }
 
         switch ($namecase) {
@@ -150,16 +152,22 @@
                 break;
 
             case '2':
-                echo "<div class='alert alert-success container' role='alert'>";
-                echo "Register successful" . "<br>" . "Welcome" . " " . $username;
+                echo "<div class='alert alert-info container' role='alert'>";
+                echo "Username validated";
                 echo "</div>";
-
+                break;
         }
 
         switch ($passcase) {
             case '1':
                 echo "<div class='alert alert-danger container' role='alert'>";
                 echo "Please enter minimum 6 characters, at least 1 capital letter, 1 small letter, 1 number, and NO symbols like +$()% (@#) allowed.";
+                echo "</div>";
+                break;
+
+            case '2':
+                echo "<div class='alert alert-info container' role='alert'>";
+                echo "Password validated";
                 echo "</div>";
                 break;
         }
@@ -170,6 +178,18 @@
                 echo "Please enter the same password.";
                 echo "</div>";
                 break;
+
+            case '2':
+                echo "<div class='alert alert-info container' role='alert'>";
+                echo "Confirm password validated";
+                echo "</div>";
+                break;
+        }
+
+        if ($namecase == 2 && $passcase == 2 && $cfmcase == 2) {
+            echo "<div class='alert alert-success container' role='alert'>";
+            echo "Register successful" . "<br>" . "Welcome" . " " . $username;
+            echo "</div>";
         }
     }
     ?>
