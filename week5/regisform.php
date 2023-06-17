@@ -14,12 +14,12 @@
         <form action="" method="post">
             <div class="mb-3">
                 <label for="firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo isset($_POST["firstname"]) ? $_POST["firstname"] : ''; ?>" required>
+                <input type="text" class="form-control" id="firstname" name="firstname" required>
                 <div id="emailHelp" class="form-text">Your first name.</div>
             </div>
             <div class="mb-3">
                 <label for="lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo isset($_POST["lastname"]) ? $_POST["lastname"] : ''; ?>" required>
+                <input type="text" class="form-control" id="lastname" name="lastname" required>
                 <div id="emailHelp" class="form-text">Your last name.</div>
             </div>
             <div class="mb-3">
@@ -67,22 +67,13 @@
                     </label>
                 </div>
                 <div class="form-check col">
-                    <!-- check name gender is null or not and if the gender equal to value male, then print checked as the attribute of the radio button -->
-                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" <?php
-                                                                                                            if (isset($_POST["gender"]) && $_POST["gender"] == "female") {
-                                                                                                                echo "checked";
-                                                                                                            }
-                                                                                                            ?> required>
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
                     <label class="form-check-label" for="female">
                         Female
                     </label>
                 </div>
                 <div class="form-check col">
-                    <input class="form-check-input" type="radio" name="gender" id="other" value="other" <?php
-                                                                                                        if (isset($_POST["gender"]) && $_POST["gender"] == "other") {
-                                                                                                            echo "checked";
-                                                                                                        }
-                                                                                                        ?> required>
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="other" required>
                     <label class="form-check-label" for="other">
                         Other
                     </label>
@@ -90,22 +81,22 @@
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" minlength="6" name="username" value="<?php echo isset($_POST["username"]) ? $_POST["username"] : ''; ?>" required>
+                <input type="text" class="form-control" id="username" aria-describedby="emailHelp" minlength="6" name="username" required>
                 <div id="emailHelp" class="form-text">Your username.</div>
             </div>
             <div class="mb-3">
                 <label for="InputPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" id="InputPassword" minlength="6" name="password" value="<?php echo isset($_POST["password"]) ? $_POST["password"] : ''; ?>" required>
+                <input type="password" class="form-control" id="InputPassword" minlength="6" name="password" required>
                 <div id="emailHelp" class="form-text">Your password.</div>
             </div>
             <div class="mb-3">
                 <label for="ConfirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="ConfirmPassword" name="confirmpassword" value="<?php echo isset($_POST["confirmpassword"]) ? $_POST["confirmpassword"] : ''; ?>" required>
+                <input type="password" class="form-control" id="ConfirmPassword" name="confirmpassword" required>
                 <div id="emailHelp" class="form-text">Confirm your password.</div>
             </div>
             <div class="mb-3">
                 <label for="InputEmail" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" value="<?php echo isset($_POST["email"]) ? $_POST["email"] : ''; ?>" required>
+                <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" name="email" required>
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-2">
