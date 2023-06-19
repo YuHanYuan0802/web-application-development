@@ -38,7 +38,8 @@
             <br>
             <select name="year" id="year">
                 <?php
-                for ($i = 1900; $i <= 2023; $i++) {
+                $year = date("Y");
+                for ($i = 1900; $i <= $year; $i++) {
                     echo "<option value='$i'>$i</option>";
                 }
                 ?>
