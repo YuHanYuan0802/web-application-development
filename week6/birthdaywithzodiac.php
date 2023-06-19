@@ -66,11 +66,73 @@
             } else {
                 echo "Capricornus";
             }
-        }elseif ($month == 2) {
+        }else if ($month == 2) {
             if ($date <= 15) {
                 echo "Capricornus";
             }else {
                 echo "Aquarius";
+            }
+        }else if ($month == 3){
+            if ($date <= 11) {
+                echo "Aquarius";
+            }else {
+                echo "Pisces";
+            }
+        }else if ($month == 4){
+            if ($date <= 18) {
+                echo "Pisces";
+            }else {
+                echo "Aries";
+            }
+        }else if ($month == 5){
+            if ($date <= 13){
+                echo "Aries";
+            }else {
+                echo "Taurus";
+            }
+        }elseif ($month == 6) {
+            if ($date <= 19) {
+                echo "Taurus";
+            }else {
+                echo "Gemini";
+            }
+        }else if ($month == 7) {
+            if ($date <= 20) {
+                echo "Gemini";
+            } else {
+                echo "Cancer";
+            }
+        }else if ($month == 8) {
+            if ($date <= 9) {
+                echo "Cancer";
+            } else {
+                echo "Leo";
+            }
+        }else if ($month == 9) {
+            if ($date <= 15) {
+                echo "Leo";
+            } else {
+                echo "Virgo";
+            }
+        }else if($month == 10){
+            if ($date <= 30) {
+                echo "Virgo";
+            } else {
+                echo "Lirba";
+            }
+        }else if ($month == 11) {
+            if ($date <= 22) {
+                echo "Lirba";
+            } else if ($date <= 29){
+                echo "Scorpius";
+            }else{
+                echo "Ophiuchus";
+            }
+        }else if ($month == 12) {
+            if ($date <= 17) {
+                echo "Ophiuchus";
+            } else {
+                echo "Sagittarius";
             }
         }
         echo "</div><br>";
