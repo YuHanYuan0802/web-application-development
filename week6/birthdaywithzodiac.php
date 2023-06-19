@@ -27,7 +27,7 @@
                 <?php
                 $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
                 for ($i = 0; $i <= count($month); $i++) {
-                    echo "<option value=\"" . ($i+1) . "\">$month[$i]</option>";
+                    echo "<option value=\"" . ($i + 1) . "\">$month[$i]</option>";
                 }
                 ?>
             </select>
@@ -47,16 +47,16 @@
     </div>
 
     <?php
-    if (isset($_POST['submit'])) {
+    if (isset($_POST['submit']) && checkdate($_POST["month"], $_POST["date"], $_POST["year"])) {
         $date = $_POST["date"];
-        $month = $_POST["month"];
+        $arraymonth = $_POST["month"];
         $year = $_POST["year"];
         $age = date("Y") - $year;
         $cnzodiac = array("Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Chicken", "Dog", "Pig");
         $numzodiac = $year + 9;
         $arrayzodiacnum = $numzodiac % 12;
         echo "<div class='fs-3 text-center'>";
-        echo $date . " " . $month . " " . $year . " " . "<br>Age: " . $age;
+        echo $date . " " . $month[$arraymonth - 1] . " " . $year . " " . "<br>Age: " . $age;
         echo "<br>";
         echo "Your Chinese Zodiac is: " . $cnzodiac[$arrayzodiacnum - 1];
         echo "<br>";
@@ -66,69 +66,69 @@
             } else {
                 echo "Capricornus";
             }
-        }else if ($month == 2) {
+        } else if ($month == 2) {
             if ($date <= 15) {
                 echo "Capricornus";
-            }else {
+            } else {
                 echo "Aquarius";
             }
-        }else if ($month == 3){
+        } else if ($month == 3) {
             if ($date <= 11) {
                 echo "Aquarius";
-            }else {
+            } else {
                 echo "Pisces";
             }
-        }else if ($month == 4){
+        } else if ($month == 4) {
             if ($date <= 18) {
                 echo "Pisces";
-            }else {
+            } else {
                 echo "Aries";
             }
-        }else if ($month == 5){
-            if ($date <= 13){
+        } else if ($month == 5) {
+            if ($date <= 13) {
                 echo "Aries";
-            }else {
+            } else {
                 echo "Taurus";
             }
-        }elseif ($month == 6) {
+        } elseif ($month == 6) {
             if ($date <= 19) {
                 echo "Taurus";
-            }else {
+            } else {
                 echo "Gemini";
             }
-        }else if ($month == 7) {
+        } else if ($month == 7) {
             if ($date <= 20) {
                 echo "Gemini";
             } else {
                 echo "Cancer";
             }
-        }else if ($month == 8) {
+        } else if ($month == 8) {
             if ($date <= 9) {
                 echo "Cancer";
             } else {
                 echo "Leo";
             }
-        }else if ($month == 9) {
+        } else if ($month == 9) {
             if ($date <= 15) {
                 echo "Leo";
             } else {
                 echo "Virgo";
             }
-        }else if($month == 10){
+        } else if ($month == 10) {
             if ($date <= 30) {
                 echo "Virgo";
             } else {
                 echo "Lirba";
             }
-        }else if ($month == 11) {
+        } else if ($month == 11) {
             if ($date <= 22) {
                 echo "Lirba";
-            } else if ($date <= 29){
+            } else if ($date <= 29) {
                 echo "Scorpius";
-            }else{
+            } else {
                 echo "Ophiuchus";
             }
-        }else if ($month == 12) {
+        } else if ($month == 12) {
             if ($date <= 17) {
                 echo "Ophiuchus";
             } else {
@@ -136,6 +136,11 @@
             }
         }
         echo "</div><br>";
+    } else {
+        echo "<br>";
+        echo "<div class='alert alert-danger container'>";
+        echo "Please enter correct date, month and year";
+        echo "</div>";
     }
     ?>
 </body>
