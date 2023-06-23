@@ -332,7 +332,7 @@
                 }
             }
             echo "</div><br>";
-        } elseif ($validateIC !== 1) {
+        } else if ($validateIC !== 1) {
             echo "<br><div class='alert alert-danger container'>";
             echo "Please enter correct Ic";
             echo "</div>";
@@ -342,9 +342,14 @@
             echo "Please enter correct date, month and year";
             echo "</div>";
         }
-    } else {
+    } else if ($validateIC !== 1) {
         echo "<br><div class='alert alert-danger container'>";
         echo "Please enter correct Ic";
+        echo "</div>";
+    } else {
+        echo "<br>";
+        echo "<div class='alert alert-danger container'>";
+        echo "Please enter correct date, month and year";
         echo "</div>";
     }
 
