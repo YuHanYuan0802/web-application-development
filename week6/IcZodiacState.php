@@ -14,14 +14,14 @@
         <form action="" method="post">
             <div class="h1">What is your IC number?</div>
             <input type="text" name="ic" id="ic" class="text-center" placeholder="xxxxxx-xx-xxxx">
-            <?php 
-                if (!empty($_POST["ic"])) {
-                    $ic = $_POST["ic"];
-                    $icdate = substr($ic, 4, -8);
-                    $icmonth = substr($ic, 2,-10);
-                    $icyear = substr($ic, 0, -12);
-                    $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-                }
+            <?php
+            if (!empty($_POST["ic"])) {
+                $ic = $_POST["ic"];
+                $icdate = substr($ic, 4, -8); //substr only return specific part of string with string starting point and length, positive number returned with start of the string and the negative number return from end of the string
+                $icmonth = substr($ic, 2, -10);
+                $icyear = substr($ic, 0, -12);
+                $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+            }
             ?><br><br>
             <input type="submit" name="submit" value="Verify and Submit">
         </form>
@@ -40,7 +40,7 @@
             $numzodiac = $year + 9;
             $arrayzodiacnum = $numzodiac % 12;
             $cnzodiac = array("Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Chicken", "Dog", "Pig");
-            $countrycode = substr($ic, 7, -5); //substr only return specific part of string with string starting point and length, positive number returned with start of the string and the negative number return from end of the string
+            $countrycode = substr($ic, 7, -5);
             echo "<br><div class='fs-3 text-center'>";
             echo $ic;
             echo "<br>";
