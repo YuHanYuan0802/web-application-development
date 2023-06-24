@@ -13,36 +13,16 @@
     <div class="container-fluid text-center row">
         <form action="" method="post">
             <div class="h1">What is your IC number?</div>
-            <input type="text" name="ic" id="ic" class="text-center" placeholder="xxxx-xx-xxxx">
-            <div class="h1">What is your day of birth?</div>
-            <select name="date">
-                <?php
-                for ($i = 1; $i <= 31; $i++) {
-                    echo "<option value='$i'>$i</option>";
+            <input type="text" name="ic" id="ic" class="text-center" placeholder="xxxxxx-xx-xxxx">
+            <?php 
+                if (!empty($_POST["ic"])) {
+                    $ic = $_POST["ic"];
+                    $icdate = substr($ic, 4, -8);
+                    $icmonth = substr($ic, 2,-10);
+                    $icyear = substr($ic, 0, -12);
+                    $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
                 }
-                ?>
-            </select>
-            <br>
-            <br>
-            <select name="month" id="month">
-                <?php
-                $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-                for ($i = 0; $i <= count($month); $i++) {
-                    echo "<option value=\"" . ($i + 1) . "\">$month[$i]</option>";
-                }
-                ?>
-            </select>
-            <br>
-            <br>
-            <select name="year" id="year">
-                <?php
-                for ($i = 1900; $i <= 2023; $i++) {
-                    echo "<option value='$i'>$i</option>";
-                }
-                ?>
-            </select>
-            <br>
-            <br>
+            ?><br><br>
             <input type="submit" name="submit" value="Verify and Submit">
         </form>
     </div>
@@ -50,19 +30,22 @@
     <?php
     if (isset($_POST["submit"])) {
         $ic = $_POST["ic"];
-        $icpattern = "/^[0-9]{4}-[0-9]{2}-[0-9]{4}$/";
+        $icpattern = "/^[0-9]{6}-[0-9]{2}-[0-9]{4}$/";
         $validateIC = preg_match($icpattern, $ic);
-        if ($validateIC === 1 && checkdate($_POST["month"], $_POST["date"], $_POST["year"])) {
-            $date = $_POST["date"];
-            $arraymonth = $_POST["month"];
-            $year = $_POST["year"];
+        if ($validateIC === 1 && checkdate($icmonth, $icdate, $icmonth)) {
+            $date = $icdate;
+            $arraymonth = $icmonth;
+            $year = $icyear + 2000;
             $age = date("Y") - $year;
-            $cnzodiac = array("Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Chicken", "Dog", "Pig");
             $numzodiac = $year + 9;
             $arrayzodiacnum = $numzodiac % 12;
-            $countrycode = substr($ic, 5, -5); //substr only return specific part of string with string starting point and length, positive number returned with start of the string and the negative number return from end of the string
+            $cnzodiac = array("Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Chicken", "Dog", "Pig");
+            $countrycode = substr($ic, 7, -5); //substr only return specific part of string with string starting point and length, positive number returned with start of the string and the negative number return from end of the string
             echo "<br><div class='fs-3 text-center'>";
-            echo "$ic";
+            echo $ic;
+            echo "<br>";
+            echo "Your birthday is: ";
+            echo $month[$arraymonth - 1] . " " . $date . ", " . $year . " " . "<br>Age: " . $age;
             echo "<br>";
             if ($countrycode === "01" || $countrycode === "21"  || $countrycode === "22"  || $countrycode === "23" || $countrycode === "24") {
                 echo "Your are from Johor";
@@ -149,9 +132,6 @@
                 echo "Not found";
                 echo "</div>";
             }
-            echo "<br>";
-            echo $month[$arraymonth - 1] . " " . $date . ", " . $year . " " . "<br>Age: " . $age;
-            echo "<br>";
             echo "<br>";
             echo "Your Chinese Zodiac is: " . $cnzodiac[$arrayzodiacnum - 1];
             echo "<br>";
@@ -332,27 +312,12 @@
                 }
             }
             echo "</div><br>";
-        } else if ($validateIC !== 1) {
+        } else {
             echo "<br><div class='alert alert-danger container'>";
             echo "Please enter correct Ic";
             echo "</div>";
-        } else {
-            echo "<br>";
-            echo "<div class='alert alert-danger container'>";
-            echo "Please enter correct date, month and year";
-            echo "</div>";
         }
-    } else if ($validateIC !== 1) {
-        echo "<br><div class='alert alert-danger container'>";
-        echo "Please enter correct Ic";
-        echo "</div>";
-    } else {
-        echo "<br>";
-        echo "<div class='alert alert-danger container'>";
-        echo "Please enter correct date, month and year";
-        echo "</div>";
     }
-
     ?>
 </body>
 
