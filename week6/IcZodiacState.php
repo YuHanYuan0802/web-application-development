@@ -52,7 +52,7 @@
             if ($year <= date("Y")) {
                 $age = date("Y") - $year;
                 $arrayzodiacnum = $year % 12;
-                $cnzodiac = array( "Monkey", "Chicken", "Dog", "Pig", "Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat");
+                $cnzodiac = array("Monkey", "Chicken", "Dog", "Pig", "Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat");
                 $countrycode = substr($ic, 7, -5);
                 echo "<br><div class='fs-3 text-center'>";
                 echo $ic;
