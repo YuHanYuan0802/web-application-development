@@ -289,16 +289,16 @@
                         echo "<img src = 'img/virgo.png' alt = 'Virgo'>";
                         echo "<br>";
                     } else {
-                        echo "Your Zodiac is: Lirba";
+                        echo "Your Zodiac is: Libra";
                         echo "<br>";
-                        echo "<img src = 'img/lirba.png' alt = 'Lirba'>";
+                        echo "<img src = 'img/libra.png' alt = 'Libra'>";
                         echo "<br>";
                     }
                 } else if ($arraymonth == 11) {
                     if ($date <= 22) {
-                        echo "Your Zodiac is: Lirba";
+                        echo "Your Zodiac is: Libra";
                         echo "<br>";
-                        echo "<img src = 'img/lirba.png' alt = 'Lirba'>";
+                        echo "<img src = 'img/libra.png' alt = 'Libra'>";
                         echo "<br>";
                     } else if ($date <= 29) {
                         echo "Your Zodiac is: Scorpius";
