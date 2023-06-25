@@ -14,6 +14,11 @@
         <form action="" method="post">
             <div class="h1">What is your IC number?</div>
             <input type="text" name="ic" id="ic" class="text-center" placeholder="xxxxxx-xx-xxxx">
+            <select name="whatyear" id="whatyear">
+                <option value="Choose your year" selected>Choose your year</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+            </select>
             <?php
             if (!empty($_POST["ic"])) {
                 $ic = $_POST["ic"];
@@ -32,13 +37,19 @@
         $ic = $_POST["ic"];
         $icpattern = "/^[0-9]{6}-[0-9]{2}-[0-9]{4}$/";
         $validateIC = preg_match($icpattern, $ic);
+        $whatyear = $_POST["whatyear"];
         if ($validateIC === 1 && checkdate($icmonth, $icdate, $icyear)) {
             $date = $icdate;
             $arraymonth = $icmonth;
-            $year = $icyear + 2000;
-            if ($year >= date("Y")){
-                $year -= 100;
-            } 
+            switch ($whatyear) {
+                case '19':
+                    $year = $icyear + 1900;
+                    break;
+                
+                case '20':
+                    $year = $icyear + 2000;
+                    break;
+            }
             $age = date("Y") - $year;
             $numzodiac = $year + 9;
             $arrayzodiacnum = $numzodiac % 12;
