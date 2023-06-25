@@ -32,10 +32,13 @@
         $ic = $_POST["ic"];
         $icpattern = "/^[0-9]{6}-[0-9]{2}-[0-9]{4}$/";
         $validateIC = preg_match($icpattern, $ic);
-        if ($validateIC === 1 && checkdate($icmonth, $icdate, $icmonth)) {
+        if ($validateIC === 1 && checkdate($icmonth, $icdate, $icyear)) {
             $date = $icdate;
             $arraymonth = $icmonth;
             $year = $icyear + 2000;
+            if ($year >= date("Y")){
+                $year -= 100;
+            } 
             $age = date("Y") - $year;
             $numzodiac = $year + 9;
             $arrayzodiacnum = $numzodiac % 12;
