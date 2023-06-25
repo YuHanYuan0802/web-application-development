@@ -24,7 +24,7 @@
                 $icdate = substr($ic, 4, -8); //substr only return specific part of string with string starting point and length, positive number returned with start of the string and the negative number return from end of the string
                 $icmonth = substr($ic, 2, -10);
                 $icyear = substr($ic, 0, -12);
-                $month = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+                $month = array("JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER");
             }
             ?><br><br>
             <input type="submit" name="submit" value="Verify and Submit">
@@ -51,9 +51,8 @@
             }
             if ($year <= date("Y")) {
                 $age = date("Y") - $year;
-                $numzodiac = $year + 9;
-                $arrayzodiacnum = $numzodiac % 12;
-                $cnzodiac = array("Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Chicken", "Dog", "Pig");
+                $arrayzodiacnum = $year % 12;
+                $cnzodiac = array( "Monkey", "Chicken", "Dog", "Pig", "Mouse", "Cow", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat");
                 $countrycode = substr($ic, 7, -5);
                 echo "<br><div class='fs-3 text-center'>";
                 echo $ic;
@@ -147,32 +146,32 @@
                     echo "</div>";
                 }
                 echo "<br>";
-                echo "Your Chinese Zodiac is: " . $cnzodiac[$arrayzodiacnum - 1];
+                echo "Your Chinese Zodiac is: " . $cnzodiac[$arrayzodiacnum];
                 echo "<br>";
-                if ($arrayzodiacnum - 1 == 0) {
-                    echo "<img src = 'img/mouse.png' alt = 'mouse'>";
-                } else if ($arrayzodiacnum - 1 == 1) {
-                    echo "<img src = 'img/cow.png' alt = 'cow'>";
-                } else if ($arrayzodiacnum - 1 == 2) {
-                    echo "<img src = 'img/tiger.png' alt = 'tiger'>";
-                } else if ($arrayzodiacnum - 1 == 3) {
-                    echo "<img src = 'img/rabbit.png' alt = 'rabbit'>";
-                } else if ($arrayzodiacnum - 1 == 4) {
-                    echo "<img src = 'img/dragon.png' alt = 'dragon'>";
-                } else if ($arrayzodiacnum - 1 == 5) {
-                    echo "<img src = 'img/snake.png' alt = 'snake'>";
-                } else if ($arrayzodiacnum - 1 == 6) {
-                    echo "<img src = 'img/horse.png' alt = 'horse'>";
-                } else if ($arrayzodiacnum - 1 == 7) {
-                    echo "<img src = 'img/goat.png' alt = 'goat'>";
-                } else if ($arrayzodiacnum - 1 == 8) {
+                if ($arrayzodiacnum == 0) {
                     echo "<img src = 'img/monkey.png' alt = 'monkey'>";
-                } else if ($arrayzodiacnum - 1 == 9) {
+                } else if ($arrayzodiacnum == 1) {
                     echo "<img src = 'img/rooster.png' alt = 'rooster'>";
-                } else if ($arrayzodiacnum - 1 == 10) {
+                } else if ($arrayzodiacnum == 2) {
                     echo "<img src = 'img/dog.png' alt = 'dog'>";
-                } else if ($arrayzodiacnum - 1 == 11) {
+                } else if ($arrayzodiacnum == 3) {
                     echo "<img src = 'img/pig.png' alt = 'pig'>";
+                } else if ($arrayzodiacnum == 4) {
+                    echo "<img src = 'img/mouse.png' alt = 'mouse'>";
+                } else if ($arrayzodiacnum == 5) {
+                    echo "<img src = 'img/cow.png' alt = 'cow'>";
+                } else if ($arrayzodiacnum == 6) {
+                    echo "<img src = 'img/tiger.png' alt = 'tiger'>";
+                } else if ($arrayzodiacnum == 7) {
+                    echo "<img src = 'img/rabbit.png' alt = 'rabbit'>";
+                } else if ($arrayzodiacnum == 8) {
+                    echo "<img src = 'img/dragon.png' alt = 'dragon'>";
+                } else if ($arrayzodiacnum == 9) {
+                    echo "<img src = 'img/snake.png' alt = 'snake'>";
+                } else if ($arrayzodiacnum == 10) {
+                    echo "<img src = 'img/horse.png' alt = 'horse'>";
+                } else {
+                    echo "<img src = 'img/goat.png' alt = 'goat'>";
                 }
                 echo "<br>";
                 if ($arraymonth == 1) {
