@@ -14,10 +14,6 @@
         <form action="" method="post">
             <div class="h1">What is your IC number?</div>
             <input type="text" name="ic" id="ic" class="text-center" placeholder="xxxxxx-xx-xxxx">
-            <select name="whatyear" id="whatyear">
-                <option value="19">19</option>
-                <option value="20">20</option>
-            </select>
             <?php
             if (!empty($_POST["ic"])) {
                 $ic = $_POST["ic"];
@@ -32,23 +28,22 @@
     </div>
 
     <?php
-    if (isset($_POST["submit"]) && isset($_POST["whatyear"])) {
+    if (isset($_POST["submit"])) {
         $ic = $_POST["ic"];
         $icpattern = "/^[0-9]{6}-[0-9]{2}-[0-9]{4}$/";
         $validateIC = preg_match($icpattern, $ic);
-        $whatyear = $_POST["whatyear"];
-        if ($validateIC === 1 && checkdate($icmonth, $icdate, $whatyear)) {
+        if ($icyear > (date("Y") - 2000) && $validateIC == 1) {
+            $year = $icyear + 1900;
+        } else if ($validateIC !== 1) {
+            echo "<br><div class='alert alert-danger container'>";
+            echo "Please enter correct Ic";
+            echo "</div>";
+        } else {
+            $year = $icyear + 2000;
+        }
+        if (checkdate($icmonth, $icdate, $year)) {
             $date = $icdate;
             $arraymonth = $icmonth;
-            switch ($whatyear) {
-                case '19':
-                    $year = $icyear + 1900;
-                    break;
-
-                case '20':
-                    $year = $icyear + 2000;
-                    break;
-            }
             if ($year <= date("Y")) {
                 $age = date("Y") - $year;
                 $arrayzodiacnum = $year % 12;
@@ -325,12 +320,8 @@
                     }
                 }
                 echo "</div><br>";
-            } else {
-                echo "<br><div class='alert alert-danger container'>";
-                echo "Please enter correct born year";
-                echo "</div>";
-            }
-        } else {
+            } 
+        }else {
             echo "<br><div class='alert alert-danger container'>";
             echo "Please enter correct Ic";
             echo "</div>";
