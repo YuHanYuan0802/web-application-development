@@ -28,7 +28,7 @@
                 </div>
             </nav>
         </div>
-        <h1>This is create customer landing page</h1>
+        This is create customer landing page
     </div>
 </body>
 </html>

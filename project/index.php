@@ -28,7 +28,7 @@
                 </div>
             </nav>
         </div>
-        <h1>This is home landing page</h1>
+        This is home landing page
     </div>
 </body>
 </html>
