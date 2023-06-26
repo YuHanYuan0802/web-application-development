@@ -1,32 +1,20 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
     <title>Contact Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<body>  
+
+<body>
     <div class="container p-0 bg-light">
-        <div class="page-header">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid d-flex">
-                    <a class="navbar-brand" href="#">Create Product</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-link" href="index.php">Home</a>
-                            <a class="nav-link" href="product_create.php">Create Product</a>
-                            <a class="nav-link" href="customer_create.php">Create Customer</a>
-                            <a class="nav-link" href="contact.php">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-      
         <?php
-        if($_POST){
+        include 'menu/menu.php';
+        ?>
+
+        <?php
+        if ($_POST) {
+            include 'config/database.php';
             $firstName = $_POST['firstName'];
             $lastName = $_POST['lastName'];
             $email = $_POST['email'];
@@ -36,29 +24,29 @@
 
             $errorMessage = array();
 
-            if(empty($firstName) || empty($lastName)) {
+            if (empty($firstName) || empty($lastName)) {
                 $errorMessage[] = "First name and last name fields are required.";
             }
 
-            if(empty($email)) {
+            if (empty($email)) {
                 $errorMessage[] = "Email field is empty.";
-            } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errorMessage[] = "Invalid email format.";
             }
 
-            if(empty($phone)) {
+            if (empty($phone)) {
                 $errorMessage[] = "Phone number field is empty.";
             }
 
-            if(empty($address)) {
+            if (empty($address)) {
                 $errorMessage[] = "Address field is empty.";
             }
 
-            if(empty($message)) {
+            if (empty($message)) {
                 $errorMessage[] = "Message field is empty.";
             }
 
-            if(!empty($errorMessage)) {
+            if (!empty($errorMessage)) {
                 echo "<div class='alert alert-danger m-3'>";
                 foreach ($errorMessage as $displayErrorMessage) {
                     echo $displayErrorMessage . "<br>";
@@ -123,4 +111,5 @@
         </div>
     </div>
 </body>
+
 </html>
