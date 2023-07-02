@@ -15,59 +15,63 @@
         <?php
         if ($_POST) {
             include 'config/database.php';
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $email = $_POST['email'];
-            $phone = $_POST['phone'];
-            $address = $_POST['address'];
-            $message = $_POST['message'];
+            try {
+                // insert query
+                $query = "INSERT INTO contact SET first_name=:firstname, last_name=:lastname, email=:email, phone=:phone, address=:address, message=:message";
+                // prepare query for execution
+                $stmt = $con->prepare($query);
+                $firstname = $_POST['firstname'];
+                $lastname = $_POST['lastname'];
+                $email = $_POST['email'];
+                $phone = $_POST['phone'];
+                $address = $_POST['address'];
+                $message = $_POST['message'];
+                // bind the parameters
+                $stmt->bindParam(':firstname', $firstname);
+                $stmt->bindParam(':lastname', $lastname);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':phone', $phone);
+                $stmt->bindParam(':address', $address);
+                $stmt->bindParam(':message', $message);
 
-            $errorMessage = array();
+                $errorMessage = array();
 
-            if (empty($firstName) || empty($lastName)) {
-                $errorMessage[] = "First name and last name fields are required.";
-            }
-
-            if (empty($email)) {
-                $errorMessage[] = "Email field is empty.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errorMessage[] = "Invalid email format.";
-            }
-
-            if (empty($phone)) {
-                $errorMessage[] = "Phone number field is empty.";
-            }
-
-            if (empty($address)) {
-                $errorMessage[] = "Address field is empty.";
-            }
-
-            if (empty($message)) {
-                $errorMessage[] = "Message field is empty.";
-            }
-
-            if (!empty($errorMessage)) {
-                echo "<div class='alert alert-danger m-3'>";
-                foreach ($errorMessage as $displayErrorMessage) {
-                    echo $displayErrorMessage . "<br>";
+                if (empty($firstname) || empty($lastname)) {
+                    $errorMessage[] = "First name and last name fields are required.";
                 }
-                echo "</div>";
-            } else {
-                // $to = 'your-email@example.com';
-                // $subject = 'Contact Form Submission';
-                // $messageBody = "First Name: $firstName\n";
-                // $messageBody .= "Last Name: $lastName\n";
-                // $messageBody .= "Email: $email\n";
-                // $messageBody .= "Phone: $phone\n";
-                // $messageBody .= "Address: $address\n";
-                // $messageBody .= "Message: $message\n";
-                // $headers = "From: $email";
 
-                // if (mail($to, $subject, $messageBody, $headers)) {
-                //     echo "<div class='alert alert-success m-3'>Message sent successfully!</div>";
-                // } else {
-                //     echo "<div class='alert alert-danger m-3'>Failed to send the message. Please try again later.</div>";
-                // }
+                if (empty($email)) {
+                    $errorMessage[] = "Email field is empty.";
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errorMessage[] = "Invalid email format.";
+                }
+
+                if (empty($phone)) {
+                    $errorMessage[] = "Phone number field is empty.";
+                }
+
+                if (empty($address)) {
+                    $errorMessage[] = "Address field is empty.";
+                }
+
+                if (empty($message)) {
+                    $errorMessage[] = "Message field is empty.";
+                }
+
+                if (!empty($errorMessage)) {
+                    echo "<div class='alert alert-danger m-3'>";
+                    foreach ($errorMessage as $displayErrorMessage) {
+                        echo $displayErrorMessage . "<br>";
+                    }
+                    echo "</div>";
+                } else if ($stmt->execute()) {
+                    echo "<div class='alert alert-success'>Record saved.</div>";
+                    $_POST = array();
+                } else {
+                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                }
+            } catch (PDOException $exception) {
+                die('ERROR: ' . $exception->getMessage());
             }
         }
         ?>
@@ -76,12 +80,12 @@
             <form method="post">
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo isset($_POST['firstName']) ? $_POST['firstName'] : ''; ?>">
+                        <label for="firstname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo isset($_POST['firstname']) ? $_POST['firstname'] : ''; ?>">
                     </div>
                     <div class="col-md-6">
-                        <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo isset($_POST['lastName']) ? $_POST['lastName'] : ''; ?>">
+                        <label for="lastname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo isset($_POST['lastname']) ? $_POST['lastname'] : ''; ?>">
                     </div>
                 </div>
                 <div class="row mb-3">
