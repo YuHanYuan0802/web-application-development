@@ -30,15 +30,15 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `contact`;
 CREATE TABLE IF NOT EXISTS `contact` (
   `contact_id` int NOT NULL,
-  `first_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `last_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `first_name` varchar(20) CHARACTER SET utf8mb4  NOT NULL,
+  `last_name` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
   `email` text NOT NULL,
   `phone` int NOT NULL,
   `address` text NOT NULL,
   `message` text NOT NULL,
   PRIMARY KEY (`contact_id`),
   UNIQUE KEY `first_name` (`first_name`,`last_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -49,18 +49,18 @@ CREATE TABLE IF NOT EXISTS `contact` (
 DROP TABLE IF EXISTS `customers`;
 CREATE TABLE IF NOT EXISTS `customers` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `username` varchar(20) CHARACTER SET utf8mb4 NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `password` text NOT NULL,
   `email` varchar(30) NOT NULL,
   `date_of_birth` date NOT NULL,
   `registration_date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `gender` enum('male','female') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `gender` enum('male','female') CHARACTER SET utf8mb4 NOT NULL,
   `status` enum('active','Inactive') NOT NULL DEFAULT 'active',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customers`

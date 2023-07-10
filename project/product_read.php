@@ -12,10 +12,6 @@
         <?php
         include 'menu/menu.php';
         ?>
-        <br>
-        <div class = "text-end">
-            <input type="text" id="input" onkeyup="search()" placeholder="Search for names.." title="Type in a name">
-        </div>
         <?php
         // include database connection
         include 'config/database.php';
@@ -23,13 +19,29 @@
         // delete message prompt will be here
 
         // select all data
-        $query = "SELECT id, name, description, price, promote_price, manufacture_date, expired_date FROM products ORDER BY id ASC";
+        $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
+        $query = "SELECT id, name, description, price, promote_price, manufacture_date, expired_date FROM products";
+        if (!empty($searchKeyword)) {
+            $query .= " WHERE name LIKE :keyword";
+            $searchKeyword = "%{$searchKeyword}%";
+        }
+        $query .= " ORDER BY id ASC";
         $stmt = $con->prepare($query);
+        if (!empty($searchKeyword)) {
+            $stmt->bindParam(':keyword', $searchKeyword);
+        }
         $stmt->execute();
 
         // this is how to get number of rows returned
         $num = $stmt->rowCount();
-
+        echo '<div class="p-3">
+            <form method="GET" action="">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search" placeholder="Search product..." value="' . str_replace('%', '', $searchKeyword) . '">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>';
         // link to create record form
         echo "<br><div><a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a></div>" . "<br>";
 
