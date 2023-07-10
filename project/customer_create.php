@@ -18,13 +18,15 @@
             include 'config/database.php';
             try {
                 // insert query
-                $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:firstname, last_name=:lastname, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
+                $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:firstname, last_name=:lastname, email=:email, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
                 // prepare query for execution
                 $stmt = $con->prepare($query);
                 $username = $_POST['username'];
                 $password = $_POST['password'];
+                $cfmpassword = $_POST['cfmpassword'];
                 $firstname = $_POST['first_name'];
                 $lastname = $_POST['last_name'];
+                $email = $_POST['email'];
                 $gender = $_POST['gender'];
                 $date_of_birth = $_POST['date_of_birth'];
                 $registration_date_time = $_POST['registration_date_time'];
@@ -34,6 +36,7 @@
                 $stmt->bindParam(':password', $password);
                 $stmt->bindParam(':firstname', $firstname);
                 $stmt->bindParam(':lastname', $lastname);
+                $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':date_of_birth', $date_of_birth);
                 $stmt->bindParam(':registration_date_time', $registration_date_time);
@@ -43,20 +46,31 @@
                 $finalusername = preg_match($usernamepattern, $username);
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
+                $currentdate = date("Y-m-d");
 
                 $errormessage = array();
-
                 if (empty($username)) {
                     $errormessage[] = "Please fill in your username" . "<br>";
                 }
                 if (!$finalusername) {
                     $errormessage[] = "Please enter at least 3 character" . "<br>";
                 }
+                if (empty($email)) {
+                    $errorMessage[] = "Email field is empty.";
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errorMessage[] = "Invalid email format.";
+                }
                 if (empty($password)) {
                     $errormessage[] = "Please fill in your password " . "<br>";
                 }
                 if (!$finalpassword) {
-                    $errormessage[] = "Please enter at least 6 character" . "<br>";
+                    $errormessage[] = "Please enter at least 6 character for password" . "<br>";
+                }
+                if (empty($cfmpassword)) {
+                    $errormessage[] = "Please enter confirm password" . "<br>";
+                }
+                if ($password !== $cfmpassword) {
+                    $errormessage[] = "Please enter the same password" . "<br>";
                 }
                 if (empty($firstname)) {
                     $errormessage[] = "Please fill in your first name" . "<br>";
@@ -70,8 +84,11 @@
                 if (empty($date_of_birth)) {
                     $errormessage[] = "Please fill in your date of birth" . "<br>";
                 }
+                if ($date_of_birth > $currentdate) {
+                    $errormessage[] = "Birthday cannot bigger than current date" . "<br>";
+                }
                 if (empty($registration_date_time)) {
-                    $errormessage[] = "Please fill in your registration_date_time" . "<br>";
+                    $errormessage[] = "Please fill in yourif registration_date_time" . "<br>";
                 }
                 if (empty($status)) {
                     $errormessage[] = "Please fill in your status" . "<br>";
@@ -89,7 +106,15 @@
                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                 }
             } catch (PDOException $exception) {
-                die('ERROR: ' . $exception->getMessage());
+                if ($exception->getCode() == 23000) {
+                    echo "<div class = 'alert alert-danger'>";
+                    echo "Username have taken, please enter other username";
+                    echo "</div>";
+                } else {
+                    echo "<div class = 'alert alert-danger'>";
+                    echo $exception->getMessage();
+                    echo "</div>";
+                }
             }
         }
         ?>
@@ -107,6 +132,11 @@
             </div>
             <br>
             <div class="form-group">
+                <label for="cfmpwd">Confirm Password:</label>
+                <input type="password" class="form-control" name="cfmpassword" value="<?php echo isset($_POST["cfmpassword"]) ? $_POST["cfmpassword"] : "" ?>" placeholder="Please enter password again">
+            </div>
+            <br>
+            <div class="form-group">
                 <label for="firstname">First Name:</label>
                 <input type="text" class="form-control" name="first_name" value="<?php echo isset($_POST["first_name"]) ? $_POST["first_name"] : "" ?>" placeholder="Enter first name">
             </div>
@@ -114,6 +144,11 @@
             <div class="form-group">
                 <label for="lastname">Last Name:</label>
                 <input type="text" class="form-control" name="last_name" value="<?php echo isset($_POST["last_name"]) ? $_POST["last_name"] : "" ?>" placeholder="Enter last name">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : "" ?>" placeholder="Your email">
             </div>
             <br>
             <div class="form-group">
@@ -141,7 +176,9 @@
                     </select>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
         </form>
         <br>
     </div>
