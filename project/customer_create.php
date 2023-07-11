@@ -31,9 +31,12 @@
                 $date_of_birth = $_POST['date_of_birth'];
                 $registration_date_time = $_POST['registration_date_time'];
                 $status = $_POST['status'];
+                $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
+                $finalpassword = preg_match($pw_pattern, $password);
+                $hashpassword = password_hash($finalpassword, PASSWORD_DEFAULT);
                 // bind the parameters
                 $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':password', $password);
+                $stmt->bindParam(':password', $hashpassword);
                 $stmt->bindParam(':firstname', $firstname);
                 $stmt->bindParam(':lastname', $lastname);
                 $stmt->bindParam(':email', $email);
@@ -44,8 +47,7 @@
 
                 $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
                 $finalusername = preg_match($usernamepattern, $username);
-                $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
-                $finalpassword = preg_match($pw_pattern, $password);
+                
                 $currentdate = date("Y-m-d");
 
                 $errormessage = array();
