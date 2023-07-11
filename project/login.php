@@ -21,16 +21,24 @@ session_start();
     if (isset($_POST['submit'])) {
         include 'config/database.php';
         try {
-            $username = mysqli_real_escape_string($db, $_POST['username']);
+            $username = $_POST['username'];
             $password = $_POST['password'];
-            $query = " SELECT * FROM customers WHERE username = '$username' && password = '$password' ";
-            $result = mysqli_query($db, $query);
-            if (mysqli_num_rows($result) > 0) {
-                $row = mysqli_fetch_array($result);
-                header('location:index.php');
+            $query = "SELECT * FROM customers WHERE (username = :username)";
+            $values = [':username' => $username];
+            $res = $con->prepare($query);
+            $res->execute($values);
+            $row = $res->fetch(PDO::FETCH_ASSOC);
+            if (is_array($row)) {
+                if (password_verify($password, $row['password'])) {
+                    header('location:index.php');
+                } else {
+                    echo "<div class = 'container w-25 alert alert-danger text-center'>";
+                    echo "Invalid password" . "<br>";
+                    echo "</div>";
+                }
             } else {
                 echo "<div class = 'container w-25 alert alert-danger text-center'>";
-                echo "Invalid username or password";
+                echo "No username found";
                 echo "</div>";
             }
         } catch (PDOException $exception) {
