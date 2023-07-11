@@ -33,7 +33,7 @@
                 $status = $_POST['status'];
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
-                $hashpassword = password_hash($finalpassword, PASSWORD_DEFAULT);
+                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
                 // bind the parameters
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':password', $hashpassword);
