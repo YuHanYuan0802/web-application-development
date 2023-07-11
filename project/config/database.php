@@ -4,7 +4,7 @@ $host = "localhost";
 $db_name = "yuhanyuan0802";
 $username = "yuhanyuan0802";
 $password = "3_2q7Ay.ici/8nFT";
-  
+$db = mysqli_connect('localhost','yuhanyuan0802','3_2q7Ay.ici/8nFT','yuhanyuan0802');
 try {
     $con = new PDO("mysql:host={$host};dbname={$db_name}", $username, $password);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // show error
