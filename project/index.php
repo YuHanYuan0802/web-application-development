@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 <!DOCTYPE HTML>
@@ -16,7 +16,14 @@ session_start();
         <?php
         include 'menu/menu.php';
         ?>
-        This is home landing page
+        Welcome
+        <?php
+        if (empty($_SESSION)) {
+            header('location:login.php');
+        } else {
+            echo " " . $_SESSION['username'];
+        }
+        ?>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
