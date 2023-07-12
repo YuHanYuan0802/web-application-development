@@ -47,6 +47,8 @@ session_start();
                 if ($row['status'] == "active") {
                     if (is_array($row)) {
                         if (password_verify($password, $row['password'])) {
+                            $_POST = array();
+                            $_SESSION['username'] = $row['username'];
                             header('location:index.php');
                         } else {
                             echo "<div class = 'container w-25 alert alert-danger text-center'>";
@@ -55,11 +57,13 @@ session_start();
                         }
                     }
                 } else {
+                    $_POST = array();
                     echo "<div class = 'container w-25 alert alert-danger text-center'>";
                     echo "User inactive";
                     echo "</div>";
                 }
             } else {
+                $_POST = array();
                 echo "<div class = 'container w-25 alert alert-danger text-center'>";
                 echo "No username found";
                 echo "</div>";
@@ -75,7 +79,7 @@ session_start();
         <form action="" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <input type="text" class="form-control" id="username" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
