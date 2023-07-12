@@ -1,6 +1,5 @@
-<?php
+<?php 
 session_start();
-$_SESSION['login'] = true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,13 +24,26 @@ $_SESSION['login'] = true;
             $username = $_POST['username'];
             $password = $_POST['password'];
             $query = "SELECT * FROM customers WHERE (username = :username)";
-            
+
             $values = [':username' => $username];
             $res = $con->prepare($query);
             $res->execute($values);
             $row = $res->fetch(PDO::FETCH_ASSOC);
 
-            if ($row > 0) {
+            $errormessage = array();
+            if (empty($username)) {
+                $errormessage[] = "Please fill in your username " . "<br>";
+            }
+            if (empty($password)) {
+                $errormessage[] = "Please fill in your password " . "<br>";
+            }
+            if (!empty($errormessage)) {
+                echo "<br><div class = 'alert alert-danger container w-25 alert alert-danger text-center'>";
+                foreach ($errormessage as $displayerrormessage) {
+                    echo $displayerrormessage;
+                }
+                echo "</div>";
+            }else if ($row > 0) {
                 if ($row['status'] == "active") {
                     if (is_array($row)) {
                         if (password_verify($password, $row['password'])) {

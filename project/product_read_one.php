@@ -1,9 +1,5 @@
-<?php
-if (!empty($_SESSION['login'])) {
-    session_start();
-} else {
-    header('location:login.php');
-}
+<?php 
+session_start();
 ?>
 <!DOCTYPE HTML>
 <html>

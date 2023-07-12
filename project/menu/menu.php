@@ -27,13 +27,7 @@
                             </ul>
                         </li>
                         <a class="nav-link" href="contact.php">Contact Us</a>
-                        <?php
-                        if (!empty($_SESSION['login'])) {
-                            echo "<a class='nav-link' href='login.php'>Log out</a>";
-                        } else {
-                            echo "No session start";
-                        }
-                        ?>
+                        <a class='nav-link' href='login.php'>Log out</a>
                     </div>
                 </div>
             </div>
