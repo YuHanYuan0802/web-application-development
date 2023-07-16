@@ -24,6 +24,8 @@ session_start();
                 $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:firstname, last_name=:lastname, email=:email, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
                 // prepare query for execution
                 $stmt = $con->prepare($query);
+                $reset = "ALTER TABLE customers AUTO_INCREMENT = 1";
+                $resetquery = $con->prepare($reset);
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 $cfmpassword = $_POST['cfmpassword'];
@@ -115,6 +117,7 @@ session_start();
                     echo "<div class = 'alert alert-danger'>";
                     echo "Username have taken, please enter other username";
                     echo "</div>";
+                    $resetquery->execute();
                 } else {
                     echo "<div class = 'alert alert-danger'>";
                     echo $exception->getMessage();

@@ -28,6 +28,8 @@ session_start();
                 $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promote_price=:promote_price, manufacture_date=:manufacture_date, expired_date=:expired_date, created=:created";
                 // prepare query for execution
                 $stmt = $con->prepare($query);
+                $reset = "ALTER TABLE products AUTO_INCREMENT = 1";
+                $resetquery = $con->prepare($reset);
                 $name = $_POST['name'];
                 $description = $_POST['description'];
                 $price = $_POST['price'];
@@ -87,11 +89,13 @@ session_start();
                     $_POST = array();
                 } else {
                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    $resetquery->execute();
                 }
             }
             // show error
             catch (PDOException $exception) {
                 die('ERROR: ' . $exception->getMessage());
+                $resetquery->execute();
             }
         }
         ?>
