@@ -94,8 +94,17 @@ session_start();
             }
             // show error
             catch (PDOException $exception) {
-                die('ERROR: ' . $exception->getMessage());
-                $resetquery->execute();
+                if ($exception->getCode() == 23000) {
+                    echo "<div class = 'alert alert-danger'>";
+                    echo "Product name have taken, please enter other product name";
+                    echo "</div>";
+                    $resetquery->execute();
+                } else {
+                    echo "<div class = 'alert alert-danger'>";
+                    echo $exception->getMessage();
+                    echo "</div>";
+                    $resetquery->execute();
+                }
             }
         }
         ?>
