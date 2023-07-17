@@ -32,7 +32,7 @@ session_start();
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, name, description, price, promote_price FROM products WHERE id = :id ";
+            $query = "SELECT products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id  WHERE products.id = :id ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -51,6 +51,9 @@ session_start();
             $decimalprice = number_format((float)$price, 2, '.', '');
             $promote_price = $row['promote_price'];
             $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+            $manuDate = $row['manufacture_date'];
+            $expireDate = $row['expired_date'];
+            $category = $row['category_name'];
             // shorter way to do that is extract($row)
         }
 
@@ -79,6 +82,18 @@ session_start();
             <tr>
                 <td>Promote Price</td>
                 <td><?php echo htmlspecialchars($decimalpromote, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Manufacture Date</td>
+                <td><?php echo htmlspecialchars($manuDate, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Expired Date</td>
+                <td><?php echo htmlspecialchars($expireDate, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td><?php echo htmlspecialchars($category, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
                 <td></td>
