@@ -1,5 +1,5 @@
 <?php 
-session_start();
+include 'config/session.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +49,7 @@ session_start();
                         if (password_verify($password, $row['password'])) {
                             $_POST = array();
                             $_SESSION['username'] = $row['username'];
-                            header('location:redirect.php');
+                            header('location:index.php');
                         } else {
                             echo "<div class = 'container w-25 alert alert-danger text-center'>";
                             echo "Invalid password" . "<br>";

@@ -1,3 +1,7 @@
+<?php
+include 'config/session.php';
+?>
+
 <!DOCTYPE HTML>
 <html>
 
