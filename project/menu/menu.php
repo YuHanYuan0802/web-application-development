@@ -35,6 +35,15 @@
                                 <li><a class="dropdown-item" href="category_create.php">Create Catogary</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Order
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="order_summary.php">Order Summary</a></li>
+                                <li><a class="dropdown-item" href="#">Order Details</a></li>
+                            </ul>
+                        </li>
                         <a class="nav-link" href="contact.php">Contact Us</a>
                         <?php 
                         session_destroy();
