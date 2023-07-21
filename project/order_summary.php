@@ -45,7 +45,19 @@ include 'config/session.php';
 
                 // Execute the query
                 $errormessage = array();
-                if ($stmt->execute()) {
+                if (empty($quantity)) {
+                    $errormessage[] = "Please enter quantity." . "<br>";
+                }
+                if ($quantity > 10 || $quantity < 1) {
+                    $errormessage[] = "The minimum of the quantity must at least 1 and the maximum of the quantity must be 10" . "<br>";
+                }
+                if (!empty($errormessage)) {
+                    echo "<div class = 'alert alert-danger'>";
+                    foreach ($errormessage as $displayerrormessage) {
+                        echo $displayerrormessage;
+                    }
+                    echo "</div>";
+                }else if ($stmt->execute()) {
                     $selectquery = "SELECT * FROM order_summary";
 
                     $selectstmt = $con->prepare($selectquery);
