@@ -37,7 +37,6 @@ include 'config/session.php';
                 $product_id = $_POST['product_id'];
                 $quantity = $_POST['quantity'];
                 $order_date = $_POST['order_date'];
-                $category_id = $_POST['category_id'];
 
                 // bind the parameters
                 $stmt->bindParam(':customer_id', $customer_id);
@@ -57,23 +56,21 @@ include 'config/session.php';
                         echo $displayerrormessage;
                     }
                     echo "</div>";
-                }else if ($stmt->execute()) {
+                } else if ($stmt->execute()) {
                     $selectquery = "SELECT * FROM order_summary";
 
                     $selectstmt = $con->prepare($selectquery);
                     $selectstmt->execute();
                     $selectrow = $selectstmt->fetch(PDO::FETCH_ASSOC);
                     $order_id = $selectrow['order_id'];
-                    
-                    $detailquery = "INSERT INTO order_detail SET product_id=:product_id, category_id=:category_id, quantity=:quantity, order_id = '$order_id'";
+
+                    $detailquery = "INSERT INTO order_detail SET product_id=:product_id, quantity=:quantity, order_id = '$order_id'";
                     $detailstmt = $con->prepare($detailquery);
                     $detailstmt->bindParam(':product_id', $product_id);
-                    $detailstmt->bindParam(':category_id', $category_id);
                     $detailstmt->bindParam(':quantity', $quantity);
 
                     if ($detailstmt->execute()) {
                         echo "<div class='alert alert-success'>Record saved.</div>";
-                        $_POST = array();
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
                         $resetdetailquery->execute();
@@ -120,7 +117,8 @@ include 'config/session.php';
                 </tr>
                 <tr>
                     <td>Product</td>
-                    <td><select name='product_id' class="form-select">
+                    <td>
+                        <select name="product_id" class="form-select">
                             <?php
                             include 'config/database.php';
                             $proquery = "SELECT name, id FROM products ORDER BY id ASC";
@@ -134,32 +132,11 @@ include 'config/session.php';
                                 }
                             }
                             foreach ($option as $id => $name) {
-                                echo "<option value = '" . $id . "'>" . $name . "</option>";
+                                echo "<option value='" . $id . "'>" . $name . "</option>";
                             }
                             ?>
                         </select>
                     </td>
-                </tr>
-                <tr>
-                    <td>Select Category</td>
-                    <td><select name='category_id' class="form-select">
-                            <?php
-                            include 'config/database.php';
-                            $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
-                            $catestmt = $con->prepare($catequery);
-                            $catestmt->execute();
-                            $num = $catestmt->rowCount();
-                            if ($num > 0) {
-                                $option = array();
-                                while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['category_id']] = $row['category_name'];
-                                }
-                            }
-                            foreach ($option as $category_id => $category_name) {
-                                echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
-                            }
-                            ?>
-                        </select></td>
                 </tr>
                 <tr>
                     <td>Order Date</td>
@@ -172,12 +149,64 @@ include 'config/session.php';
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' value='Save' class='btn btn-primary' />
-
+                        <input type="submit" value="Save" class="btn btn-primary">
                     </td>
                 </tr>
             </table>
         </form>
+        <?php
+        include 'config/database.php';
+        if (!empty($product_id)) {
+            $pricequery = "SELECT name, price, promote_price FROM products WHERE id='$product_id'";
+            $pricestmt = $con->prepare($pricequery);
+            $pricestmt->execute();
+            while ($pricerow = $pricestmt->fetch(PDO::FETCH_ASSOC)) {
+                $errormessage = array();
+                if (empty($quantity)) {
+                    $errormessage[] = "Please enter quantity." . "<br>";
+                }
+                if ($quantity > 10 || $quantity < 1) {
+                    $errormessage[] = "The minimum of the quantity must at least 1 and the maximum of the quantity must be 10" . "<br>";
+                }
+                if (!empty($errormessage)) {
+                    echo "<div class = 'alert alert-danger'>";
+                    foreach ($errormessage as $displayerrormessage) {
+                        echo $displayerrormessage;
+                    }
+                    echo "</div>";
+                } else {
+                    $name = $pricerow['name'];
+                    $promote_price = $pricerow['promote_price'];
+                    $price = $pricerow['price'];
+                    $quanprice = $quantity * $promote_price;
+                    $decimalprice = number_format((float)$price, 2, '.', '');
+                    $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+                    echo "<table id='price_table' class='table table-hover table-responsive table-bordered'>";
+                    echo "<tr>";
+                    echo "<th>Name</th>";
+                    echo "<th>Price</th>";
+                    echo "<th>Quantity</th>";
+                    echo "<th>Subtotal</th>";
+                    echo "</tr>";
+
+                    echo "<tr>";
+                    echo "<td>$name</td>";
+                    if ($promote_price < $decimalprice && $promote_price > 0) {
+                        echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                    } else {
+                        echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    }
+                    echo "<td>x$quantity</td>";
+                    echo "<td>RM $quanprice</td>";
+                    echo "</tr>";
+                    echo "</table>";
+                }
+            }
+        } else {
+            echo "<div class='alert alert-danger'>Unable to found order record.</div>";
+        }
+
+        ?>
     </div>
     <!-- end .container -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
