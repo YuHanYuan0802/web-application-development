@@ -35,7 +35,11 @@ include 'config/session.php';
                 $resetdetailquery = $con->prepare($resetdetail);
                 $customer_id = $_POST['customer_id'];
                 $product_id = $_POST['product_id'];
+                $second_product_id = $_POST['second_product_id'];
+                $third_product_id = $_POST['third_product_id'];
                 $quantity = $_POST['quantity'];
+                $second_quantity = $_POST['second_quantity'];
+                $third_quantity = $_POST['third_quantity'];
                 $order_date = $_POST['order_date'];
 
                 // bind the parameters
@@ -69,6 +73,9 @@ include 'config/session.php';
                     $detailstmt->bindParam(':product_id', $product_id);
                     $detailstmt->bindParam(':quantity', $quantity);
 
+                    $multiquery = "INSERT INTO order_detail(order_id, product_id, quantity) VALUES ('$order_id', '$second_product_id' , '$second_quantity'), ('$order_id', '$third_product_id', '$third_quantity')";
+                    $multistmt = $con->prepare($multiquery);
+                    $multistmt->execute();
                     if ($detailstmt->execute()) {
                         echo "<div class='alert alert-success'>Record saved.</div>";
                     } else {
@@ -136,6 +143,44 @@ include 'config/session.php';
                             }
                             ?>
                         </select>
+                        <br>
+                        <select name="second_product_id" class="form-select">
+                            <?php
+                            include 'config/database.php';
+                            $proquery = "SELECT name, id FROM products ORDER BY id ASC";
+                            $prostmt = $con->prepare($proquery);
+                            $prostmt->execute();
+                            $num = $prostmt->rowCount();
+                            if ($num > 0) {
+                                $option = array();
+                                while ($row = $prostmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $option[$row['id']] = $row['name'];
+                                }
+                            }
+                            foreach ($option as $id => $name) {
+                                echo "<option value='" . $id . "'>" . $name . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <br>
+                        <select name="third_product_id" class="form-select">
+                            <?php
+                            include 'config/database.php';
+                            $proquery = "SELECT name, id FROM products ORDER BY id ASC";
+                            $prostmt = $con->prepare($proquery);
+                            $prostmt->execute();
+                            $num = $prostmt->rowCount();
+                            if ($num > 0) {
+                                $option = array();
+                                while ($row = $prostmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $option[$row['id']] = $row['name'];
+                                }
+                            }
+                            foreach ($option as $id => $name) {
+                                echo "<option value='" . $id . "'>" . $name . "</option>";
+                            }
+                            ?>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -144,7 +189,13 @@ include 'config/session.php';
                 </tr>
                 <tr>
                     <td>Quantity</td>
-                    <td><input type='number' name='quantity' class='form-control ' min="1" max="10" /></td>
+                    <td>
+                        <input type='number' name='quantity' class='form-control ' min="1" max="10" />
+                        <br>
+                        <input type='number' name='second_quantity' class='form-control ' min="1" max="10" />
+                        <br>
+                        <input type='number' name='third_quantity' class='form-control ' min="1" max="10" />
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
@@ -158,8 +209,14 @@ include 'config/session.php';
         include 'config/database.php';
         if (!empty($product_id)) {
             $pricequery = "SELECT name, price, promote_price FROM products WHERE id='$product_id'";
+            $secondpricequery = "SELECT name, price, promote_price FROM products WHERE id='$second_product_id'";
+            $thirdpricequery = "SELECT name, price, promote_price FROM products WHERE id='$third_product_id'";
             $pricestmt = $con->prepare($pricequery);
+            $secondpricestmt = $con->prepare($secondpricequery);
+            $thirdpricestmt = $con->prepare($thirdpricequery);
             $pricestmt->execute();
+            $secondpricestmt->execute();
+            $thirdpricestmt->execute();
             while ($pricerow = $pricestmt->fetch(PDO::FETCH_ASSOC)) {
                 $errormessage = array();
                 if (empty($quantity)) {
@@ -199,8 +256,46 @@ include 'config/session.php';
                     echo "<td>x$quantity</td>";
                     echo "<td>RM $quanprice</td>";
                     echo "</tr>";
-                    echo "</table>";
                 }
+            }
+            while ($secondpricerow = $secondpricestmt->fetch(PDO::FETCH_ASSOC)) {
+                $name = $secondpricerow['name'];
+                $promote_price = $secondpricerow['promote_price'];
+                $price = $secondpricerow['price'];
+                $quanprice = $second_quantity * $promote_price;
+                $decimalprice = number_format((float)$price, 2, '.', '');
+                $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+
+                echo "<tr>";
+                echo "<td>$name</td>";
+                if ($promote_price < $decimalprice && $promote_price > 0) {
+                    echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                } else {
+                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                }
+                echo "<td>x$second_quantity</td>";
+                echo "<td>RM $quanprice</td>";
+                echo "</tr>";
+            }
+            while ($thirdpricerow = $thirdpricestmt->fetch(PDO::FETCH_ASSOC)) {
+                $name = $thirdpricerow['name'];
+                $promote_price = $thirdpricerow['promote_price'];
+                $price = $thirdpricerow['price'];
+                $quanprice = $third_quantity * $promote_price;
+                $decimalprice = number_format((float)$price, 2, '.', '');
+                $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+
+                echo "<tr>";
+                echo "<td>$name</td>";
+                if ($promote_price < $decimalprice && $promote_price > 0) {
+                    echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                } else {
+                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                }
+                echo "<td>x$third_quantity</td>";
+                echo "<td>RM $quanprice</td>";
+                echo "</tr>";
+                echo "</table>";
             }
         } else {
             echo "<div class='alert alert-danger'>Unable to found order record.</div>";
