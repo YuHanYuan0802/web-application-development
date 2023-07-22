@@ -49,9 +49,15 @@ include 'config/session.php';
                 // Execute the query
                 $errormessage = array();
                 if (empty($quantity)) {
-                    $errormessage[] = "Please enter quantity." . "<br>";
+                    $errormessage[] = "Please enter first quantity." . "<br>";
                 }
-                if ($quantity > 10 || $quantity < 1) {
+                if (empty($second_quantity)) {
+                    $errormessage[] = "Please enter second quantity." . "<br>";
+                }
+                if (empty($third_quantity)) {
+                    $errormessage[] = "Please enter third quantity." . "<br>";
+                }
+                if ($quantity > 10 || $quantity < 1 || $second_quantity > 10 || $second_quantity < 1 || $third_quantity > 10 || $third_quantity < 1) {
                     $errormessage[] = "The minimum of the quantity must at least 1 and the maximum of the quantity must be 10" . "<br>";
                 }
                 if (!empty($errormessage)) {
@@ -218,19 +224,8 @@ include 'config/session.php';
             $secondpricestmt->execute();
             $thirdpricestmt->execute();
             while ($pricerow = $pricestmt->fetch(PDO::FETCH_ASSOC)) {
-                $errormessage = array();
                 if (empty($quantity)) {
-                    $errormessage[] = "Please enter quantity." . "<br>";
-                }
-                if ($quantity > 10 || $quantity < 1) {
-                    $errormessage[] = "The minimum of the quantity must at least 1 and the maximum of the quantity must be 10" . "<br>";
-                }
-                if (!empty($errormessage)) {
-                    echo "<div class = 'alert alert-danger'>";
-                    foreach ($errormessage as $displayerrormessage) {
-                        echo $displayerrormessage;
-                    }
-                    echo "</div>";
+                    echo "<div class = 'alert alert-danger'>First quantity not set.</div>";
                 } else {
                     $name = $pricerow['name'];
                     $promote_price = $pricerow['promote_price'];
@@ -259,43 +254,51 @@ include 'config/session.php';
                 }
             }
             while ($secondpricerow = $secondpricestmt->fetch(PDO::FETCH_ASSOC)) {
-                $name = $secondpricerow['name'];
-                $promote_price = $secondpricerow['promote_price'];
-                $price = $secondpricerow['price'];
-                $quanprice = $second_quantity * $promote_price;
-                $decimalprice = number_format((float)$price, 2, '.', '');
-                $decimalpromote = number_format((float)$promote_price, 2, '.', '');
-
-                echo "<tr>";
-                echo "<td>$name</td>";
-                if ($promote_price < $decimalprice && $promote_price > 0) {
-                    echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                if (empty($second_quantity)) {
+                    echo "<div class = 'alert alert-danger'>Second quantity not set.</div>";
                 } else {
-                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    $name = $secondpricerow['name'];
+                    $promote_price = $secondpricerow['promote_price'];
+                    $price = $secondpricerow['price'];
+                    $quanprice = $second_quantity * $promote_price;
+                    $decimalprice = number_format((float)$price, 2, '.', '');
+                    $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+
+                    echo "<tr>";
+                    echo "<td>$name</td>";
+                    if ($promote_price < $decimalprice && $promote_price > 0) {
+                        echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                    } else {
+                        echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    }
+                    echo "<td>x$second_quantity</td>";
+                    echo "<td>RM $quanprice</td>";
+                    echo "</tr>";
                 }
-                echo "<td>x$second_quantity</td>";
-                echo "<td>RM $quanprice</td>";
-                echo "</tr>";
             }
             while ($thirdpricerow = $thirdpricestmt->fetch(PDO::FETCH_ASSOC)) {
-                $name = $thirdpricerow['name'];
-                $promote_price = $thirdpricerow['promote_price'];
-                $price = $thirdpricerow['price'];
-                $quanprice = $third_quantity * $promote_price;
-                $decimalprice = number_format((float)$price, 2, '.', '');
-                $decimalpromote = number_format((float)$promote_price, 2, '.', '');
-
-                echo "<tr>";
-                echo "<td>$name</td>";
-                if ($promote_price < $decimalprice && $promote_price > 0) {
-                    echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                if (empty($second_quantity)) {
+                    echo "<div class = 'alert alert-danger'>Third quantity not set.</div>";
                 } else {
-                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    $name = $thirdpricerow['name'];
+                    $promote_price = $thirdpricerow['promote_price'];
+                    $price = $thirdpricerow['price'];
+                    $quanprice = $third_quantity * $promote_price;
+                    $decimalprice = number_format((float)$price, 2, '.', '');
+                    $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+
+                    echo "<tr>";
+                    echo "<td>$name</td>";
+                    if ($promote_price < $decimalprice && $promote_price > 0) {
+                        echo "<td class = 'd-flex'><div class = 'mx-1 text-decoration-line-through'>RM $decimalprice</div><div class = 'mx-1'>RM $decimalpromote</div></td>";
+                    } else {
+                        echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    }
+                    echo "<td>x$third_quantity</td>";
+                    echo "<td>RM $quanprice</td>";
+                    echo "</tr>";
+                    echo "</table>";
                 }
-                echo "<td>x$third_quantity</td>";
-                echo "<td>RM $quanprice</td>";
-                echo "</tr>";
-                echo "</table>";
             }
         } else {
             echo "<div class='alert alert-danger'>Unable to found order record.</div>";
