@@ -40,8 +40,8 @@
                                 Order
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="order_summary.php">Order Summary</a></li>
-                                <li><a class="dropdown-item" href="#">Order Details</a></li>
+                                <li><a class="dropdown-item" href="order_create.php">Create Order</a></li>
+                                <li><a class="dropdown-item" href="#"></a></li>
                             </ul>
                         </li>
                         <a class="nav-link" href="contact.php">Contact Us</a>
