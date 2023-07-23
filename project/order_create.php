@@ -67,19 +67,19 @@ include 'config/session.php';
                     }
                     echo "</div>";
                 } else if ($stmt->execute()) {
-                    $selectquery = "SELECT * FROM order_summary";
+                    // $selectquery = "SELECT * FROM order_summary";
 
-                    $selectstmt = $con->prepare($selectquery);
-                    $selectstmt->execute();
-                    $selectrow = $selectstmt->fetch(PDO::FETCH_ASSOC);
-                    $order_id = $selectrow['order_id'];
+                    // $selectstmt = $con->prepare($selectquery);
+                    // $selectstmt->execute();
+                    // $selectrow = $selectstmt->fetch(PDO::FETCH_ASSOC);
+                    $last_order_id = $con->lastInsertId();
 
-                    $detailquery = "INSERT INTO order_detail SET product_id=:product_id, quantity=:quantity, order_id = '$order_id'";
+                    $detailquery = "INSERT INTO order_detail SET product_id=:product_id, quantity=:quantity, order_id = '$last_order_id'";
                     $detailstmt = $con->prepare($detailquery);
                     $detailstmt->bindParam(':product_id', $product_id);
                     $detailstmt->bindParam(':quantity', $quantity);
 
-                    $multiquery = "INSERT INTO order_detail(order_id, product_id, quantity) VALUES ('$order_id', '$second_product_id' , '$second_quantity'), ('$order_id', '$third_product_id', '$third_quantity')";
+                    $multiquery = "INSERT INTO order_detail(order_id, product_id, quantity) VALUES ('$last_order_id', '$second_product_id' , '$second_quantity'), ('$last_order_id', '$third_product_id', '$third_quantity')";
                     $multistmt = $con->prepare($multiquery);
                     $multistmt->execute();
                     if ($detailstmt->execute()) {
@@ -134,37 +134,38 @@ include 'config/session.php';
                         <select name="product_id" class="form-select">
                             <?php
                             include 'config/database.php';
-                            $proquery = "SELECT name, id FROM products ORDER BY id ASC";
+                            $proquery = "SELECT name, id, price FROM products ORDER BY id ASC";
                             $prostmt = $con->prepare($proquery);
                             $prostmt->execute();
                             $num = $prostmt->rowCount();
                             if ($num > 0) {
-                                $option = array();
                                 while ($row = $prostmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['id']] = $row['name'];
+                                    $id = $row['id'];
+                                    $name = $row['name'];
+                                    $price = $row['price'];
+                                    echo "<option value='" . $id . "'>" . $name . " RM " . $price . "</option>";
                                 }
                             }
-                            foreach ($option as $id => $name) {
-                                echo "<option value='" . $id . "'>" . $name . "</option>";
-                            }
+                            // foreach ($option as $id => $name) {
+                            //     echo "<option value='" . $id . "'>" . $name . "</option>";
+                            // }
                             ?>
                         </select>
                         <br>
                         <select name="second_product_id" class="form-select">
                             <?php
                             include 'config/database.php';
-                            $proquery = "SELECT name, id FROM products ORDER BY id ASC";
+                            $proquery = "SELECT name, id, price FROM products ORDER BY id ASC";
                             $prostmt = $con->prepare($proquery);
                             $prostmt->execute();
                             $num = $prostmt->rowCount();
                             if ($num > 0) {
-                                $option = array();
                                 while ($row = $prostmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['id']] = $row['name'];
+                                    $id = $row['id'];
+                                    $name = $row['name'];
+                                    $price = $row['price'];
+                                    echo "<option value='" . $id . "'>" . $name . " RM " . $price . "</option>";
                                 }
-                            }
-                            foreach ($option as $id => $name) {
-                                echo "<option value='" . $id . "'>" . $name . "</option>";
                             }
                             ?>
                         </select>
@@ -172,18 +173,17 @@ include 'config/session.php';
                         <select name="third_product_id" class="form-select">
                             <?php
                             include 'config/database.php';
-                            $proquery = "SELECT name, id FROM products ORDER BY id ASC";
+                            $proquery = "SELECT name, id, price FROM products ORDER BY id ASC";
                             $prostmt = $con->prepare($proquery);
                             $prostmt->execute();
                             $num = $prostmt->rowCount();
                             if ($num > 0) {
-                                $option = array();
                                 while ($row = $prostmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['id']] = $row['name'];
+                                    $id = $row['id'];
+                                    $name = $row['name'];
+                                    $price = $row['price'];
+                                    echo "<option value='" . $id . "'>" . $name . " RM " . $price . "</option>";
                                 }
-                            }
-                            foreach ($option as $id => $name) {
-                                echo "<option value='" . $id . "'>" . $name . "</option>";
                             }
                             ?>
                         </select>
