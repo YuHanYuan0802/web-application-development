@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2023 at 07:24 AM
+-- Generation Time: Jul 23, 2023 at 04:04 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -107,9 +107,12 @@ CREATE TABLE `order_detail` (
 --
 
 INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quantity`) VALUES
-(1, 1, 2, 2),
-(2, 1, 3, 3),
-(3, 1, 1, 1);
+(1, 1, 2, 5),
+(2, 1, 3, 6),
+(3, 1, 1, 4),
+(4, 2, 8, 5),
+(5, 2, 7, 4),
+(6, 2, 9, 6);
 
 -- --------------------------------------------------------
 
@@ -128,7 +131,8 @@ CREATE TABLE `order_summary` (
 --
 
 INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
-(1, 1, '2023-07-22');
+(1, 1, '2023-07-23'),
+(2, 1, '2023-07-23');
 
 -- --------------------------------------------------------
 
@@ -232,13 +236,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_summary`
 --
 ALTER TABLE `order_summary`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
