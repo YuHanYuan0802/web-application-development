@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2023 at 08:18 AM
+-- Generation Time: Jul 23, 2023 at 07:24 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -99,7 +99,6 @@ CREATE TABLE `order_detail` (
   `order_detail_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -107,8 +106,10 @@ CREATE TABLE `order_detail` (
 -- Dumping data for table `order_detail`
 --
 
-INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `category_id`, `quantity`) VALUES
-(1, 1, 2, 3, 4);
+INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quantity`) VALUES
+(1, 1, 2, 2),
+(2, 1, 3, 3),
+(3, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,7 @@ CREATE TABLE `order_summary` (
 --
 
 INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
-(1, 1, '2023-07-21');
+(1, 1, '2023-07-22');
 
 -- --------------------------------------------------------
 
@@ -153,13 +154,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `price`, `promote_price`, `manufacture_date`, `expired_date`, `created`, `modified`) VALUES
-(1, 'Basketball', 1, 'A ball used in the NBA.', 49.98, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:04:03', '2023-07-19 12:51:25'),
-(2, 'Gatorade', 3, 'This is a very good drink for athletes.', 1.99, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:14:29', '2015-08-05 22:59:18'),
-(3, 'Eye Glasses', 5, 'It will make you read better.', 6, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:15:04', '2023-07-20 12:38:47'),
-(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', 3.95, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:16:08', '2023-07-20 12:39:00'),
-(5, 'Mouse', 4, 'Very useful if you love your computer.', 11.35, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:17:58', '2023-07-20 12:37:14'),
-(6, 'Earphone', 4, 'You need this one if you love music.', 7, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:21', '2023-07-20 12:37:24'),
-(7, 'Pillow', 5, 'Sleeping well is important.', 8.99, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:56', '2023-07-20 12:39:08'),
+(1, 'Basketball', 1, 'A ball used in the NBA.', 49.98, 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:04:03', '2023-07-22 06:16:45'),
+(2, 'Gatorade', 3, 'This is a very good drink for athletes.', 1.99, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:14:29', '2023-07-22 06:16:52'),
+(3, 'Eye Glasses', 5, 'It will make you read better.', 6, 5.5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:15:04', '2023-07-22 06:17:01'),
+(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', 3.95, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:16:08', '2023-07-22 06:17:16'),
+(5, 'Mouse', 4, 'Very useful if you love your computer.', 11.35, 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:17:58', '2023-07-22 06:17:24'),
+(6, 'Earphone', 4, 'You need this one if you love music.', 7, 6.7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:21', '2023-07-22 06:17:34'),
+(7, 'Pillow', 5, 'Sleeping well is important.', 8.99, 7.99, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:56', '2023-07-22 06:19:06'),
 (8, 'Coca cola', 3, 'Soft drink', 5, 2.5, '2023-07-07 00:00:00', '2023-07-17 00:00:00', '2023-07-17 08:25:43', '2023-07-17 08:25:43'),
 (9, 'Pepsi', 3, 'Soft drink', 4, 2, '2023-07-13 00:00:00', '2023-07-17 00:00:00', '2023-07-17 08:27:24', '2023-07-17 08:27:24');
 
@@ -194,7 +195,6 @@ ALTER TABLE `customers`
 ALTER TABLE `order_detail`
   ADD PRIMARY KEY (`order_detail_id`),
   ADD KEY `order_id` (`order_id`),
-  ADD KEY `category_id` (`category_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
@@ -232,7 +232,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_summary`
@@ -255,7 +255,6 @@ ALTER TABLE `products`
 --
 ALTER TABLE `order_detail`
   ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_summary` (`order_id`),
-  ADD CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
   ADD CONSTRAINT `order_detail_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
