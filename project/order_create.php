@@ -63,11 +63,6 @@ include 'config/session.php';
                     }
                     echo "</div>";
                 } else if ($stmt->execute()) {
-                    // $selectquery = "SELECT * FROM order_summary";
-
-                    // $selectstmt = $con->prepare($selectquery);
-                    // $selectstmt->execute();
-                    // $selectrow = $selectstmt->fetch(PDO::FETCH_ASSOC);
                     $last_order_id = $con->lastInsertId();
 
                     $detailquery = "INSERT INTO order_detail SET product_id=:product_id, quantity=:quantity, order_id = '$last_order_id'";
