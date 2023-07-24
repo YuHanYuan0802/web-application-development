@@ -23,7 +23,7 @@ include 'config/session.php';
 
         // select all data
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-        $query = "SELECT customers.username, order_summary.order_date, order_detail.order_detail_id FROM order_detail INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id";
+        $query = "SELECT customers.username, order_summary.order_date, order_summary.order_id FROM order_summary INNER JOIN order_detail ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id";
         if (!empty($searchKeyword)) {
             $query .= " WHERE username LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
@@ -68,12 +68,12 @@ include 'config/session.php';
                 extract($row);
                 // creating new table row per record
                 echo "<tr>";
-                echo "<td>{$order_detail_id}</td>";
+                echo "<td>{$order_id}</td>";
                 echo "<td>{$username}</td>";
                 echo "<td>{$order_date}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_detail_read.php?id={$order_detail_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
+                echo "<a href='order_detail_read.php?id={$order_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
                 echo "</td>";
                 echo "</tr>";
             }
