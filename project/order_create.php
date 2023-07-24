@@ -29,10 +29,6 @@ include 'config/session.php';
 
                 // prepare query for execution
                 $stmt = $con->prepare($query);
-                $reset = "ALTER TABLE order_summary AUTO_INCREMENT = 1";
-                $resetdetail = "ALTER TABLE order_detail AUTO_INCREMENT = 1";
-                $resetquery = $con->prepare($reset);
-                $resetdetailquery = $con->prepare($resetdetail);
                 $customer_id = $_POST['customer_id'];
                 $product_id = $_POST['product_id'];
                 $second_product_id = $_POST['second_product_id'];
@@ -86,11 +82,9 @@ include 'config/session.php';
                         echo "<div class='alert alert-success'>Record saved.</div>";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                        $resetdetailquery->execute();
                     }
                 } else {
                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                    $resetquery->execute();
                 }
             }
             // show error
@@ -98,8 +92,6 @@ include 'config/session.php';
                 echo "<div class = 'alert alert-danger'>";
                 echo $exception->getMessage();
                 echo "</div>";
-                $resetquery->execute();
-                $resetdetailquery->execute();
             }
         }
         ?>
@@ -151,6 +143,7 @@ include 'config/session.php';
                             // }
                             ?>
                         </select>
+                        <input type='number' name='quantity' class='form-control ' min="1" max="10" />
                         <br>
                         <select name="second_product_id" class="form-select">
                             <?php
@@ -169,6 +162,7 @@ include 'config/session.php';
                             }
                             ?>
                         </select>
+                        <input type='number' name='second_quantity' class='form-control ' min="1" max="10"/>
                         <br>
                         <select name="third_product_id" class="form-select">
                             <?php
@@ -187,21 +181,12 @@ include 'config/session.php';
                             }
                             ?>
                         </select>
+                        <input type='number' name='third_quantity' class='form-control ' min="1" max="10" />
                     </td>
                 </tr>
                 <tr>
                     <td>Order Date</td>
                     <td><input type='date' name='order_date' class='form-control' value="<?php echo date('Y-m-d'); ?>" /></td>
-                </tr>
-                <tr>
-                    <td>Quantity</td>
-                    <td>
-                        <input type='number' name='quantity' class='form-control ' min="1" max="10" />
-                        <br>
-                        <input type='number' name='second_quantity' class='form-control ' min="1" max="10" />
-                        <br>
-                        <input type='number' name='third_quantity' class='form-control ' min="1" max="10" />
-                    </td>
                 </tr>
                 <tr>
                     <td></td>
