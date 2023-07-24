@@ -53,7 +53,7 @@ include 'config/session.php';
                 }
                 foreach ($product_id as $product_array) {
                     if (empty($product_array)) {
-                        $errormessage[] = "Please select your products." . "<br>";
+                        $errormessage[] = "Please select the product." . "<br>";
                     }
                 }
                 if (empty($order_date)) {
@@ -96,6 +96,7 @@ include 'config/session.php';
                 <tr>
                     <td>Customer Name</td>
                     <td><select name='customer_id' class="form-select">
+                            <option value='0'>Please select customers</option>
                             <?php
                             include 'config/database.php';
                             $cusquery = "SELECT username, user_id FROM customers ORDER BY user_id ASC";
@@ -103,7 +104,6 @@ include 'config/session.php';
                             $cusstmt->execute();
                             $num = $cusstmt->rowCount();
                             if ($num > 0) {
-                                echo "<option>Please select customers</option>";
                                 $option = array();
                                 while ($row = $cusstmt->fetch(PDO::FETCH_ASSOC)) {
                                     $option[$row['user_id']] = $row['username'];
@@ -127,7 +127,7 @@ include 'config/session.php';
                         <td class="text-center">1</td>
                         <td class="d-flex">
                             <select class="form-select mb-3 col" name="product_id[]" aria-label=".form-select-lg example">
-                                <option>Please select product</option>
+                                <option value="0">Please select product</option>
                                 <?php
                                 include 'config/database.php';
                                 $proquery = "SELECT name, id, price FROM products ORDER BY id ASC";
@@ -160,7 +160,8 @@ include 'config/session.php';
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Order Date</td>
-                        <td><input type='' name='order_date' class='form-control' value="<?php date_default_timezone_set('Asia/Kuala_Lumpur'); echo date('Y-m-d, h:i:sa') ?>" /></td>
+                        <td><input type='' name='order_date' class='form-control' value="<?php date_default_timezone_set('Asia/Kuala_Lumpur');
+                                                                                            echo date('Y-m-d, h:i:sa') ?>" /></td>
                     </tr>
                     <tr>
                         <td></td>
