@@ -41,7 +41,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="order_create.php">Create Order</a></li>
-                                <li><a class="dropdown-item" href="order_read">Read Order</a></li>
+                                <li><a class="dropdown-item" href="order_read.php">Read Order</a></li>
                             </ul>
                         </li>
                         <a class="nav-link" href="contact.php">Contact Us</a>
