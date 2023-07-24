@@ -23,7 +23,7 @@ include 'config/session.php';
 
         // select all data
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-        $query = "SELECT customers.username, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id";
+        $query = "SELECT customers.username, order_summary.order_date, order_detail.order_detail_id FROM order_detail INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id";
         if (!empty($searchKeyword)) {
             $query .= " WHERE username LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
@@ -58,7 +58,6 @@ include 'config/session.php';
             echo "<th>Order Detail ID</th>";
             echo "<th>Customer</th>";
             echo "<th>Order Date</th>";
-            echo "<th>Quantity</th>";
             echo "<th>Action</th>";
             echo "</tr>";
 
@@ -72,7 +71,6 @@ include 'config/session.php';
                 echo "<td>{$order_detail_id}</td>";
                 echo "<td>{$username}</td>";
                 echo "<td>{$order_date}</td>";
-                echo "<td>x{$quantity}</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='order_detail_read.php?id={$order_detail_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
