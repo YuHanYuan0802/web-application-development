@@ -23,9 +23,9 @@ include 'config/session.php';
 
         // select all data
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-        $query = "SELECT customers.username, products.id, products.name, order_summary.customer_id, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.product_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id";
+        $query = "SELECT customers.username, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id";
         if (!empty($searchKeyword)) {
-            $query .= " WHERE customer_id LIKE :keyword";
+            $query .= " WHERE username LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
         }
         $query .= " ORDER BY order_detail_id ASC";
@@ -40,7 +40,7 @@ include 'config/session.php';
         echo '<div class="p-3">
             <form method="GET" action="">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="search" placeholder="Search customer id..." value="' . str_replace('%', '', $searchKeyword) . '">
+                    <input type="text" class="form-control" name="search" placeholder="Search customer..." value="' . str_replace('%', '', $searchKeyword) . '">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
@@ -56,10 +56,7 @@ include 'config/session.php';
             //creating our table heading
             echo "<tr>";
             echo "<th>Order Detail ID</th>";
-            echo "<th>Customer ID</th>";
             echo "<th>Customer</th>";
-            echo "<th>Product ID</th>";
-            echo "<th>Product Name</th>";
             echo "<th>Order Date</th>";
             echo "<th>Quantity</th>";
             echo "<th>Action</th>";
@@ -73,15 +70,12 @@ include 'config/session.php';
                 // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$order_detail_id}</td>";
-                echo "<td>{$customer_id}</td>";
                 echo "<td>{$username}</td>";
-                echo "<td>{$product_id}</td>";
-                echo "<td>{$name}</td>";
                 echo "<td>{$order_date}</td>";
                 echo "<td>x{$quantity}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_detail_read.php?id={$id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
+                echo "<a href='order_detail_read.php?id={$order_detail_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
                 echo "</td>";
                 echo "</tr>";
             }
