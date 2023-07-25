@@ -202,7 +202,7 @@ include 'config/session.php';
                                                                                         echo "checked";
                                                                                     } ?> class="form-group">
                         <label for="male">Male</label><br>
-                        <input type="radio" id="female" name="gender" value="female" <?php if ($row['gender'] == "male") {
+                        <input type="radio" id="female" name="gender" value="female" <?php if ($row['gender'] == "female") {
                                                                                             echo "checked";
                                                                                         } ?> class="form-group">
                         <label for="female">Female</label><br>
