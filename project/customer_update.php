@@ -74,7 +74,7 @@ include 'config/session.php';
         // check if form was submitted
         if (isset($_POST['submit'])) {
             try {
-                $pwquery = "SELECT * FROM customers";
+                $pwquery = "SELECT * FROM customers WHERE user_id = $id";
                 $pwstmt = $con->prepare($pwquery);
                 $pwstmt->execute();
                 $pwrow = $pwstmt->fetch(PDO::FETCH_ASSOC);
@@ -108,15 +108,19 @@ include 'config/session.php';
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
-                $stmt->bindParam(':password', $hashpassword);
+
+                if (empty($_POST['old_password']) && empty($_POST['new_password']) && empty($_POST['cfm_new_password'])) {
+                    $stmt->bindParam(':password', $dbpw);
+                } else {
+                    $stmt->bindParam(':password', $hashpassword);
+                }
+
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':date_of_birth', $date_of_birth);
                 $stmt->bindParam(':registration_date_time', $registration_date_time);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':status', $status);
                 $stmt->bindParam(':user_id', $id);
-
-
 
                 $errormessage = array();
                 // Execute the query
@@ -172,27 +176,27 @@ include 'config/session.php';
                 </tr>
                 <tr>
                     <td>Enter Old Password</td>
-                    <td><input type="password" name="old_password" class='form-control'>
+                    <td><input type="password" name="old_password" class='form-control'></td>
                 </tr>
                 <tr>
                     <td>New Password</td>
-                    <td><input type="password" name="new_password" class='form-control'>
+                    <td><input type="password" name="new_password" class='form-control'></td>
                 </tr>
                 <tr>
                     <td>Confirm New Password</td>
-                    <td><input type="password" name="cfm_new_password" class='form-control'>
+                    <td><input type="password" name="cfm_new_password" class='form-control'></td>
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td><input type="text" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES);  ?>" class='form-control'>
+                    <td><input type="text" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES);  ?>" class='form-control'></td>
                 </tr>
                 <tr>
                     <td>Date of Birth</td>
-                    <td><input type="date" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" class="form-control">
+                    <td><input type="date" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Registration date and time</td>
-                    <td><input type="datetime-local" name="registration_date_time" value="<?php echo htmlspecialchars($registration_date_time, ENT_QUOTES);  ?>" class="form-control">
+                    <td><input type="datetime-local" name="registration_date_time" value="<?php echo htmlspecialchars($registration_date_time, ENT_QUOTES);  ?>" class="form-control"></td>
                 </tr>
                 <tr>
                     <td>Gender </td>
@@ -211,10 +215,15 @@ include 'config/session.php';
                 <tr>
                     <td>Status</td>
                     <td>
-                        <select class="form-control" id="status" name="status" value="<?php echo htmlspecialchars($status, ENT_QUOTES);  ?>">
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
+                        <label><?php echo ucfirst($row['status']); ?></label></br>
+                        <input type="radio" id="active" name="status" value="active" <?php if ($row['status'] == "active") {
+                                                                                            echo "checked";
+                                                                                        } ?> class="form-group">
+                        <label for="active">Active</label><br>
+                        <input type="radio" id="inactive" name="status" value="inactive" <?php if ($row['status'] == "inactive") {
+                                                                                                echo "checked";
+                                                                                            } ?> class="form-group">
+                        <label for="inactive">Inactive</label><br>
                     </td>
                 </tr>
                 <tr>
