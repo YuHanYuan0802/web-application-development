@@ -39,7 +39,7 @@ include 'config/session.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT id, name, description, price FROM products WHERE id = ? LIMIT 0,1";
+            $query = "SELECT products.id, products.name, products.description, products.price, products.promote_price, category.category_id, category.category_name FROM products INNER JOIN category ON products.category_id=category.category_id WHERE id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -55,6 +55,8 @@ include 'config/session.php';
             $name = $row['name'];
             $description = $row['description'];
             $price = $row['price'];
+            $promote_price = $row['promote_price'];
+            $category_name = $row['category_name'];
         }
 
         // show error
@@ -72,20 +74,28 @@ include 'config/session.php';
                 // write update query
                 // in this case, it seemed like we have so many fields to pass and
                 // it is better to label them and not use question marks
-                $query = "UPDATE products SET name=:name, description=:description, price=:price WHERE id = :id";
+                $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category WHERE id = :id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
                 // posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 $price = htmlspecialchars(strip_tags($_POST['price']));
+                $promote_price = htmlspecialchars(strip_tags($_POST['promote_price']));
+                $category = htmlspecialchars(strip_tags($_POST['category']));
                 // bind the parameters
                 $stmt->bindParam(':name', $name);
                 $stmt->bindParam(':description', $description);
                 $stmt->bindParam(':price', $price);
+                $stmt->bindParam(':promote_price', $promote_price);
+                $stmt->bindParam(':category', $category);
                 $stmt->bindParam(':id', $id);
                 // Execute the query
-                if ($stmt->execute()) {
+                if ($promote_price >= $price) {
+                    echo "<div class = 'alert alert-danger'>";
+                    echo "Promote price should lower than normal price.";
+                    echo "</div>";
+                } else if ($stmt->execute()) {
                     echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
                     echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
@@ -93,7 +103,9 @@ include 'config/session.php';
             }
             // show errors
             catch (PDOException $exception) {
-                die('ERROR: ' . $exception->getMessage());
+                echo "<div class = 'alert alert-danger'>";
+                echo $exception->getMessage();
+                echo "</div>";
             }
         } ?>
 
@@ -111,6 +123,34 @@ include 'config/session.php';
                 <tr>
                     <td>Price</td>
                     <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Promote Price</td>
+                    <td><input type='text' name='promote_price' value="<?php echo htmlspecialchars($promote_price, ENT_QUOTES);  ?>" class='form-control' /></td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>
+                        <label for="category"><?php echo htmlspecialchars($category_name, ENT_QUOTES);  ?></label>
+                        <select name='category' id="category" class="form-select">
+                            <?php
+                            include 'config/database.php';
+                            $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
+                            $catestmt = $con->prepare($catequery);
+                            $catestmt->execute();
+                            $num = $catestmt->rowCount();
+                            if ($num > 0) {
+                                $option = array();
+                                while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $option[$row['category_id']] = $row['category_name'];
+                                }
+                            }
+                            foreach ($option as $category_id => $category_name) {
+                                echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
