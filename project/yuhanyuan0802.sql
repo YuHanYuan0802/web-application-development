@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 30, 2023 at 11:02 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jul 31, 2023 at 08:23 AM
+-- Server version: 8.0.31
+-- PHP Version: 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,11 +27,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
-  `category_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE IF NOT EXISTS `category` (
+  `category_id` int NOT NULL AUTO_INCREMENT,
   `category_name` varchar(20) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `description` text NOT NULL,
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `category_name` (`category_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `category`
@@ -53,15 +56,18 @@ INSERT INTO `category` (`category_id`, `category_name`, `description`) VALUES
 -- Table structure for table `contact`
 --
 
-CREATE TABLE `contact` (
-  `contact_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE IF NOT EXISTS `contact` (
+  `contact_id` int NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `email` text NOT NULL,
-  `phone` int(11) NOT NULL,
+  `phone` int NOT NULL,
   `address` text NOT NULL,
-  `message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `message` text NOT NULL,
+  PRIMARY KEY (`contact_id`),
+  UNIQUE KEY `first_name` (`first_name`,`last_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -69,18 +75,21 @@ CREATE TABLE `contact` (
 -- Table structure for table `customers`
 --
 
-CREATE TABLE `customers` (
-  `user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `customers`;
+CREATE TABLE IF NOT EXISTS `customers` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `password` text NOT NULL,
   `email` varchar(30) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `registration_date_time` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `registration_date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `gender` enum('male','female') NOT NULL,
-  `status` enum('active','inactive') NOT NULL DEFAULT 'active'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `customers`
@@ -88,7 +97,7 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`user_id`, `username`, `first_name`, `last_name`, `password`, `email`, `date_of_birth`, `registration_date_time`, `gender`, `status`) VALUES
 (1, 'yuhanyuan', 'yu', 'hanhan', '$2y$10$qaSjHdXR1Vweix.kb2FjXewTHUYKa78RUy6XIWSyxANKgHGth/MdW', 'yu@gmail.com', '2023-07-25', '2023-07-25 12:08:00', 'male', 'active'),
-(2, 'limsinkuan', 'lim', 'sinkuan', '$2y$10$e5skny40jelojKXe2/fBdOFVmgHPDI9Ld0CI/8GZzGehNOCC20O9i', 'lim@gmail.com', '2023-07-25', '2023-07-30 13:56:23', 'male', 'active');
+(2, 'limsinkuan', 'lim', 'sinkuan', '$2y$10$kvq2zkbC7iwJdL/68MOIS.NI6bHwWTK5Ltk3eY2B1OCUJGrZ18aMa', 'lim@gmail.com', '2023-07-25', '2023-07-30 13:56:23', 'male', 'active');
 
 -- --------------------------------------------------------
 
@@ -96,12 +105,16 @@ INSERT INTO `customers` (`user_id`, `username`, `first_name`, `last_name`, `pass
 -- Table structure for table `order_detail`
 --
 
-CREATE TABLE `order_detail` (
-  `order_detail_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `order_detail`;
+CREATE TABLE IF NOT EXISTS `order_detail` (
+  `order_detail_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`order_detail_id`),
+  KEY `order_id` (`order_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `order_detail`
@@ -110,7 +123,20 @@ CREATE TABLE `order_detail` (
 INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quantity`) VALUES
 (1, 1, 1, 1),
 (2, 2, 2, 2),
-(3, 2, 3, 3);
+(3, 2, 3, 3),
+(4, 3, 1, 2),
+(5, 3, 2, 2),
+(6, 4, 1, 1),
+(7, 4, 2, 1),
+(8, 5, 1, 2),
+(9, 6, 1, 3),
+(10, 6, 2, 4),
+(11, 7, 2, 2),
+(12, 7, 3, 3),
+(13, 8, 2, 2),
+(14, 8, 3, 3),
+(15, 9, 1, 1),
+(16, 9, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -118,11 +144,14 @@ INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quanti
 -- Table structure for table `order_summary`
 --
 
-CREATE TABLE `order_summary` (
-  `order_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `order_date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `order_summary`;
+CREATE TABLE IF NOT EXISTS `order_summary` (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `order_date` datetime NOT NULL,
+  PRIMARY KEY (`order_id`),
+  KEY `customer_id` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `order_summary`
@@ -130,7 +159,14 @@ CREATE TABLE `order_summary` (
 
 INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
 (1, 1, '2023-07-24 04:29:58'),
-(2, 1, '2023-07-24 04:30:36');
+(2, 1, '2023-07-24 04:30:36'),
+(3, 2, '2023-07-31 02:55:46'),
+(4, 1, '2023-07-31 03:26:34'),
+(5, 2, '2023-07-31 03:28:01'),
+(6, 1, '2023-07-31 03:53:09'),
+(7, 1, '2023-07-31 03:57:07'),
+(8, 1, '2023-07-31 03:57:07'),
+(9, 2, '2023-07-31 03:59:09');
 
 -- --------------------------------------------------------
 
@@ -138,18 +174,22 @@ INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
 -- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `category_id` int NOT NULL,
   `description` text NOT NULL,
   `price` double NOT NULL,
   `promote_price` float NOT NULL,
   `manufacture_date` datetime NOT NULL,
   `expired_date` datetime NOT NULL,
   `created` datetime NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `category_id` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `products`
@@ -165,88 +205,6 @@ INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `price`, `pr
 (7, 'Pillow', 5, 'Sleeping well is important.', 8.99, 7.99, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:56', '2023-07-22 06:19:06'),
 (8, 'Coca cola', 3, 'Soft drink', 5, 2.5, '2023-07-07 00:00:00', '2023-07-17 00:00:00', '2023-07-17 08:25:43', '2023-07-17 08:25:43'),
 (9, 'Pepsi', 3, 'Soft drink', 4, 2, '2023-07-13 00:00:00', '2023-07-17 00:00:00', '2023-07-17 08:27:24', '2023-07-17 08:27:24');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`category_id`),
-  ADD UNIQUE KEY `category_name` (`category_name`);
-
---
--- Indexes for table `contact`
---
-ALTER TABLE `contact`
-  ADD PRIMARY KEY (`contact_id`),
-  ADD UNIQUE KEY `first_name` (`first_name`,`last_name`);
-
---
--- Indexes for table `customers`
---
-ALTER TABLE `customers`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- Indexes for table `order_detail`
---
-ALTER TABLE `order_detail`
-  ADD PRIMARY KEY (`order_detail_id`),
-  ADD KEY `order_id` (`order_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `order_summary`
---
-ALTER TABLE `order_summary`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `customer_id` (`customer_id`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `category_id` (`category_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `customers`
---
-ALTER TABLE `customers`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `order_detail`
---
-ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `order_summary`
---
-ALTER TABLE `order_summary`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
