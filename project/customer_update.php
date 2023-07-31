@@ -79,48 +79,49 @@ include 'config/session.php';
                 $pwstmt->execute();
                 $pwrow = $pwstmt->fetch(PDO::FETCH_ASSOC);
                 $dbpw = $pwrow['password'];
-                // write update query
-                // in this case, it seemed like we have so many fields to pass and
-                // it is better to label them and not use question marks
-                $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, password=:password, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status WHERE user_id = :user_id";
-                // prepare query for excecution
-                $stmt = $con->prepare($query);
+
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
-                $password = htmlspecialchars(strip_tags($_POST['new_password']));
-                $old_password = htmlspecialchars(strip_tags($_POST['old_password']));
-                $cfm_new_password = htmlspecialchars(strip_tags($_POST['cfm_new_password']));
+                $password = $_POST['new_password'];
+                $old_password = $_POST['old_password'];
+                $cfm_new_password = $_POST['cfm_new_password'];
                 $email = htmlspecialchars(strip_tags($_POST['email']));
-                $date_of_birth = htmlspecialchars(strip_tags($_POST['date_of_birth']));
-                $registration_date_time = htmlspecialchars(strip_tags($_POST['registration_date_time']));
-                $gender = htmlspecialchars(strip_tags($_POST['gender']));
-                $status = htmlspecialchars(strip_tags($_POST['status']));
+                $date_of_birth = $_POST['date_of_birth'];
+                $registration_date_time = $_POST['registration_date_time'];
+                $gender = $_POST['gender'];
+                $status = $_POST['status'];
 
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
-                $hashpassword = password_hash($password, PASSWORD_DEFAULT);
                 $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
                 $finalusername = preg_match($usernamepattern, $username);
+
+                $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
+                if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password'])) {
+                    $query .= ", password=:password WHERE user_id = :user_id";
+                    $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+                }else {
+                    $query .= " WHERE user_id=:user_id";
+                }
+                // prepare query for excecution
+                $stmt = $con->prepare($query);
 
                 // bind the parameters
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':first_name', $first_name);
                 $stmt->bindParam(':last_name', $last_name);
-
-                if (empty($_POST['old_password']) && empty($_POST['new_password']) && empty($_POST['cfm_new_password'])) {
-                    $stmt->bindParam(':password', $dbpw);
-                } else {
-                    $stmt->bindParam(':password', $hashpassword);
-                }
-
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':date_of_birth', $date_of_birth);
                 $stmt->bindParam(':registration_date_time', $registration_date_time);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':status', $status);
                 $stmt->bindParam(':user_id', $id);
+
+                if (!empty($hashpassword)) {
+                    $stmt->bindParam(':password', $hashpassword);
+                }
 
                 $errormessage = array();
                 // Execute the query
