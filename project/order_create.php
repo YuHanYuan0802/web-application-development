@@ -33,14 +33,13 @@ include 'config/session.php';
                 $product_id = $_POST['product_id'];
                 $quantity = $_POST['quantity'];
                 $order_date = $_POST['order_date'];
-
                 // bind the parameters
                 $stmt->bindParam(':customer_id', $customer_id);
                 $stmt->bindParam(':order_date', $order_date);
 
                 // Execute the query
                 $errormessage = array();
-                if (empty($customer_id)) {
+                if (isset($customer_id)) {
                     $errormessage[] = "Please select the customer." . "<br>";
                 }
                 foreach ($quantity as $quantity_array) {
@@ -65,6 +64,16 @@ include 'config/session.php';
                         echo $displayerrormessage;
                     }
                     echo "</div>";
+                }
+                $nodupliproduct = array_unique($product_id);
+
+                if (count($nodupliproduct) < count($product_id)) {
+                    foreach ($product_id as $key => $val) {
+                        if (!array_key_exists($key, $nodupliproduct)) {
+                            unset($quantity[$key]);
+                        }
+                    }
+                    echo "<div class='alert alert-danger'>Product duplicate.</div>";
                 } else if ($stmt->execute()) {
                     $last_order_id = $con->lastInsertId();
                     $multiquery = "INSERT INTO order_detail SET order_id=:order_id, product_id=:product_id, quantity=:quantity";
@@ -96,7 +105,7 @@ include 'config/session.php';
                 <tr>
                     <td>Customer Name</td>
                     <td><select name='customer_id' class="form-select">
-                            <option value='0'>Please select customers</option>
+                            <option value="">Please select customers</option>
                             <?php
                             include 'config/database.php';
                             $cusquery = "SELECT username, user_id FROM customers ORDER BY user_id ASC";
@@ -161,7 +170,7 @@ include 'config/session.php';
                     <tr>
                         <td>Order Date</td>
                         <td><input name='order_date' class='form-control' value="<?php date_default_timezone_set('Asia/Kuala_Lumpur');
-                                                                                            echo date('Y-m-d, h:i:sa') ?>" /></td>
+                                                                                    echo date('Y-m-d, h:i:sa') ?>" /></td>
                     </tr>
                     <tr>
                         <td></td>
