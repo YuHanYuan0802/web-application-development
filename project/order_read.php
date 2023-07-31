@@ -55,7 +55,7 @@ include 'config/session.php';
 
             //creating our table heading
             echo "<tr>";
-            echo "<th>Order Detail ID</th>";
+            echo "<th>Order ID</th>";
             echo "<th>Customer</th>";
             echo "<th>Order Date</th>";
             echo "<th>Action</th>";
