@@ -45,10 +45,7 @@
                             </ul>
                         </li>
                         <a class="nav-link" href="contact.php">Contact Us</a>
-                        <?php 
-                        session_destroy();
-                        echo "<a class='nav-link' href='login.php'>Log out</a>";
-                        ?>
+                        <a class='nav-link' href='login.php'>Log out</a>
                     </div>
                 </div>
             </div>
