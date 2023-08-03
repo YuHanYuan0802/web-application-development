@@ -29,7 +29,7 @@ include 'config/session.php';
         include 'config/database.php';
         try {
             // prepare select query
-            $query = "SELECT customers.username, products.name, order_summary.order_date, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_detail_id = :id";
+            $query = "SELECT customers.username, products.name, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_detail_id = :id";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -45,7 +45,6 @@ include 'config/session.php';
             $name = $row['username'];
             $product_name = $row['name'];
             $quantity = $row['quantity'];
-            $order_date = $row['order_date'];
         }
 
         // show error
@@ -140,10 +139,6 @@ include 'config/session.php';
                 <tr>
                     <td>Quantity</td>
                     <td><input type='number' name='quantity' value="<?php echo htmlspecialchars($quantity, ENT_QUOTES);  ?>" class='form-control' /></td>
-                </tr>
-                <tr>
-                    <td>Order Date</td>
-                    <td><input name='order_date' class='form-control' value="<?php echo htmlspecialchars($order_date, ENT_QUOTES) ?>" /></td>
                 </tr>
                 <tr>
                     <td></td>
