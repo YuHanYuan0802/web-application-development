@@ -45,7 +45,17 @@
                             </ul>
                         </li>
                         <a class="nav-link" href="contact.php">Contact Us</a>
-                        <a class='nav-link' href='login.php'>Log out</a>
+                        <?php
+                        if (isset($_POST['submit'])) {
+                            session_destroy();
+                            session_unset();
+                            header('location:login.php');
+                            exit();
+                        }
+                        ?>
+                        <form action="" method="post">
+                            <input type="submit" class="btn btn-danger" name="submit" value="Log out">
+                        </form>
                     </div>
                 </div>
             </div>
