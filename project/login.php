@@ -50,6 +50,7 @@ include 'config/session.php';
                             $_POST = array();
                             $_SESSION['username'] = $row['username'];
                             header('location:index.php');
+                            exit();
                         } else {
                             echo "<div class = 'container w-25 alert alert-danger text-center'>";
                             echo "Invalid password" . "<br>";
