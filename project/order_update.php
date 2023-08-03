@@ -143,7 +143,7 @@ include 'config/session.php';
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' name="submit" value='Save Changes' class='btn btn-primary' />
+                        <input type='submit' name="submit" value='Update order' class='btn btn-primary' />
                         <a href='order_read.php' class='btn btn-danger'>Back to read order</a>
                     </td>
                 </tr>
