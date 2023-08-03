@@ -76,7 +76,7 @@ include 'config/session.php';
                 echo "<td>";
                 // read one record
                 echo "<a href='order_detail_read.php?id={$order_detail_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
-                echo "<a href='order_update.php?id={$order_detail_id}' class='btn btn-info m-r-1em mx-1'>Edit</a>";
+                echo "<a href='order_update.php?id={$order_detail_id}' class='btn btn-primary m-r-1em mx-1'>Edit</a>";
                 echo "</td>";
                 echo "</tr>";
             }
