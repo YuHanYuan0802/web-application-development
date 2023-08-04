@@ -92,9 +92,13 @@ include 'config/session.php';
             }
             // show error
             catch (PDOException $exception) {
-                echo "<div class = 'alert alert-danger'>";
-                echo $exception->getMessage();
-                echo "</div>";
+                if ($exception->getCode() == 23000) {
+                    echo "";
+                } else {
+                    echo "<div class = 'alert alert-danger'>";
+                    echo $exception->getMessage();
+                    echo "</div>";
+                }
             }
         }
         ?>
@@ -124,8 +128,7 @@ include 'config/session.php';
                             ?>
                         </select></td>
                 </tr>
-                <table class='table table-hover table-responsive table-bordered' id="row_del">
-
+                <table class='table table-hover table-responsive table-bordered' id="row_del">  
                     <tr>
                         <td class="text-center text-light">#</td>
                         <td class="text-center">Product</td>
@@ -154,7 +157,7 @@ include 'config/session.php';
                                 ?>
                             </select>
                         </td>
-                        <td><input type="number" class="form-select mb-3" name="quantity[]" aria-label=".form-select-lg example" /></td>
+                        <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" /></td>
                         <td><input href='#' onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1' value="Delete" /></td>
                     </tr>
                     <tr>
