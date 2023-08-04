@@ -20,9 +20,17 @@ include 'config/session.php';
         <!-- html form to create product will be here -->
         <!-- PHP insert code will be here -->
         <?php
+
+        // include database connection
+        include 'config/database.php';
+        $proquery = "SELECT name, id, price FROM products ORDER BY id ASC";
+        $prostmt = $con->prepare($proquery);
+        $prostmt->execute();
+        $prorow = $prostmt->fetchAll(PDO::FETCH_ASSOC);
+        $productsRowCount = $prostmt->rowCount();
+        $selectpro = 1;
+
         if ($_POST) {
-            // include database connection
-            include 'config/database.php';
             try {
                 // insert query
                 $query = "INSERT INTO order_summary SET customer_id=:customer_id, order_date=:order_date";
@@ -39,7 +47,7 @@ include 'config/session.php';
 
                 // Execute the query
                 $errormessage = array();
-                if (isset($customer_id)) {
+                if (empty($customer_id)) {
                     $errormessage[] = "Please select the customer." . "<br>";
                 }
                 foreach ($quantity as $quantity_array) {
@@ -58,13 +66,6 @@ include 'config/session.php';
                 if (empty($order_date)) {
                     $errormessage[] = "Please select the date and time." . "<br>";
                 }
-                if (!empty($errormessage)) {
-                    echo "<div class = 'alert alert-danger'>";
-                    foreach ($errormessage as $displayerrormessage) {
-                        echo $displayerrormessage;
-                    }
-                    echo "</div>";
-                }
                 $nodupliproduct = array_unique($product_id);
 
                 if (count($nodupliproduct) < count($product_id)) {
@@ -73,19 +74,33 @@ include 'config/session.php';
                             unset($quantity[$key]);
                         }
                     }
-                    echo "<div class='alert alert-danger'>Product duplicate.</div>";
+                    $errormessage[] = "Product duplicate.";
+                    $nodupliproduct = array_values($nodupliproduct);
+                    $quantity = array_values($quantity);
+                }
+
+                $selectpro = isset($nodupliproduct) ? count($nodupliproduct) : count($_POST['product_id']);
+
+                if (!empty($errormessage)) {
+                    echo "<div class = 'alert alert-danger'>";
+                    foreach ($errormessage as $displayerrormessage) {
+                        echo $displayerrormessage;
+                    }
+                    echo "</div>";
                 } else if ($stmt->execute()) {
                     $last_order_id = $con->lastInsertId();
                     $multiquery = "INSERT INTO order_detail SET order_id=:order_id, product_id=:product_id, quantity=:quantity";
                     $multistmt = $con->prepare($multiquery);
-                    $num_product_id = count($product_id);
-                    for ($i = 0; $i < $num_product_id; $i++) {
+
+                    for ($i = 0; $i < $selectpro; $i++) {
                         $multistmt->bindParam(':order_id', $last_order_id);
-                        $multistmt->bindParam(':product_id', $product_id[$i]);
+                        $multistmt->bindParam(':product_id', $nodupliproduct[$i]);
                         $multistmt->bindParam(':quantity', $quantity[$i]);
                         $multistmt->execute();
                     }
                     echo "<div class='alert alert-success'>Record saved.</div>";
+                    $_POST = array();
+                    $selectpro = 1;
                 } else {
                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                 }
@@ -128,38 +143,33 @@ include 'config/session.php';
                             ?>
                         </select></td>
                 </tr>
-                <table class='table table-hover table-responsive table-bordered' id="row_del">  
+                <table class='table table-hover table-responsive table-bordered' id="row_del">
                     <tr>
                         <td class="text-center text-light">#</td>
                         <td class="text-center">Product</td>
                         <td class="text-center">Quantity</td>
                         <td class="text-center">Action</td>
                     </tr>
-                    <tr class="pRow">
-                        <td class="text-center">1</td>
-                        <td class="d-flex">
-                            <select class="form-select mb-3 col" name="product_id[]" aria-label=".form-select-lg example">
-                                <option value="0">Please select product</option>
-                                <?php
-                                include 'config/database.php';
-                                $proquery = "SELECT name, id, price FROM products ORDER BY id ASC";
-                                $prostmt = $con->prepare($proquery);
-                                $prostmt->execute();
-                                $num = $prostmt->rowCount();
-                                if ($num > 0) {
-                                    while ($row = $prostmt->fetch(PDO::FETCH_ASSOC)) {
-                                        $id = $row['id'];
-                                        $name = $row['name'];
-                                        $price = $row['price'];
-                                        echo "<option value='" . $id . "'>" . $name . " RM " . $price . "</option>";
+                    <?php for ($x = 0; $x < $selectpro; $x++) : ?>
+                        <tr class="pRow">
+                            <td class="text-center"><?php echo $x + 1; ?></td>
+                            <td class="d-flex">
+                                <select class="form-select mb-3 col" name="product_id[]" aria-label=".form-select-lg example">
+                                    <option value="">Please select product</option>
+                                    <?php
+                                    for ($i = 0; $i < $productsRowCount; $i++) {
+                                        $selected = isset($_POST["product_id"]) && $prorow[$i]['id'] == $product_id[$x] ? "selected" : "";
+                                        echo "<option value='{$prorow[$i]['id']}' $selected >{$prorow[$i]['name']} RM {$prorow[$i]['price']}</option>";
                                     }
-                                }
-                                ?>
-                            </select>
-                        </td>
-                        <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" /></td>
-                        <td><input href='#' onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1' value="Delete" /></td>
-                    </tr>
+                                    ?>
+                                </select>
+                            </td>
+                            <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" /></td>
+                            <td><input href='#' onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1' value="Delete" /></td>
+                        </tr>
+                    <?php
+                    endfor;
+                    ?>
                     <tr>
                         <td>
 
@@ -168,6 +178,7 @@ include 'config/session.php';
                             <input type="button" value="Add More Product" class="btn btn-success add_one" />
                         </td>
                     </tr>
+
                 </table>
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
