@@ -1,5 +1,5 @@
 <!-- SELECT customers.username, products.id, products.name, order_summary.customer_id, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.product_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id -->
-<?php 
+<?php
 include 'config/session.php';
 ?>
 <!DOCTYPE HTML>
@@ -33,7 +33,7 @@ include 'config/session.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT customers.username, products.id, products.name, products.promote_price, products.price, order_summary.customer_id, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.product_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_detail_id = :id";
+            $query = "SELECT customers.username, products.id, products.name, products.promote_price, products.price, order_summary.customer_id, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.product_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id = :id";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -43,18 +43,46 @@ include 'config/session.php';
             $stmt->execute();
 
             // store retrieved row to a variable
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // values to fill up our form
-            $username = $row['username'];
-            $product_name = $row['name'];
-            $price = $row['price'];
-            $decimalprice = number_format((float)$price, 2, '.', '');
-            $promote_price = $row['promote_price'];
-            $decimalpromote = number_format((float)$promote_price, 2, '.', '');
-            $quantity = $row['quantity'];
-            $order_date = $row['order_date'];
-            // shorter way to do that is extract($row)
+            $countrow = $stmt->rowCount();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<table class='table table-hover table-responsive table-bordered'>";
+
+                echo "<tr>";
+                echo "<td>Name</td>";
+                echo "<td>" . $username = $row['username'] . "</td>";
+                echo "</tr>";
+
+                echo "<tr>";
+                echo "<td>Product Name</td>";
+                echo "<td>" . $product_name = $row['name'] . "</td>";
+                echo "</tr>";
+
+                $price = $row['price'];
+                echo "<tr>";
+                echo "<td>Price</td>";
+                echo "<td>" . "RM" . $decimalprice = number_format((float)$price, 2, '.', '') . "</td>";
+                echo "</tr>";
+
+                $promote_price = $row['promote_price'];
+                echo "<tr>";
+                echo "<td>Promote Price</td>";
+                echo "<td>" . "RM" . $decimalpromote = number_format((float)$promote_price, 2, '.', '') . "</td>";
+                echo "</tr>";
+
+                echo "<tr>";
+                echo "<td>Quantity</td>";
+                echo "<td>" . $quantity = $row['quantity'] . "</td>";
+                echo "</tr>";
+
+                echo "<tr>";
+                echo "<td>Order Date</td>";
+                echo "<td>" . $order_date = $row['order_date'] . "</td>";
+                echo "</tr>";
+                
+                echo "</table>";
+            }
+            echo "<td><a href='order_read.php' class='btn btn-danger'>Back to read order</a></td>";
         }
 
         // show error
@@ -62,44 +90,6 @@ include 'config/session.php';
             die('ERROR: ' . $exception->getMessage());
         }
         ?>
-
-
-        <!-- HTML read one record table will be here -->
-        <!--we have our html table here where the record will be displayed-->
-        <table class='table table-hover table-responsive table-bordered'>
-            <tr>
-                <td>Name</td>
-                <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Product Name</td>
-                <td><?php echo htmlspecialchars($product_name, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Price</td>
-                <td><?php echo "RM " . htmlspecialchars($decimalprice, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Promote Price</td>
-                <td><?php echo "RM " . htmlspecialchars($decimalpromote, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Quantity</td>
-                <td><?php echo htmlspecialchars($quantity, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Order Date</td>
-                <td><?php echo htmlspecialchars($order_date, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <a href='order_read.php' class='btn btn-danger'>Back to read order</a>
-                </td>
-            </tr>
-        </table>
-
-
     </div>
 
 </body>
