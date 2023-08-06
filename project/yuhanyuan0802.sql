@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2023 at 10:33 AM
+-- Generation Time: Aug 06, 2023 at 11:02 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -111,19 +111,8 @@ INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quanti
 (1, 1, 1, 1),
 (2, 2, 2, 2),
 (3, 2, 3, 3),
-(4, 3, 1, 2),
-(5, 3, 2, 2),
-(6, 4, 1, 1),
-(7, 4, 2, 1),
-(8, 5, 1, 2),
-(9, 6, 1, 3),
-(10, 6, 2, 4),
-(11, 7, 2, 2),
-(12, 7, 3, 3),
-(13, 8, 2, 2),
-(14, 8, 3, 3),
-(15, 9, 1, 1),
-(16, 9, 2, 2);
+(4, 3, 2, 2),
+(5, 3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -144,13 +133,7 @@ CREATE TABLE `order_summary` (
 INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
 (1, 1, '2023-07-24 04:29:58'),
 (2, 1, '2023-07-24 04:30:36'),
-(3, 2, '2023-07-31 02:55:46'),
-(4, 1, '2023-07-31 03:26:34'),
-(5, 2, '2023-07-31 03:28:01'),
-(6, 1, '2023-07-31 03:53:09'),
-(7, 1, '2023-07-31 03:57:07'),
-(8, 1, '2023-07-31 03:57:07'),
-(9, 2, '2023-07-31 03:59:09');
+(3, 2, '2023-08-06 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -254,13 +237,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `order_summary`
 --
 ALTER TABLE `order_summary`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `products`
