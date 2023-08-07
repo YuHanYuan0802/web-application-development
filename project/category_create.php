@@ -1,5 +1,4 @@
 <?php 
-include 'config/session.php';
 include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
