@@ -1,6 +1,6 @@
-<!-- SELECT customers.username, products.id, products.name, order_summary.customer_id, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.product_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id -->
 <?php
 include 'config/session.php';
+include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -33,55 +33,65 @@ include 'config/session.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT customers.username, products.id, products.name, products.promote_price, products.price, order_summary.customer_id, order_summary.order_date, order_detail.order_detail_id, order_detail.order_id, order_detail.product_id, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id = :id";
+            $query = "SELECT customers.username, products.name,products.price, products.promote_price, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id = :id";
             $stmt = $con->prepare($query);
-
-            // Bind the parameter
             $stmt->bindParam(":id", $id);
-
-            // execute our query
             $stmt->execute();
 
-            // store retrieved row to a variable
+            $cusquery = "SELECT customers.username, order_summary.order_date FROM order_summary INNER JOIN customers ON customers.user_id = order_summary.customer_id INNER JOIN order_detail ON order_detail.order_id = order_summary.order_id WHERE order_detail.order_id =:id";
+            $cusstmt = $con->prepare($cusquery);
+            $cusstmt->bindParam(":id", $id);
+            $cusstmt->execute();
+            if ($cusrow = $cusstmt->fetch(PDO::FETCH_ASSOC)){
+                extract($cusrow);
+                echo "<div class = 'd-flex justify-content-between'>";
+                echo "<div>";
+                echo "<strong>Username: " . $username . "</strong>";
+                echo "</div>";
+                echo "<div>";
+                echo "<strong>Order Date: " . $order_date . "</strong>";
+                echo "</div>";
+                echo "</div>";
+                echo "<br>";
+            }
 
             $countrow = $stmt->rowCount();
+            echo "<table class='table table-hover table-responsive table-bordered'>";
+
+            echo "<tr>";
+            echo "<th>Product Name</th>";
+            echo "<th>Price</th>";
+            echo "<th>Quantity</th>";
+            echo "<th>Amount (RM)</th>";
+            echo "</tr>";
+
+            $total = 0;
+
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<table class='table table-hover table-responsive table-bordered'>";
-
                 echo "<tr>";
-                echo "<td>Name</td>";
-                echo "<td>" . $username = $row['username'] . "</td>";
-                echo "</tr>";
-
-                echo "<tr>";
-                echo "<td>Product Name</td>";
                 echo "<td>" . $product_name = $row['name'] . "</td>";
-                echo "</tr>";
-
                 $price = $row['price'];
-                echo "<tr>";
-                echo "<td>Price</td>";
-                echo "<td>" . "RM" . $decimalprice = number_format((float)$price, 2, '.', '') . "</td>";
-                echo "</tr>";
-
                 $promote_price = $row['promote_price'];
-                echo "<tr>";
-                echo "<td>Promote Price</td>";
-                echo "<td>" . "RM" . $decimalpromote = number_format((float)$promote_price, 2, '.', '') . "</td>";
+                $decimalprice = number_format((float)$price, 2, '.', '');
+                $decimalpromote = number_format((float)$promote_price, 2, '.', '');
+                if ($promote_price < $decimalprice && $promote_price > 0) {
+                    echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";
+                } else {
+                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                }
+                echo "<td class='text-end'>x" . $row['quantity'] . "</td>";
+                $amount = $row['quantity'] * $decimalpromote;
+                $decimalamount = number_format((float)$amount, 2, '.', '');
+                echo "<td class = 'text-end'>Rm " . $decimalamount . "</td>";
                 echo "</tr>";
-
-                echo "<tr>";
-                echo "<td>Quantity</td>";
-                echo "<td>" . $quantity = $row['quantity'] . "</td>";
-                echo "</tr>";
-
-                echo "<tr>";
-                echo "<td>Order Date</td>";
-                echo "<td>" . $order_date = $row['order_date'] . "</td>";
-                echo "</tr>";
-                
-                echo "</table>";
+                $total += $decimalamount;
+                $decimaltotal = number_format((float)$total, 2, '.', '');
             }
+            echo "<th></th>";
+            echo "<th></th>";
+            echo "<th></th>";
+            echo "<th class = 'text-end'>Total Price: RM $decimaltotal</th>";
+            echo "</table>";
             echo "<td><a href='order_read.php' class='btn btn-danger'>Back to read order</a></td>";
         }
 
