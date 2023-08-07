@@ -1,5 +1,6 @@
 <?php
 include 'config/session.php';
+include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -99,21 +100,19 @@ include 'config/session.php';
                         $multistmt->execute();
                     }
                     echo "<div class='alert alert-success'>Record saved.</div>";
+                    echo "<script>window.location.href='order_detail_read.php?id={$last_order_id}'</script>";
                     $_POST = array();
                     $selectpro = 1;
+                    exit();
                 } else {
                     echo "<div class='alert alert-danger'>Unable to save record.</div>";
                 }
             }
             // show error
             catch (PDOException $exception) {
-                if ($exception->getCode() == 23000) {
-                    echo "";
-                } else {
                     echo "<div class = 'alert alert-danger'>";
                     echo $exception->getMessage();
                     echo "</div>";
-                }
             }
         }
         ?>
