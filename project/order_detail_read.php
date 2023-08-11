@@ -32,7 +32,7 @@ include 'config/validate_login.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT customers.username, products.name,products.price, products.promote_price, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id = :id";
+            $query = "SELECT products.name, products.price, products.promote_price, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id = :id";
             $stmt = $con->prepare($query);
             $stmt->bindParam(":id", $id);
             $stmt->execute();
