@@ -75,11 +75,13 @@ include 'config/validate_login.php';
                 $decimalpromote = number_format((float)$promote_price, 2, '.', '');
                 if ($promote_price < $decimalprice && $promote_price > 0) {
                     echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";
+                    $theprice = $decimalpromote;
                 } else {
                     echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    $theprice = $decimalprice;
                 }
                 echo "<td class='text-end'>x" . $row['quantity'] . "</td>";
-                $amount = $row['quantity'] * $decimalpromote;
+                $amount = $row['quantity'] * $theprice;
                 $decimalamount = number_format((float)$amount, 2, '.', '');
                 echo "<td class = 'text-end'>Rm " . $decimalamount . "</td>";
                 echo "</tr>";

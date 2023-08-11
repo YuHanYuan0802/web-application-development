@@ -75,8 +75,13 @@ include 'config/validate_login.php';
                 echo "<td>{$order_id}</td>";
                 echo "<td>{$username}</td>";
                 echo "<td>{$order_date}</td>";
-                while ($totalrow = $totalstmt->fetch(PDO::FETCH_ASSOC)){
-                    $amount = $totalrow['quantity'] * $totalrow['promote_price'];
+                while ($totalrow = $totalstmt->fetch(PDO::FETCH_ASSOC)) {
+                    if ($totalrow['promote_price'] < $totalrow['price'] && $totalrow['promote_price'] > 0) {
+                        $theprice = $totalrow['promote_price'];
+                    } else {
+                        $theprice = $totalrow['price'];
+                    }
+                    $amount = $totalrow['quantity'] * $theprice;
                     $total += $amount;
                     $decimaltotal = number_format($total, '2', '.');
                 }
