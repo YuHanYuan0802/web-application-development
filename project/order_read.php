@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/validate_login.php';
 ?>
 <html lang="en">
@@ -58,19 +58,29 @@ include 'config/validate_login.php';
             echo "<th>Order ID</th>";
             echo "<th>Customer</th>";
             echo "<th>Order Date</th>";
+            echo "<th>Order Amount</th>";
             echo "<th>Action</th>";
             echo "</tr>";
-
+            $total = 0;
             // retrieve our table contents
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                // extract row
-                // this will make $row['firstname'] to just $firstname only
+            for ($i = 1; $i <= $num; $i++) {
+                $total = 0;
+                $totalquery = "SELECT products.name, products.price, products.promote_price, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id=:id";
+                $totalstmt = $con->prepare($totalquery);
+                $totalstmt->bindParam(':id', $i);
+                $totalstmt->execute();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 extract($row);
-                // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$order_id}</td>";
                 echo "<td>{$username}</td>";
                 echo "<td>{$order_date}</td>";
+                while ($totalrow = $totalstmt->fetch(PDO::FETCH_ASSOC)){
+                    $amount = $totalrow['quantity'] * $totalrow['promote_price'];
+                    $total += $amount;
+                    $decimaltotal = number_format($total, '2', '.');
+                }
+                echo "<td class = 'text-end'>RM {$decimaltotal}</td>";
                 echo "<td>";
                 // read one record
                 echo "<a href='order_detail_read.php?id={$order_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
@@ -78,8 +88,6 @@ include 'config/validate_login.php';
                 echo "</td>";
                 echo "</tr>";
             }
-
-
             // end table
             echo "</table>";
         } else {
