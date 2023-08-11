@@ -85,9 +85,9 @@ include 'config/validate_login.php';
                 echo "<td>{$name}</td>";
                 echo "<td>{$description}</td>";
                 if ($promote_price < $decimalprice && $promote_price > 0) {
-                    echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>{$decimalprice}</div><div class = 'mx-1'>{$decimalpromote}</div></td>";
+                    echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";
                 } else {
-                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    echo "<td class = 'text-end'>RM {$decimalprice}</td>";
                 }
                 echo "<td>{$manufacture_date}</td>";
                 echo "<td>{$expired_date}</td>";
