@@ -181,8 +181,7 @@ include 'config/validate_login.php';
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Order Date</td>
-                        <td><input name='order_date' class='form-control' value="<?php date_default_timezone_set('Asia/Kuala_Lumpur');
-                                                                                    echo date('Y-m-d, h:i:sa') ?>" /></td>
+                        <td><input type="datetime-local" name='order_date' class='form-control'/></td>
                     </tr>
                     <tr>
                         <td></td>
