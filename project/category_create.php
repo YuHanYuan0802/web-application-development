@@ -89,7 +89,7 @@ include 'config/validate_login.php';
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' value='Save' class='btn btn-primary' />
+                        <input type='submit' value='Submit' class='btn btn-primary' />
                         
                     </td>
                 </tr>
