@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2023 at 11:02 AM
+-- Generation Time: Aug 13, 2023 at 10:40 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -44,8 +44,7 @@ INSERT INTO `category` (`category_id`, `category_name`, `description`) VALUES
 (4, 'Electronic devices', 'Earphone, tracking devices, phone, etc.'),
 (5, 'Daily items', 'Item used in daily life like furniture, personal items, decorations, etc.'),
 (6, 'Music', 'Sound that can be played.'),
-(7, 'Movie', 'Recording of moving images that tells a story.'),
-(8, 'Game', 'Can be played by people.');
+(7, 'Movie', 'Recording of moving images that tells a story.');
 
 -- --------------------------------------------------------
 
@@ -112,7 +111,11 @@ INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quanti
 (2, 2, 2, 2),
 (3, 2, 3, 3),
 (4, 3, 2, 2),
-(5, 3, 3, 3);
+(5, 3, 3, 3),
+(6, 4, 6, 6),
+(7, 4, 8, 8),
+(8, 5, 8, 8),
+(9, 5, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -133,7 +136,9 @@ CREATE TABLE `order_summary` (
 INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
 (1, 1, '2023-07-24 04:29:58'),
 (2, 1, '2023-07-24 04:30:36'),
-(3, 2, '2023-08-06 00:00:00');
+(3, 2, '2023-08-06 06:21:09'),
+(4, 1, '2023-08-13 14:48:16'),
+(5, 2, '2023-08-13 14:52:00');
 
 -- --------------------------------------------------------
 
@@ -148,8 +153,8 @@ CREATE TABLE `products` (
   `description` text NOT NULL,
   `price` double NOT NULL,
   `promote_price` float NOT NULL,
-  `manufacture_date` datetime NOT NULL,
-  `expired_date` datetime NOT NULL,
+  `manufacture_date` date NOT NULL,
+  `expired_date` date NOT NULL,
   `created` datetime NOT NULL,
   `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -159,15 +164,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `price`, `promote_price`, `manufacture_date`, `expired_date`, `created`, `modified`) VALUES
-(1, 'Basketball', 1, 'A ball used in the NBA.', 49.98, 40, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:04:03', '2023-07-22 06:16:45'),
-(2, 'Gatorade', 3, 'This is a very good drink for athletes.', 1.99, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:14:29', '2023-07-22 06:16:52'),
-(3, 'Eye Glasses', 5, 'It will make you read better.', 6, 5.5, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:15:04', '2023-07-22 06:17:01'),
-(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', 3.95, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:16:08', '2023-07-22 06:17:16'),
-(5, 'Mouse', 4, 'Very useful if you love your computer.', 11.35, 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:17:58', '2023-07-22 06:17:24'),
-(6, 'Earphone', 4, 'You need this one if you love music.', 7, 6.7, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:21', '2023-07-22 06:17:34'),
-(7, 'Pillow', 5, 'Sleeping well is important.', 8.99, 7.99, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2015-08-02 12:18:56', '2023-07-22 06:19:06'),
-(8, 'Coca cola', 3, 'Soft drink', 5, 2.5, '2023-07-07 00:00:00', '2023-07-17 00:00:00', '2023-07-17 08:25:43', '2023-07-17 08:25:43'),
-(9, 'Pepsi', 3, 'Soft drink', 4, 2, '2023-07-13 00:00:00', '2023-07-17 00:00:00', '2023-07-17 08:27:24', '2023-07-17 08:27:24');
+(1, 'Basketball', 1, 'A ball used in the NBA.', 49.98, 40, '2022-05-12', '0000-00-00', '2015-08-02 12:04:03', '2023-08-13 07:11:29'),
+(2, 'Gatorade', 3, 'This is a very good drink for athletes.', 1.99, 1, '2023-08-13', '2024-08-14', '2015-08-02 12:14:29', '2023-08-13 07:12:51'),
+(3, 'Eye Glasses', 5, 'It will make you read better.', 6, 5.5, '2022-10-15', '0000-00-00', '2015-08-02 12:15:04', '2023-08-13 07:13:50'),
+(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', 3.95, 2, '2022-06-10', '0000-00-00', '2015-08-02 12:16:08', '2023-08-13 07:14:05'),
+(5, 'Mouse', 4, 'Very useful if you love your computer.', 11.35, 10, '2023-12-01', '0000-00-00', '2015-08-02 12:17:58', '2023-08-13 07:14:17'),
+(6, 'Earphone', 4, 'You need this one if you love music.', 7, 6.7, '2021-07-23', '0000-00-00', '2015-08-02 12:18:21', '2023-08-13 07:14:33'),
+(7, 'Pillow', 5, 'Sleeping well is important.', 8.99, 7.99, '2022-05-20', '0000-00-00', '2015-08-02 12:18:56', '2023-08-13 07:14:46'),
+(8, 'Coca cola', 3, 'Soft drink', 5, 2.5, '2023-07-07', '2023-07-17', '2023-07-17 08:25:43', '2023-07-17 08:25:43'),
+(11, 'Pepsi', 3, 'A soft drink alternative of Coca Cola.', 2.5, 2, '2022-01-13', '2024-01-28', '2023-08-13 09:46:48', '2023-08-13 07:46:48');
 
 --
 -- Indexes for dumped tables
@@ -237,19 +242,19 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `order_summary`
 --
 ALTER TABLE `order_summary`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
