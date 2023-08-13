@@ -1,63 +1,74 @@
-    <div class="page-header">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid d-flex">
-                <a class="navbar-brand" href="#">Project</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="index.php">Home</a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Product
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="product_read.php">Read Product</a></li>
-                                <li><a class="dropdown-item" href="product_create.php">Create Product</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Customer
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="customer_read.php">Read Customer</a></li>
-                                <li><a class="dropdown-item" href="customer_create.php">Create Customer</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Category
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="category_read.php">Read Catogary</a></li>
-                                <li><a class="dropdown-item" href="category_create.php">Create Catogary</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Order
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="order_create.php">Create Order</a></li>
-                                <li><a class="dropdown-item" href="order_read.php">Read Order</a></li>
-                            </ul>
-                        </li>
-                        <a class="nav-link" href="contact.php">Contact Us</a>
-                        <?php
-                        if (isset($_POST['submit'])) {
-                            session_destroy();
-                            session_unset();
-                            header('location:login.php');
-                            exit();
-                        }
-                        ?>
-                        <form action="" method="post">
-                            <input type="submit" class="btn btn-danger" name="submit" value="Log out">
-                        </form>
-                    </div>
+<?php
+if (isset($_POST['submit'])) {
+    session_destroy();
+    session_unset();
+    header('location:login.php');
+    exit();
+}
+?>
+
+<div class="page-header">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-5">
+        <div class="container-fluid d-flex">
+            <a class="navbar-brand" href="#">Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="index.php">Home</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Product
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="product_read.php">Read Product</a></li>
+                            <li><a class="dropdown-item" href="product_create.php">Create Product</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Customer
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="customer_read.php">Read Customer</a></li>
+                            <li><a class="dropdown-item" href="customer_create.php">Create Customer</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Category
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="category_read.php">Read Catogary</a></li>
+                            <li><a class="dropdown-item" href="category_create.php">Create Catogary</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Order
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="order_create.php">Create Order</a></li>
+                            <li><a class="dropdown-item" href="order_read.php">Read Order</a></li>
+                        </ul>
+                    </li>
+                    <a class="nav-link" href="contact.php">Contact Us</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?php
+                            echo $_SESSION['username'];
+                            ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Edit profile</a></li>
+                            <form action="" method="post">
+                                <input type="submit" class="btn mx-1" name="submit" value="Log out">
+                            </form>
+                        </ul>
+                    </li>
                 </div>
             </div>
-        </nav>
-    </div>
+        </div>
+    </nav>
+</div>
