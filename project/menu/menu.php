@@ -61,7 +61,6 @@ if (isset($_POST['submit'])) {
                             ?>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Edit profile</a></li>
                             <form action="" method="post">
                                 <input type="submit" class="btn mx-1" name="submit" value="Log out">
                             </form>
