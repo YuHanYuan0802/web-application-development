@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
@@ -13,7 +13,7 @@ include 'config/validate_login.php';
 <body>
     <!-- container -->
     <div class="container">
-        <?php 
+        <?php
         include 'menu/menu.php';
         ?>
 
@@ -46,7 +46,7 @@ include 'config/validate_login.php';
                 $stmt->bindParam(':expired_date', $expired_date);
                 $created = date('Y-m-d H:i:s'); // get the current date and time
                 $stmt->bindParam(':created', $created);
-                $stmt->bindParam(':category' , $category);
+                $stmt->bindParam(':category', $category);
                 // Execute the query
                 $errormessage = array();
 
@@ -140,24 +140,24 @@ include 'config/validate_login.php';
                 </tr>
                 <tr>
                     <td>Select category</td>
-                    <td><select name = 'category' class = "form-select">
-                        <?php
-                        include 'config/database.php';
-                        $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
-                        $catestmt = $con->prepare($catequery);
-                        $catestmt->execute();
-                        $num = $catestmt->rowCount();
-                        if ($num>0) {
-                            $option = array();
-                            while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
-                                $option[$row['category_id']] = $row['category_name'];
+                    <td><select name='category' class="form-select">
+                            <?php
+                            include 'config/database.php';
+                            $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
+                            $catestmt = $con->prepare($catequery);
+                            $catestmt->execute();
+                            $num = $catestmt->rowCount();
+                            if ($num > 0) {
+                                $option = array();
+                                while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $option[$row['category_id']] = $row['category_name'];
+                                }
                             }
-                        }
-                        foreach ($option as $category_id => $category_name) {
-                            echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
-                        }
-                        ?>
-                    </select></td>
+                            foreach ($option as $category_id => $category_name) {
+                                echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
+                            }
+                            ?>
+                        </select></td>
                 </tr>
                 <tr>
                     <td></td>
