@@ -26,8 +26,8 @@ if (!empty($_FILES["image"]["name"])) {
         $file_upload_error_messages = "<div>Image already exists. Try to change file name.</div>";
     }
 
-    if ($_FILES["image"]["size"] > (1024000)) {
-        $file_upload_error_messages .= "<div>Image must be less than 1 MB in size.</div>";
+    if ($_FILES["image"]["size"] > (512000)) {
+        $file_upload_error_messages .= "<div>Image must be less than 512 KB in size.</div>";
     }
 
     if (!is_dir($target_directory)) {
