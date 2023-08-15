@@ -20,12 +20,13 @@ include 'config/validate_login.php';
         <!-- html form to create product will be here -->
         <!-- PHP insert code will be here -->
         <?php
+        include 'upload.php';
         if ($_POST) {
             // include database connection
             include 'config/database.php';
             try {
                 // insert query
-                $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promote_price=:promote_price, manufacture_date=:manufacture_date, expired_date=:expired_date, created=:created, category_id=:category";
+                $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promote_price=:promote_price, manufacture_date=:manufacture_date, expired_date=:expired_date, created=:created, category_id=:category, image=:image";
                 // prepare query for execution
                 $stmt = $con->prepare($query);
                 $reset = "ALTER TABLE products AUTO_INCREMENT = 1";
@@ -47,6 +48,7 @@ include 'config/validate_login.php';
                 $created = date('Y-m-d H:i:s'); // get the current date and time
                 $stmt->bindParam(':created', $created);
                 $stmt->bindParam(':category', $category);
+                $stmt->bindParam(':image', $image);
                 // Execute the query
                 $errormessage = array();
 
@@ -75,7 +77,7 @@ include 'config/validate_login.php';
                     $errormessage[] = "Expired date cannot smaller than manufacture date" . "<br>";
                 }
                 if (!is_numeric($price)) {
-                    $errormessage[] = "Please enter number for price";
+                    $errormessage[] = "Please enter number for price" . "<br>";
                 }
                 if (!is_numeric($promote_price)) {
                     $errormessage[] = "Please enter number for promote price";
@@ -112,7 +114,7 @@ include 'config/validate_login.php';
         ?>
 
         <!-- html form here where the product information will be entered -->
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST"  enctype="multipart/form-data">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
@@ -158,6 +160,10 @@ include 'config/validate_login.php';
                             }
                             ?>
                         </select></td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="image" /></td>
                 </tr>
                 <tr>
                     <td></td>
