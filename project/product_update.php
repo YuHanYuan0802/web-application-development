@@ -68,13 +68,14 @@ include 'config/validate_login.php';
         <!-- HTML form to update record will be here -->
         <!-- PHP post to update record will be here -->
         <?php
+        include 'upload.php';
         // check if form was submitted
         if ($_POST) {
             try {
                 // write update query
                 // in this case, it seemed like we have so many fields to pass and
                 // it is better to label them and not use question marks
-                $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category WHERE id = :id";
+                $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category, image=:image WHERE id = :id";
                 // prepare query for excecution
                 $stmt = $con->prepare($query);
                 // posted values
@@ -89,6 +90,7 @@ include 'config/validate_login.php';
                 $stmt->bindParam(':price', $price);
                 $stmt->bindParam(':promote_price', $promote_price);
                 $stmt->bindParam(':category', $category);
+                $stmt->bindParam(':image', $image);
                 $stmt->bindParam(':id', $id);
                 // Execute the query
                 if ($promote_price >= $price) {
@@ -110,7 +112,7 @@ include 'config/validate_login.php';
         } ?>
 
         <!--we have our html form here where new record information can be updated-->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>
@@ -151,6 +153,10 @@ include 'config/validate_login.php';
                             ?>
                         </select>
                     </td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="image" /></td>
                 </tr>
                 <tr>
                     <td></td>
