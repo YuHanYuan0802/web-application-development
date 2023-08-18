@@ -1,5 +1,6 @@
 <?php
 include 'config/validate_login.php';
+$_SESSION['image'] = "product";
 ?>
 
 <!DOCTYPE HTML>
@@ -56,7 +57,8 @@ include 'config/validate_login.php';
             $description = $row['description'];
             $price = $row['price'];
             $promote_price = $row['promote_price'];
-            $category_name = $row['category_name'];
+            $cate_id = $row['category_id'];
+            $cate_name = $row['category_name'];
         }
 
         // show error
@@ -133,8 +135,8 @@ include 'config/validate_login.php';
                 <tr>
                     <td>Category</td>
                     <td>
-                        <label for="category"><?php echo htmlspecialchars($category_name, ENT_QUOTES);  ?></label>
                         <select name='category' id="category" class="form-select">
+                            <option value="<?php echo $cate_id?>"><?php echo $cate_name?></option>
                             <?php
                             include 'config/database.php';
                             $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
