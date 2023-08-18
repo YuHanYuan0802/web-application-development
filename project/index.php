@@ -42,12 +42,12 @@ include 'config/validate_login.php';
         $moststmt = $con->prepare($mostquery);
         $moststmt->execute();
 
-        $topquery = "SELECT products.name, products.description, category.category_name FROM order_detail INNER JOIN products ON products.id=order_detail.product_id INNER JOIN category ON category.category_id=products.category_id GROUP BY order_detail.product_id LIMIT 5";
+        $topquery = "SELECT products.image, products.name, products.description, category.category_name FROM order_detail INNER JOIN products ON products.id=order_detail.product_id INNER JOIN category ON category.category_id=products.category_id GROUP BY order_detail.product_id LIMIT 5";
         $topstmt = $con->prepare($topquery);
         $topstmt->execute();
         $counttop = $topstmt->rowCount();
 
-        $nobuyquery = "SELECT products.name, products.description, category.category_name FROM products INNER JOIN category ON category.category_id=products.category_id WHERE NOT EXISTS(SELECT products.id FROM order_detail WHERE order_detail.product_id=products.id) LIMIT 3";
+        $nobuyquery = "SELECT products.image, products.name, products.description, category.category_name FROM products INNER JOIN category ON category.category_id=products.category_id WHERE NOT EXISTS(SELECT products.id FROM order_detail WHERE order_detail.product_id=products.id) LIMIT 3";
         $nobuystmt = $con->prepare($nobuyquery);
         $nobuystmt->execute();
         $countnobuy = $nobuystmt->rowCount();
@@ -119,6 +119,7 @@ include 'config/validate_login.php';
                 for ($i = 0; $i < $counttop; $i++) {
                     echo "<div class='shadow p-5 m-5 bg-body-tertiary rounded text-start' style='width:25rem;'>";
                     $toprow = $topstmt->fetch(PDO::FETCH_ASSOC);
+                    echo "<img src='uploads/{$toprow['image']}' alt='{$toprow['name']}' width='100px'/>";
                     echo "<h5><strong>" . $toprow['name'] . "</strong></h5>";
                     echo "<h5>Category</h5>";
                     echo "<h5><strong>" . $toprow['category_name'] . "</strong></h5>";
@@ -138,6 +139,7 @@ include 'config/validate_login.php';
                 for ($i = 0; $i < $countnobuy; $i++) {
                     echo "<div class='shadow p-5 m-5 bg-body-tertiary rounded text-start' style='width:25rem;'>";
                     $nobuyrow = $nobuystmt->fetch(PDO::FETCH_ASSOC);
+                    echo "<img src='uploads/{$nobuyrow['image']}' alt='{$nobuyrow['name']}' width='100px'/>";
                     echo "<h5><strong>" . $nobuyrow['name'] . "</strong></h5>";
                     echo "<h5>Category</h5>";
                     echo "<h5><strong>" . $nobuyrow['category_name'] . "</strong></h5>";
