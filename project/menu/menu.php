@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['submit'])) {
+if (isset($_POST['logout'])) {
     session_destroy();
     session_unset();
     header('location:login.php');
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
                         </a>
                         <ul class="dropdown-menu">
                             <form action="" method="post">
-                                <input type="submit" class="btn mx-1" name="submit" value="Log out">
+                                <input type="submit" class="btn mx-1" name="logout" value="Log out">
                             </form>
                         </ul>
                     </li>
