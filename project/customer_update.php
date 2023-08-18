@@ -1,5 +1,6 @@
 <?php
 include 'config/validate_login.php';
+$_SESSION['image'] = "user";
 ?>
 
 <!DOCTYPE HTML>
@@ -71,6 +72,7 @@ include 'config/validate_login.php';
         <!-- HTML form to update record will be here -->
         <!-- PHP post to update record will be here -->
         <?php
+        include 'upload.php';
         // check if form was submitted
         if (isset($_POST['submit'])) {
             try {
@@ -98,7 +100,7 @@ include 'config/validate_login.php';
                 $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
                 $finalusername = preg_match($usernamepattern, $username);
 
-                $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
+                $query = "UPDATE customers SET image=:image, username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
                 if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password'])) {
                     $query .= ", password=:password WHERE user_id = :user_id";
                     $hashpassword = password_hash($password, PASSWORD_DEFAULT);
@@ -117,6 +119,7 @@ include 'config/validate_login.php';
                 $stmt->bindParam(':registration_date_time', $registration_date_time);
                 $stmt->bindParam(':gender', $gender);
                 $stmt->bindParam(':status', $status);
+                $stmt->bindParam(':image', $image);
                 $stmt->bindParam(':user_id', $id);
 
                 if (!empty($hashpassword)) {
@@ -226,6 +229,10 @@ include 'config/validate_login.php';
                                                                                             } ?> class="form-group">
                         <label for="inactive">Inactive</label><br>
                     </td>
+                </tr>
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="image" /></td>
                 </tr>
                 <tr>
                     <td></td>

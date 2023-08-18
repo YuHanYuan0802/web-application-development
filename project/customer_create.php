@@ -1,5 +1,6 @@
-<?php 
+<?php
 include 'config/validate_login.php';
+$_SESSION['image'] = "user";
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -17,11 +18,12 @@ include 'config/validate_login.php';
         include 'menu/menu.php';
         ?>
         <?php
+        include 'upload.php';
         if ($_POST) {
             include 'config/database.php';
             try {
                 // insert query
-                $query = "INSERT INTO customers SET username=:username, password=:password, first_name=:firstname, last_name=:lastname, email=:email, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
+                $query = "INSERT INTO customers SET image=:image, username=:username, password=:password, first_name=:firstname, last_name=:lastname, email=:email, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
                 // prepare query for execution
                 $stmt = $con->prepare($query);
                 $reset = "ALTER TABLE customers AUTO_INCREMENT = 1";
@@ -49,10 +51,11 @@ include 'config/validate_login.php';
                 $stmt->bindParam(':date_of_birth', $date_of_birth);
                 $stmt->bindParam(':registration_date_time', $registration_date_time);
                 $stmt->bindParam(':status', $status);
+                $stmt->bindParam(':image', $image);
 
                 $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
                 $finalusername = preg_match($usernamepattern, $username);
-                
+
                 $currentdate = date("Y-m-d");
 
                 $errormessage = array();
@@ -182,6 +185,11 @@ include 'config/validate_login.php';
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="image">Photo</label><br>
+                    <input type="file" id="image" name="image" />
                 </div>
                 <br>
                 <div>

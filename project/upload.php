@@ -53,7 +53,9 @@ if (!empty($_FILES["image"]["name"])) {
         echo "<div>{$file_upload_error_messages}</div>";
         echo "</div>";
     }
+} else if($_SESSION['image'] == "product"){
+    $image = "product_image_coming_soon.jpg";
 } else {
-    $image = "";
+    $image = "default_user.png";
 }
 ?>
