@@ -27,10 +27,9 @@ include 'config/validate_login.php';
             echo "<div class='alert alert-success'>Record was deleted.</div>";
         }
 
-
         // select all data
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-        $query = "SELECT products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id";
+        $query = "SELECT products.image, products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id";
         if (!empty($searchKeyword)) {
             $query .= " WHERE name LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
@@ -64,6 +63,7 @@ include 'config/validate_login.php';
             echo "<tr>";
             echo "<th>ID</th>";
             echo "<th>Name</th>";
+            echo "<th>Image</th>";
             echo "<th>Description</th>";
             echo "<th>Price</th>";
             echo "<th>manufacture date</th>";
@@ -83,6 +83,7 @@ include 'config/validate_login.php';
                 echo "<tr>";
                 echo "<td>{$id}</td>";
                 echo "<td>{$name}</td>";
+                echo "<td><img src='uploads/{$image}' alt='{$name}' width='100px'></td>";
                 echo "<td>{$description}</td>";
                 if ($promote_price < $decimalprice && $promote_price > 0) {
                     echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";
@@ -94,13 +95,13 @@ include 'config/validate_login.php';
                 echo "<td>{$category_name}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
+                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em m-1'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em mx-1'>Edit</a>";
+                echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em m-1'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$id});'  class='btn btn-danger mx-1'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$id});'  class='btn btn-danger m-1'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
