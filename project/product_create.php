@@ -1,5 +1,6 @@
 <?php
 include 'config/validate_login.php';
+$_SESSION['image'] = "product";
 ?>
 <!DOCTYPE HTML>
 <html>

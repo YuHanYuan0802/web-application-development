@@ -29,7 +29,7 @@ include 'config/validate_login.php';
 
         // select all data
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-        $query = "SELECT user_id, username, first_name, last_name, date_of_birth, registration_date_time, email, gender, status FROM customers";
+        $query = "SELECT image, user_id, username, first_name, last_name, date_of_birth, registration_date_time, email, gender, status FROM customers";
         if (!empty($searchKeyword)) {
             $query .= " WHERE username LIKE :keyword OR first_name LIKE :keyword OR last_name LIKE :keyword OR email LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
@@ -63,6 +63,7 @@ include 'config/validate_login.php';
             echo "<tr>";
             echo "<th>ID</th>";
             echo "<th>Username</th>";
+            echo "<th>Image</th>";
             echo "<th>First name</th>";
             echo "<th>Last name</th>";
             echo "<th>Email</th>";
@@ -82,6 +83,7 @@ include 'config/validate_login.php';
                 echo "<tr>";
                 echo "<td>{$user_id}</td>";
                 echo "<td>{$username}</td>";
+                echo "<td><img src='uploads/{$image}' alt='{$username}' width='100px'</td>";
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
                 echo "<td>{$email}</td>";
