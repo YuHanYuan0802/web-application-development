@@ -49,6 +49,7 @@ session_start();
                         if (password_verify($password, $row['password'])) {
                             $_POST = array();
                             $_SESSION['username'] = $row['username'];
+                            $_SESSION['user_image'] = $row['image'];
                             header('location:index.php');
                             exit();
                         } else {
