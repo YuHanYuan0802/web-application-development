@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2023 at 10:40 AM
+-- Generation Time: Aug 20, 2023 at 04:27 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -71,6 +71,7 @@ CREATE TABLE `contact` (
 CREATE TABLE `customers` (
   `user_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
+  `image` varchar(100) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `password` text NOT NULL,
@@ -85,9 +86,10 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`user_id`, `username`, `first_name`, `last_name`, `password`, `email`, `date_of_birth`, `registration_date_time`, `gender`, `status`) VALUES
-(1, 'yuhanyuan', 'yu', 'hanhan', '$2y$10$qaSjHdXR1Vweix.kb2FjXewTHUYKa78RUy6XIWSyxANKgHGth/MdW', 'yu@gmail.com', '2023-07-25', '2023-07-25 12:08:00', 'male', 'active'),
-(2, 'limsinkuan', 'lim', 'sinkuan', '$2y$10$kvq2zkbC7iwJdL/68MOIS.NI6bHwWTK5Ltk3eY2B1OCUJGrZ18aMa', 'lim@gmail.com', '2023-07-25', '2023-07-30 13:56:23', 'male', 'active');
+INSERT INTO `customers` (`user_id`, `username`, `image`, `first_name`, `last_name`, `password`, `email`, `date_of_birth`, `registration_date_time`, `gender`, `status`) VALUES
+(1, 'yuhanyuan', 'default_user.png', 'yu', 'hanhan', '$2y$10$qaSjHdXR1Vweix.kb2FjXewTHUYKa78RUy6XIWSyxANKgHGth/MdW', 'yu@gmail.com', '2023-07-25', '2023-07-25 12:08:00', 'male', 'active'),
+(2, 'limsinkuan', 'default_user.png', 'lim', 'sinkuan', '$2y$10$kvq2zkbC7iwJdL/68MOIS.NI6bHwWTK5Ltk3eY2B1OCUJGrZ18aMa', 'lim@gmail.com', '2023-07-25', '2023-07-30 13:56:23', 'male', 'active'),
+(3, 'haw123', 'default_user.png', 'Haw', 'EngEng', '$2y$10$azfP2yf426md46tNF.Umj.WPKLLm0nr7YBaJAoROBsWzXPRs16ueG', 'haw@gmail.com', '2002-01-01', '2023-08-18 23:45:00', 'male', 'active');
 
 -- --------------------------------------------------------
 
@@ -151,6 +153,7 @@ CREATE TABLE `products` (
   `name` varchar(128) NOT NULL,
   `category_id` int(11) NOT NULL,
   `description` text NOT NULL,
+  `image` varchar(100) NOT NULL,
   `price` double NOT NULL,
   `promote_price` float NOT NULL,
   `manufacture_date` date NOT NULL,
@@ -163,16 +166,17 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `price`, `promote_price`, `manufacture_date`, `expired_date`, `created`, `modified`) VALUES
-(1, 'Basketball', 1, 'A ball used in the NBA.', 49.98, 40, '2022-05-12', '0000-00-00', '2015-08-02 12:04:03', '2023-08-13 07:11:29'),
-(2, 'Gatorade', 3, 'This is a very good drink for athletes.', 1.99, 1, '2023-08-13', '2024-08-14', '2015-08-02 12:14:29', '2023-08-13 07:12:51'),
-(3, 'Eye Glasses', 5, 'It will make you read better.', 6, 5.5, '2022-10-15', '0000-00-00', '2015-08-02 12:15:04', '2023-08-13 07:13:50'),
-(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', 3.95, 2, '2022-06-10', '0000-00-00', '2015-08-02 12:16:08', '2023-08-13 07:14:05'),
-(5, 'Mouse', 4, 'Very useful if you love your computer.', 11.35, 10, '2023-12-01', '0000-00-00', '2015-08-02 12:17:58', '2023-08-13 07:14:17'),
-(6, 'Earphone', 4, 'You need this one if you love music.', 7, 6.7, '2021-07-23', '0000-00-00', '2015-08-02 12:18:21', '2023-08-13 07:14:33'),
-(7, 'Pillow', 5, 'Sleeping well is important.', 8.99, 7.99, '2022-05-20', '0000-00-00', '2015-08-02 12:18:56', '2023-08-13 07:14:46'),
-(8, 'Coca cola', 3, 'Soft drink', 5, 2.5, '2023-07-07', '2023-07-17', '2023-07-17 08:25:43', '2023-07-17 08:25:43'),
-(11, 'Pepsi', 3, 'A soft drink alternative of Coca Cola.', 2.5, 2, '2022-01-13', '2024-01-28', '2023-08-13 09:46:48', '2023-08-13 07:46:48');
+INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `image`, `price`, `promote_price`, `manufacture_date`, `expired_date`, `created`, `modified`) VALUES
+(1, 'Basketball', 1, 'A ball used in the NBA.', '29965dca3434e164ab7ea3cfc1a4194e35e3e1e2-basketball.jpg', 49.98, 40, '2022-05-12', '0000-00-00', '2015-08-02 12:04:03', '2023-08-15 02:26:36'),
+(2, 'Gatorade', 3, 'This is a very good drink for athletes.', '53d89d4c72810ccd7eb37829efa6472953b6bc57-gatorade.jpg', 1.99, 1, '2023-08-13', '2024-08-14', '2015-08-02 12:14:29', '2023-08-15 02:27:40'),
+(3, 'Eye Glasses', 5, 'It will make you read better.', '6c88630487456ab97a4131099f39bb0056f1c651-glasses.jpg', 6, 5.5, '2022-10-15', '0000-00-00', '2015-08-02 12:15:04', '2023-08-15 02:28:41'),
+(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', '5587ecc2a5a7066631b3c1d3ec00fb337d936635-trashcan.jpg', 3.95, 2, '2022-06-10', '0000-00-00', '2015-08-02 12:16:08', '2023-08-15 02:29:39'),
+(5, 'Mouse', 4, 'Very useful if you love your computer.', '90b01134caa6cb714d4623840d45f9a539d1ec79-mouse.jpg', 11.35, 10, '2023-12-01', '0000-00-00', '2015-08-02 12:17:58', '2023-08-15 02:30:14'),
+(6, 'Earphone', 4, 'You need this one if you love music.', '784acfe8121f68ae9be74228322099e3590692ad-earphone.jpg', 7, 6.7, '2021-07-23', '0000-00-00', '2015-08-02 12:18:21', '2023-08-15 02:30:47'),
+(7, 'Pillow', 5, 'Sleeping well is important.', 'fefb917abedce543dc99cbe086c6ee4ebefb7353-pillow.jpg', 8.99, 7.99, '2022-05-20', '0000-00-00', '2015-08-02 12:18:56', '2023-08-15 02:31:25'),
+(8, 'Coca cola', 3, 'Soft drink', 'd59980a5da135146fdceb31fe3de8feda53ee127-cocacola.jpg', 5, 2.5, '2023-07-07', '2023-07-17', '2023-07-17 08:25:43', '2023-08-15 02:32:31'),
+(9, 'Pepsi', 3, 'A soft drink alternative of Coca Cola.', 'e14075ec8b1c8722b02c737181ff3365f227361e-pepsi.jpg', 2.5, 2, '2022-01-13', '2024-01-28', '2023-08-13 09:46:48', '2023-08-15 02:33:02'),
+(10, 'French Fry', 2, 'Make from Potato', '7dc4220ed4c2c3b1c5068053df13529c21888d3f-d6cf3640302554ca2130ddcba02b1efcdf49e2a1-french_fries.jpg', 5.99, 4, '2020-01-20', '2024-03-22', '2023-08-15 03:56:39', '2023-08-18 15:22:04');
 
 --
 -- Indexes for dumped tables
@@ -236,7 +240,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
@@ -254,7 +258,7 @@ ALTER TABLE `order_summary`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
