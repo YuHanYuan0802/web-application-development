@@ -23,8 +23,11 @@ include 'config/validate_login.php';
         $action = isset($_GET['action']) ? $_GET['action'] : "";
 
         // if it was redirected from delete.php
-        if ($action == 'deleted') {
+        if ($action == 'imagedeleted') {
+            echo "<div class='alert alert-success'>Record and image was deleted.</div>";
+        } else {
             echo "<div class='alert alert-success'>Record was deleted.</div>";
+            echo "<div class='alert alert-success'>Default image no need delete.</div>";
         }
 
         // select all data
