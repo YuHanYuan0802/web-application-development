@@ -18,14 +18,27 @@
         // SELECT name FROM products WHERE EXISTS(SELECT products.id FROM order_detail WHERE order_detail.product_id=products.id)
         $id = isset($_GET['id']) ? $_GET['id'] :  die('ERROR: Record ID not found.');
 
+        $selectimage = "SELECT image FROM products WHERE id = ?";
+        $imagestmt = $con->prepare($selectimage);
+        $imagestmt->bindParam(1, $id);
+        $imagestmt->execute();
+        $row = $imagestmt->fetch(PDO::FETCH_ASSOC);
+        $image = $row['image'];
+
         // delete query
         $query = "DELETE FROM products WHERE id = ?";
         $stmt = $con->prepare($query);
         $stmt->bindParam(1, $id);
         if ($stmt->execute()) {
+            if ($image == "default_user.png" || $image == "product_image_coming_soon.jpg") {
+                //no need delete default image.
+                header('Location: product_read.php?action=deleted');
+            }else {
+                unlink("uploads/".$image);
+                header('Location: product_read.php?action=imagedeleted');
+            }
             // redirect to read records page and
             // tell the user record was deleted
-            header('Location: product_read.php?action=deleted');
         } else {
             die('Unable to delete record.');
         }
