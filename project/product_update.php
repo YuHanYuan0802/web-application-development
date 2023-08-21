@@ -40,7 +40,7 @@ $_SESSION['image'] = "product";
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT products.id, products.name, products.description, products.price, products.promote_price, category.category_id, category.category_name FROM products INNER JOIN category ON products.category_id=category.category_id WHERE id = ? LIMIT 0,1";
+            $query = "SELECT products.image, products.id, products.name, products.description, products.price, products.promote_price, category.category_id, category.category_name FROM products INNER JOIN category ON products.category_id=category.category_id WHERE id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -59,6 +59,7 @@ $_SESSION['image'] = "product";
             $promote_price = $row['promote_price'];
             $cate_id = $row['category_id'];
             $cate_name = $row['category_name'];
+            $img = $row['image'];
         }
 
         // show error
@@ -70,39 +71,43 @@ $_SESSION['image'] = "product";
         <!-- HTML form to update record will be here -->
         <!-- PHP post to update record will be here -->
         <?php
-        include 'upload.php';
+
         // check if form was submitted
         if ($_POST) {
+            include 'upload.php';
             try {
-                // write update query
-                // in this case, it seemed like we have so many fields to pass and
-                // it is better to label them and not use question marks
-                $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category, image=:image WHERE id = :id";
-                // prepare query for excecution
-                $stmt = $con->prepare($query);
                 // posted values
                 $name = htmlspecialchars(strip_tags($_POST['name']));
                 $description = htmlspecialchars(strip_tags($_POST['description']));
                 $price = htmlspecialchars(strip_tags($_POST['price']));
                 $promote_price = htmlspecialchars(strip_tags($_POST['promote_price']));
                 $category = htmlspecialchars(strip_tags($_POST['category']));
-                // bind the parameters
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':price', $price);
-                $stmt->bindParam(':promote_price', $promote_price);
-                $stmt->bindParam(':category', $category);
-                $stmt->bindParam(':image', $image);
-                $stmt->bindParam(':id', $id);
-                // Execute the query
+
                 if ($promote_price >= $price) {
                     echo "<div class = 'alert alert-danger'>";
                     echo "Promote price should lower than normal price.";
                     echo "</div>";
-                } else if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    // write update query
+                    // in this case, it seemed like we have so many fields to pass and
+                    // it is better to label them and not use question marks
+                    $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category, image=:image WHERE id = :id";
+                    // prepare query for excecution
+                    $stmt = $con->prepare($query);
+
+                    // bind the parameters
+                    $stmt->bindParam(':name', $name);
+                    $stmt->bindParam(':description', $description);
+                    $stmt->bindParam(':price', $price);
+                    $stmt->bindParam(':promote_price', $promote_price);
+                    $stmt->bindParam(':category', $category);
+                    $stmt->bindParam(':image', $image);
+                    $stmt->bindParam(':id', $id);
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record was updated.</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    }
                 }
             }
             // show errors
@@ -136,7 +141,7 @@ $_SESSION['image'] = "product";
                     <td>Category</td>
                     <td>
                         <select name='category' id="category" class="form-select">
-                            <option value="<?php echo $cate_id?>"><?php echo $cate_name?></option>
+                            <option value="<?php echo $cate_id ?>"><?php echo $cate_name ?></option>
                             <?php
                             include 'config/database.php';
                             $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
@@ -158,7 +163,12 @@ $_SESSION['image'] = "product";
                 </tr>
                 <tr>
                     <td>Photo</td>
-                    <td><input type="file" name="image" /></td>
+                    <td>
+                        <img src="uploads/<?php echo $img ?>" alt="<?php echo $name ?>" width="100px">
+                        <br>
+                        <br>
+                        <input type="file" name="image" />
+                    </td>
                 </tr>
                 <tr>
                     <td></td>

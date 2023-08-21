@@ -115,6 +115,7 @@ include 'config/validate_login.php';
                         $order_details_stmt->bindParam(":quantity", $quantity[$i]);
                         $order_details_stmt->execute();
                     }
+                    echo "<script>window.location.href='order_detail_read.php?id={$id}'</script>";
                     echo "<div class='alert alert-success' role='alert'>Order Placed Successfully.</div>";
                     $_POST = array();
                 }

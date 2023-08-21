@@ -46,7 +46,7 @@ $_SESSION['image'] = "product";
                     $errormessage[] = "Please fill in your price" . "<br>";
                 }
                 if (empty($promote_price)) {
-                    $errormessage[] = "Please fill in your promote price" . "<br>";
+                    $promote_price = "";
                 }
                 if (empty($manufacture_date)) {
                     $errormessage[] = "Please fill in your manufacture date" . "<br>";
@@ -62,9 +62,6 @@ $_SESSION['image'] = "product";
                 }
                 if (!is_numeric($price)) {
                     $errormessage[] = "Please enter number for price" . "<br>";
-                }
-                if (!is_numeric($promote_price)) {
-                    $errormessage[] = "Please enter number for promote price";
                 }
                 if (!empty($errormessage)) {
                     echo "<div class = 'alert alert-danger'>";

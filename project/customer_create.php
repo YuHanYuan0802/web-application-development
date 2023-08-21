@@ -20,8 +20,8 @@ $_SESSION['image'] = "user";
         <?php
 
         if ($_POST) {
-            include 'upload.php';
             include 'config/database.php';
+            include 'upload.php';
             try {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
@@ -33,7 +33,7 @@ $_SESSION['image'] = "user";
                 $date_of_birth = $_POST['date_of_birth'];
                 $registration_date_time = $_POST['registration_date_time'];
                 $status = $_POST['status'];
-                
+
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
                 $hashpassword = password_hash($password, PASSWORD_DEFAULT);
@@ -192,7 +192,7 @@ $_SESSION['image'] = "user";
                 <br>
                 <div class="form-group">
                     <label for="image">Photo</label><br>
-                    <input type="file" id="image" name="image" />
+                    <input type="file" name="image" />
                 </div>
                 <br>
                 <div>

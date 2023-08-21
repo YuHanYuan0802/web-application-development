@@ -9,14 +9,6 @@ $_SESSION['image'] = "user";
 <head>
     <title>Update Customer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
-    <!-- custom css →
-    <style>
-       .m-r-1em{ margin-right:1em; }
-       .m-b-1em{ margin-bottom:1em; }
-       .m-l-1em{ margin-left:1em; }
-       .mt0{ margin-top:0; }
-    </style>-->
 </head>
 
 <body>
@@ -40,7 +32,7 @@ $_SESSION['image'] = "user";
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT username, first_name, last_name, password, email, date_of_birth, registration_date_time, gender, status FROM customers WHERE user_id = ? LIMIT 0,1";
+            $query = "SELECT image, username, first_name, last_name, password, email, date_of_birth, registration_date_time, gender, status FROM customers WHERE user_id = ? LIMIT 0,1";
             $stmt = $con->prepare($query);
 
             // this is the first question mark
@@ -61,6 +53,7 @@ $_SESSION['image'] = "user";
             $registration_date_time = $row['registration_date_time'];
             $gender = $row['gender'];
             $status = $row['status'];
+            $img = $row['image'];
         }
 
         // show error
@@ -74,14 +67,8 @@ $_SESSION['image'] = "user";
         <?php
         include 'upload.php';
         // check if form was submitted
-        if (isset($_POST['submit'])) {
+        if ($_POST) {
             try {
-                $pwquery = "SELECT * FROM customers WHERE user_id = $id";
-                $pwstmt = $con->prepare($pwquery);
-                $pwstmt->execute();
-                $pwrow = $pwstmt->fetch(PDO::FETCH_ASSOC);
-                $dbpw = $pwrow['password'];
-
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
@@ -99,28 +86,11 @@ $_SESSION['image'] = "user";
                 $finalpassword = preg_match($pw_pattern, $password);
                 $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
                 $finalusername = preg_match($usernamepattern, $username);
-
-                $query = "UPDATE customers SET image=:image, username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
-                if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password'])) {
-                    $query .= ", password=:password WHERE user_id = :user_id";
-                    $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-                }else {
-                    $query .= " WHERE user_id=:user_id";
-                }
-                // prepare query for excecution
-                $stmt = $con->prepare($query);
-
-                // bind the parameters
-                $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':first_name', $first_name);
-                $stmt->bindParam(':last_name', $last_name);
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':date_of_birth', $date_of_birth);
-                $stmt->bindParam(':registration_date_time', $registration_date_time);
-                $stmt->bindParam(':gender', $gender);
-                $stmt->bindParam(':status', $status);
-                $stmt->bindParam(':image', $image);
-                $stmt->bindParam(':user_id', $id);
+                $pwquery = "SELECT * FROM customers WHERE user_id = $id";
+                $pwstmt = $con->prepare($pwquery);
+                $pwstmt->execute();
+                $pwrow = $pwstmt->fetch(PDO::FETCH_ASSOC);
+                $dbpw = $pwrow['password'];
 
                 if (!empty($hashpassword)) {
                     $stmt->bindParam(':password', $hashpassword);
@@ -149,10 +119,34 @@ $_SESSION['image'] = "user";
                         echo $displayerrormessage;
                     }
                     echo "</div>";
-                } else if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record was updated.</div>";
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status, image=:image";
+                    if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password'])) {
+                        $query .= ", password=:password WHERE user_id = :user_id";
+                        $hashpassword = password_hash($password, PASSWORD_DEFAULT);
+                    } else {
+                        $query .= " WHERE user_id=:user_id";
+                    }
+                    // prepare query for excecution
+                    $stmt = $con->prepare($query);
+
+                    // bind the parameters
+                    $stmt->bindParam(':username', $username);
+                    $stmt->bindParam(':first_name', $first_name);
+                    $stmt->bindParam(':last_name', $last_name);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':date_of_birth', $date_of_birth);
+                    $stmt->bindParam(':registration_date_time', $registration_date_time);
+                    $stmt->bindParam(':gender', $gender);
+                    $stmt->bindParam(':status', $status);
+                    $stmt->bindParam(':image', $image);
+                    $stmt->bindParam(':user_id', $id);
+                    if ($stmt->execute()) {
+                        echo "image is ".$image;
+                        echo "<div class='alert alert-success'>Record was updated.</div>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    }
                 }
             }
             // show errors
@@ -232,12 +226,17 @@ $_SESSION['image'] = "user";
                 </tr>
                 <tr>
                     <td>Photo</td>
-                    <td><input type="file" name="image" /></td>
+                    <td>
+                        <img src="uploads/<?php echo $img ?>" alt="<?php echo $username ?>" width="100px">
+                        <br>
+                        <br>
+                        <input type="file" name="image" />
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' name="submit" value='Save Changes' class='btn btn-primary' />
+                        <input type='submit' value='Save Changes' class='btn btn-primary' />
                         <a href='customer_read.php' class='btn btn-danger'>Back to read customers</a>
                     </td>
                 </tr>
