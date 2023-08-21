@@ -65,9 +65,9 @@ $_SESSION['image'] = "user";
         <!-- HTML form to update record will be here -->
         <!-- PHP post to update record will be here -->
         <?php
-        include 'upload.php';
         // check if form was submitted
         if ($_POST) {
+            include 'upload.php';
             try {
                 // posted values
                 $username = htmlspecialchars(strip_tags($_POST['username']));
@@ -142,7 +142,6 @@ $_SESSION['image'] = "user";
                     $stmt->bindParam(':image', $image);
                     $stmt->bindParam(':user_id', $id);
                     if ($stmt->execute()) {
-                        echo "image is ".$image;
                         echo "<div class='alert alert-success'>Record was updated.</div>";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
@@ -158,7 +157,7 @@ $_SESSION['image'] = "user";
         } ?>
 
         <!--we have our html form here where new record information can be updated-->
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
