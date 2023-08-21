@@ -17,13 +17,17 @@ if (!empty($_FILES["image"]["name"])) {
         $file_upload_error_messages .= "<div>Submitted file is not an image.</div>";
     }
 
+    if ($check['width']>600 || $check['height']>600) {
+        $file_upload_error_messages .= "<div>Submitted file is exceed width 600px and height 600px limit.</div>";
+    }
+
     $allowed_file_types = array("jpg", "jpeg", "png", "gif");
     if (!in_array($file_type, $allowed_file_types)) {
         $file_upload_error_messages .= "<div>Only JPG, JPEG, PNG, GIF files are allowed.</div>";
     }
 
     if (file_exists($target_file)) {
-        $file_upload_error_messages = "<div>Image already exists. Try to change file name.</div>";
+        $file_upload_error_messages .= "<div>Image already exists. Try to change file name.</div>";
     }
 
     if ($_FILES["image"]["size"] > (512000)) {
