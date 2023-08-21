@@ -25,7 +25,7 @@ include 'config/validate_login.php';
         // if it was redirected from delete.php
         if ($action == 'imagedeleted') {
             echo "<div class='alert alert-success'>Record and image was deleted.</div>";
-        } else {
+        } else if($action == "deleted"){
             echo "<div class='alert alert-success'>Record was deleted.</div>";
             echo "<div class='alert alert-success'>Default image no need delete.</div>";
         }
