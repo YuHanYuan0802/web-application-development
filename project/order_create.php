@@ -32,20 +32,11 @@ include 'config/validate_login.php';
 
         if ($_POST) {
             try {
-                // insert query
-                $query = "INSERT INTO order_summary SET customer_id=:customer_id, order_date=:order_date";
-
-                // prepare query for execution
-                $stmt = $con->prepare($query);
                 $customer_id = $_POST['customer_id'];
                 $product_id = $_POST['product_id'];
                 $quantity = $_POST['quantity'];
                 $order_date = $_POST['order_date'];
-                // bind the parameters
-                $stmt->bindParam(':customer_id', $customer_id);
-                $stmt->bindParam(':order_date', $order_date);
 
-                // Execute the query
                 $errormessage = array();
                 if (empty($customer_id)) {
                     $errormessage[] = "Please select the customer." . "<br>";
@@ -87,31 +78,41 @@ include 'config/validate_login.php';
                         echo $displayerrormessage;
                     }
                     echo "</div>";
-                } else if ($stmt->execute()) {
-                    $last_order_id = $con->lastInsertId();
-                    $multiquery = "INSERT INTO order_detail SET order_id=:order_id, product_id=:product_id, quantity=:quantity";
-                    $multistmt = $con->prepare($multiquery);
-
-                    for ($i = 0; $i < $selectpro; $i++) {
-                        $multistmt->bindParam(':order_id', $last_order_id);
-                        $multistmt->bindParam(':product_id', $nodupliproduct[$i]);
-                        $multistmt->bindParam(':quantity', $quantity[$i]);
-                        $multistmt->execute();
-                    }
-                    echo "<div class='alert alert-success'>Record saved.</div>";
-                    echo "<script>window.location.href='order_detail_read.php?id={$last_order_id}'</script>";
-                    $_POST = array();
-                    $selectpro = 1;
-                    exit();
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    $query = "INSERT INTO order_summary SET customer_id=:customer_id, order_date=:order_date";
+
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+
+                    // bind the parameters
+                    $stmt->bindParam(':customer_id', $customer_id);
+                    $stmt->bindParam(':order_date', $order_date);
+                    if ($stmt->execute()) {
+                        $last_order_id = $con->lastInsertId();
+                        $multiquery = "INSERT INTO order_detail SET order_id=:order_id, product_id=:product_id, quantity=:quantity";
+                        $multistmt = $con->prepare($multiquery);
+
+                        for ($i = 0; $i < $selectpro; $i++) {
+                            $multistmt->bindParam(':order_id', $last_order_id);
+                            $multistmt->bindParam(':product_id', $nodupliproduct[$i]);
+                            $multistmt->bindParam(':quantity', $quantity[$i]);
+                            $multistmt->execute();
+                        }
+                        echo "<div class='alert alert-success'>Record saved.</div>";
+                        echo "<script>window.location.href='order_detail_read.php?id={$last_order_id}'</script>";
+                        $_POST = array();
+                        $selectpro = 1;
+                        exit();
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    }
                 }
             }
             // show error
             catch (PDOException $exception) {
-                    echo "<div class = 'alert alert-danger'>";
-                    echo $exception->getMessage();
-                    echo "</div>";
+                echo "<div class = 'alert alert-danger'>";
+                echo $exception->getMessage();
+                echo "</div>";
             }
         }
         ?>
@@ -181,7 +182,7 @@ include 'config/validate_login.php';
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Order Date</td>
-                        <td><input type="datetime-local" name='order_date' class='form-control'/></td>
+                        <td><input type="datetime-local" name='order_date' class='form-control' /></td>
                     </tr>
                     <tr>
                         <td></td>

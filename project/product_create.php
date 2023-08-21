@@ -21,17 +21,11 @@ $_SESSION['image'] = "product";
         <!-- html form to create product will be here -->
         <!-- PHP insert code will be here -->
         <?php
-        include 'upload.php';
         if ($_POST) {
+            include 'upload.php';
             // include database connection
             include 'config/database.php';
             try {
-                // insert query
-                $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promote_price=:promote_price, manufacture_date=:manufacture_date, expired_date=:expired_date, created=:created, category_id=:category, image=:image";
-                // prepare query for execution
-                $stmt = $con->prepare($query);
-                $reset = "ALTER TABLE products AUTO_INCREMENT = 1";
-                $resetquery = $con->prepare($reset);
                 $name = $_POST['name'];
                 $description = $_POST['description'];
                 $price = $_POST['price'];
@@ -39,18 +33,7 @@ $_SESSION['image'] = "product";
                 $manufacture_date = $_POST['manufacture_date'];
                 $expired_date = $_POST['expired_date'];
                 $category = $_POST['category'];
-                // bind the parameters
-                $stmt->bindParam(':name', $name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':price', $price);
-                $stmt->bindParam(':promote_price', $promote_price);
-                $stmt->bindParam(':manufacture_date', $manufacture_date);
-                $stmt->bindParam(':expired_date', $expired_date);
-                $created = date('Y-m-d H:i:s'); // get the current date and time
-                $stmt->bindParam(':created', $created);
-                $stmt->bindParam(':category', $category);
-                $stmt->bindParam(':image', $image);
-                // Execute the query
+
                 $errormessage = array();
 
                 if (empty($name)) {
@@ -89,12 +72,31 @@ $_SESSION['image'] = "product";
                         echo $displayerrormessage;
                     }
                     echo "</div>";
-                } else if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record saved.</div>";
-                    $_POST = array();
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                    $resetquery->execute();
+                    $query = "INSERT INTO products SET name=:name, description=:description, price=:price, promote_price=:promote_price, manufacture_date=:manufacture_date, expired_date=:expired_date, created=:created, category_id=:category, image=:image";
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+                    $reset = "ALTER TABLE products AUTO_INCREMENT = 1";
+                    $resetquery = $con->prepare($reset);
+
+                    // bind the parameters
+                    $stmt->bindParam(':name', $name);
+                    $stmt->bindParam(':description', $description);
+                    $stmt->bindParam(':price', $price);
+                    $stmt->bindParam(':promote_price', $promote_price);
+                    $stmt->bindParam(':manufacture_date', $manufacture_date);
+                    $stmt->bindParam(':expired_date', $expired_date);
+                    $created = date('Y-m-d H:i:s'); // get the current date and time
+                    $stmt->bindParam(':created', $created);
+                    $stmt->bindParam(':category', $category);
+                    $stmt->bindParam(':image', $image);
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record saved.</div>";
+                        $_POST = array();
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable save the record.</div>";
+                        $resetquery->execute();
+                    }
                 }
             }
             // show error
@@ -115,7 +117,7 @@ $_SESSION['image'] = "product";
         ?>
 
         <!-- html form here where the product information will be entered -->
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST"  enctype="multipart/form-data">
+        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Name</td>

@@ -96,13 +96,13 @@ include 'config/validate_login.php';
                 echo "<td>{$status}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='customer_read_one.php?id={$user_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
+                echo "<a href='customer_read_one.php?id={$user_id}' class='btn btn-info m-r-1em m-1'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='customer_update.php?id={$user_id}' class='btn btn-primary m-r-1em mx-1'>Edit</a>";
+                echo "<a href='customer_update.php?id={$user_id}' class='btn btn-primary m-r-1em m-1'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_customer({$user_id});'  class='btn btn-danger mx-1'>Delete</a>";
+                echo "<a href='#' onclick='delete_customer({$user_id});'  class='btn btn-danger m-1'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

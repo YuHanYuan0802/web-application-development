@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
@@ -13,7 +13,7 @@ include 'config/validate_login.php';
 <body>
     <!-- container -->
     <div class="container">
-        <?php 
+        <?php
         include 'menu/menu.php';
         ?>
 
@@ -24,18 +24,9 @@ include 'config/validate_login.php';
             // include database connection
             include 'config/database.php';
             try {
-                // insert query
-                $query = "INSERT INTO category SET category_name=:category_name, description=:description";
-                // prepare query for execution
-                $stmt = $con->prepare($query);
-                $reset = "ALTER TABLE products AUTO_INCREMENT = 1";
-                $resetquery = $con->prepare($reset);
                 $category_name = $_POST['category_name'];
                 $description = $_POST['description'];
-                // bind the parameters
-                $stmt->bindParam(':category_name', $category_name);
-                $stmt->bindParam(':description', $description);
-                // Execute the query
+
                 $errormessage = array();
 
                 if (empty($category_name)) {
@@ -50,12 +41,24 @@ include 'config/validate_login.php';
                         echo $displayerrormessage;
                     }
                     echo "</div>";
-                } else if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record saved.</div>";
-                    $_POST = array();
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
-                    $resetquery->execute();
+                    $query = "INSERT INTO category SET category_name=:category_name, description=:description";
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+                    $reset = "ALTER TABLE products AUTO_INCREMENT = 1";
+                    $resetquery = $con->prepare($reset);
+
+                    // bind the parameters
+                    $stmt->bindParam(':category_name', $category_name);
+                    $stmt->bindParam(':description', $description);
+
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record saved.</div>";
+                        $_POST = array();
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                        $resetquery->execute();
+                    }
                 }
             }
             // show error
@@ -90,7 +93,7 @@ include 'config/validate_login.php';
                     <td></td>
                     <td>
                         <input type='submit' value='Submit' class='btn btn-primary' />
-                        
+
                     </td>
                 </tr>
             </table>

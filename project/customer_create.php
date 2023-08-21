@@ -18,16 +18,11 @@ $_SESSION['image'] = "user";
         include 'menu/menu.php';
         ?>
         <?php
-        include 'upload.php';
+
         if ($_POST) {
+            include 'upload.php';
             include 'config/database.php';
             try {
-                // insert query
-                $query = "INSERT INTO customers SET image=:image, username=:username, password=:password, first_name=:firstname, last_name=:lastname, email=:email, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
-                // prepare query for execution
-                $stmt = $con->prepare($query);
-                $reset = "ALTER TABLE customers AUTO_INCREMENT = 1";
-                $resetquery = $con->prepare($reset);
                 $username = $_POST['username'];
                 $password = $_POST['password'];
                 $cfmpassword = $_POST['cfmpassword'];
@@ -38,24 +33,12 @@ $_SESSION['image'] = "user";
                 $date_of_birth = $_POST['date_of_birth'];
                 $registration_date_time = $_POST['registration_date_time'];
                 $status = $_POST['status'];
+                
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
                 $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-                // bind the parameters
-                $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':password', $hashpassword);
-                $stmt->bindParam(':firstname', $firstname);
-                $stmt->bindParam(':lastname', $lastname);
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':gender', $gender);
-                $stmt->bindParam(':date_of_birth', $date_of_birth);
-                $stmt->bindParam(':registration_date_time', $registration_date_time);
-                $stmt->bindParam(':status', $status);
-                $stmt->bindParam(':image', $image);
-
                 $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
                 $finalusername = preg_match($usernamepattern, $username);
-
                 $currentdate = date("Y-m-d");
 
                 $errormessage = array();
@@ -109,11 +92,31 @@ $_SESSION['image'] = "user";
                         echo $displayerrormessage;
                     }
                     echo "</div>";
-                } else if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record saved.</div>";
-                    $_POST = array();
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    $query = "INSERT INTO customers SET image=:image, username=:username, password=:password, first_name=:firstname, last_name=:lastname, email=:email, gender=:gender, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, status=:status";
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+                    $reset = "ALTER TABLE customers AUTO_INCREMENT = 1";
+                    $resetquery = $con->prepare($reset);
+
+                    // bind the parameters
+                    $stmt->bindParam(':username', $username);
+                    $stmt->bindParam(':password', $hashpassword);
+                    $stmt->bindParam(':firstname', $firstname);
+                    $stmt->bindParam(':lastname', $lastname);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':gender', $gender);
+                    $stmt->bindParam(':date_of_birth', $date_of_birth);
+                    $stmt->bindParam(':registration_date_time', $registration_date_time);
+                    $stmt->bindParam(':status', $status);
+                    $stmt->bindParam(':image', $image);
+
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record saved.</div>";
+                        $_POST = array();
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    }
                 }
             } catch (PDOException $exception) {
                 if ($exception->getCode() == 23000) {
