@@ -82,6 +82,9 @@ include 'config/validate_login.php';
                 // extract row
                 // this will make $row['firstname'] to just $firstname only
                 extract($row);
+
+                $gender = ucfirst($gender);
+                $status = ucfirst($status);
                 // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$user_id}</td>";
