@@ -16,8 +16,8 @@ include 'config/validate_login.php';
         <?php
         include 'menu/menu.php';
         ?>
-        <div>
-            <p>Read One Customer</>
+        <div class="text-center">
+            <h5><strong>Customer details</strong></h5>
         </div>
 
         <!-- PHP read one record will be here -->
