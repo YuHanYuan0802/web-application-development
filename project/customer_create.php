@@ -121,7 +121,7 @@ $_SESSION['image'] = "user";
             } catch (PDOException $exception) {
                 if ($exception->getCode() == 23000) {
                     echo "<div class = 'alert alert-danger'>";
-                    echo "Username have taken, please enter other username";
+                    echo "Username or email have taken, please enter other username or email";
                     echo "</div>";
                     $resetquery->execute();
                 } else {
