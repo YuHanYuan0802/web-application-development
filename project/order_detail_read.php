@@ -37,7 +37,7 @@ include 'config/validate_login.php';
             $stmt->bindParam(":id", $id);
             $stmt->execute();
 
-            $cusquery = "SELECT customers.username, order_summary.order_date FROM order_summary INNER JOIN customers ON customers.user_id = order_summary.customer_id INNER JOIN order_detail ON order_detail.order_id = order_summary.order_id WHERE order_detail.order_id =:id";
+            $cusquery = "SELECT customers.username, customers.first_name, customers.last_name, order_summary.order_date FROM order_summary INNER JOIN customers ON customers.user_id = order_summary.customer_id INNER JOIN order_detail ON order_detail.order_id = order_summary.order_id WHERE order_detail.order_id =:id";
             $cusstmt = $con->prepare($cusquery);
             $cusstmt->bindParam(":id", $id);
             $cusstmt->execute();
@@ -50,6 +50,13 @@ include 'config/validate_login.php';
                 echo "<div>";
                 echo "<strong>Order Date: " . $order_date . "</strong>";
                 echo "</div>";
+                echo "</div>";
+                echo "<br>";
+                echo "<div>";
+                echo "<strong>First name: " . $first_name . "</strong>";
+                echo "</div>";
+                echo "<div>";
+                echo "<strong>Last name: " . $last_name . "</strong>";
                 echo "</div>";
                 echo "<br>";
             }
