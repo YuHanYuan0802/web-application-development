@@ -191,7 +191,7 @@ include 'config/validate_login.php';
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Order Date</td>
-                        <td><input type="datetime-local" name='order_date' class='form-control' /></td>
+                        <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d h:i:s") ?>" /></td>
                     </tr>
                     <tr>
                         <td></td>
