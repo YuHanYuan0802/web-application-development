@@ -81,7 +81,7 @@ $_SESSION['image'] = "user";
                     $errormessage[] = "Birthday cannot bigger than current date" . "<br>";
                 }
                 if (empty($registration_date_time)) {
-                    $errormessage[] = "Please fill in yourif registration_date_time" . "<br>";
+                    $errormessage[] = "Please fill in your registration date and time" . "<br>";
                 }
                 if (empty($status)) {
                     $errormessage[] = "Please fill in your status" . "<br>";
@@ -179,7 +179,7 @@ $_SESSION['image'] = "user";
                 <br>
                 <div class="form-group">
                     <label for="regdate">Registration Date & Time:</label>
-                    <input type="datetime-local" class="form-control" name="registration_date_time" value="<?php echo isset($_POST["registration_date_time"]) ? $_POST["registration_date_time"] : "" ?>">
+                    <input type="text" class="form-control" name="registration_date_time" value="<?php echo date("Y-m-d H:i:s") ?>" >
                 </div>
                 <br>
                 <div class="form-group">
