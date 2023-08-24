@@ -84,9 +84,14 @@ $_SESSION['image'] = "product";
                 $category = htmlspecialchars(strip_tags($_POST['category']));
 
                 if ($promote_price >= $price) {
-                    echo "<div class = 'alert alert-danger'>";
-                    echo "Promote price should lower than normal price.";
-                    echo "</div>";
+                    $errormessage[] = "Promote price should lower than normal price.";
+                }
+                if (!empty($$errormessage)) {
+                    foreach ($errormessage as $displayerrormessage) {
+                        echo "<div class = 'alert alert-danger'>";
+                        echo $displayerrormessage;
+                        echo "</div>";
+                    }
                 } else {
                     // write update query
                     // in this case, it seemed like we have so many fields to pass and
