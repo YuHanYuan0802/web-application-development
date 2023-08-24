@@ -96,7 +96,6 @@ $_SESSION['image'] = "user";
                     $stmt->bindParam(':password', $hashpassword);
                 }
 
-                $errormessage = array();
                 // Execute the query
                 if (!$finalusername) {
                     $errormessage[] = "Please enter at least 3 character for new username" . "<br>";
