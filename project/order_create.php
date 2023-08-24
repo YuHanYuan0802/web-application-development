@@ -37,7 +37,16 @@ include 'config/validate_login.php';
                 $quantity = $_POST['quantity'];
                 $order_date = $_POST['order_date'];
 
+                $statusquery = "SELECT status FROM customers WHERE user_id =:user_id";
+                $statusstmt = $con->prepare($statusquery);
+                $statusstmt->bindParam(':user_id', $customer_id);
+                $statusstmt->execute();
+                $statusrow = $statusstmt->fetch(PDO::FETCH_ASSOC);
+
                 $errormessage = array();
+                if ($statusrow['status']=="inactive") {
+                    $errormessage[] = "Customer not active!" . "<br>";
+                }
                 if (empty($customer_id)) {
                     $errormessage[] = "Please select the customer." . "<br>";
                 }
