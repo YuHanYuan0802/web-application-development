@@ -86,7 +86,7 @@ $_SESSION['image'] = "product";
                 if ($promote_price >= $price) {
                     $errormessage[] = "Promote price should lower than normal price.";
                 }
-                if (!empty($$errormessage)) {
+                if (!empty($errormessage)) {
                     foreach ($errormessage as $displayerrormessage) {
                         echo "<div class = 'alert alert-danger'>";
                         echo $displayerrormessage;
@@ -96,9 +96,27 @@ $_SESSION['image'] = "product";
                     // write update query
                     // in this case, it seemed like we have so many fields to pass and
                     // it is better to label them and not use question marks
-                    $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category, image=:image WHERE id = :id";
-                    // prepare query for excecution
-                    $stmt = $con->prepare($query);
+                    if (isset($_POST['deleteimage'])) {
+                        if ($img == "default_user.png" || $img == "product_image_coming_soon.jpg") {
+                            //no need to delete default image
+                        } else {
+                            unlink('uploads/' . $img);
+                            $unlinkquery = "UPDATE products SET image=:image WHERE id=:id";
+                            $unlinkstmt = $con->prepare($unlinkquery);
+                            $unlinkstmt->bindParam(':image', $image);
+                            $unlinkstmt->bindParam(':id', $id);
+                            $unlinkstmt->execute();
+                        }
+                    }
+                    $query = "UPDATE products SET name=:name, description=:description, price=:price, promote_price=:promote_price, category_id =:category";
+                    if (empty($_FILES['image']['tmp_name'])) {
+                        $query .= " WHERE id=:id";
+                        $stmt = $con->prepare($query);
+                    } else {
+                        $query .= ", image=:image WHERE id=:id";
+                        $stmt = $con->prepare($query);
+                        $stmt->bindParam(':image', $image);
+                    }
 
                     // bind the parameters
                     $stmt->bindParam(':name', $name);
@@ -106,7 +124,6 @@ $_SESSION['image'] = "product";
                     $stmt->bindParam(':price', $price);
                     $stmt->bindParam(':promote_price', $promote_price);
                     $stmt->bindParam(':category', $category);
-                    $stmt->bindParam(':image', $image);
                     $stmt->bindParam(':id', $id);
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was updated.</div>";
@@ -173,12 +190,15 @@ $_SESSION['image'] = "product";
                         <br>
                         <br>
                         <input type="file" name="image" />
+                        <br>
+                        <br>
+                        <input type="submit" name="deleteimage" value="Delete Image">
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' value='Save Changes' class='btn btn-primary' />
+                        <input type='submit' value='Save Changes' name="submit" class='btn btn-primary' />
                         <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
                     </td>
                 </tr>

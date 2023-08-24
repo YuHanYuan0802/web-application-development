@@ -92,16 +92,14 @@ $_SESSION['image'] = "user";
                 $pwrow = $pwstmt->fetch(PDO::FETCH_ASSOC);
                 $dbpw = $pwrow['password'];
 
-                if (!empty($hashpassword)) {
-                    $stmt->bindParam(':password', $hashpassword);
-                }
-
-                // Execute the query
                 if (!$finalusername) {
                     $errormessage[] = "Please enter at least 3 character for new username" . "<br>";
                 }
                 if (!password_verify($old_password, $dbpw) && !empty($old_password)) {
                     $errormessage[] = "Incorrect password. Please try again." . "<br>";
+                }
+                if (password_verify($old_password, $dbpw) && empty($password) && empty($cfm_new_password)) {
+                    $errormessage[] = "Please enter new password to change your password." . "<br>";
                 }
                 if ($password === $old_password  && !empty($password)) {
                     $errormessage[] = "New password cannot be same as old password. Please try again." . "<br>";
@@ -119,17 +117,37 @@ $_SESSION['image'] = "user";
                     }
                     echo "</div>";
                 } else {
-                    $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status, image=:image";
-                    if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password'])) {
-                        $query .= ", password=:password WHERE user_id = :user_id";
+                    if (isset($_POST['deleteimage'])) {
+                        if ($img == "default_user.png" || $img == "product_image_coming_soon.jpg") {
+                            //no need to delete default image
+                        } else {
+                            unlink('uploads/' . $img);
+                            $unlinkquery = "UPDATE customers SET image=:image WHERE user_id=:user_id";
+                            $unlinkstmt = $con->prepare($unlinkquery);
+                            $unlinkstmt->bindParam(':image', $image);
+                            $unlinkstmt->bindParam(':user_id', $id);
+                            $unlinkstmt->execute();
+                        }
+                    }
+                    $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
+                    if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password']) && empty($_FILES['image']['tmp_name'])) {
+                        $query .= ", password=:password WHERE user_id=:user_id";
                         $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-                    } else {
+                    } else if (empty($_POST['old_password']) && empty($_POST['new_password']) && empty($_POST['cfm_new_password']) && empty($_FILES['image']['tmp_name'])) {
                         $query .= " WHERE user_id=:user_id";
+                    } else {
+                        $query .= ", image=:image WHERE user_id=:user_id";
                     }
                     // prepare query for excecution
                     $stmt = $con->prepare($query);
 
                     // bind the parameters
+                    if (!empty($hashpassword)) {
+                        $stmt->bindParam(':password', $hashpassword);
+                    }
+                    if (!empty($_FILES['image']['tmp_name'])) {
+                        $stmt->bindParam(':image', $image);
+                    }
                     $stmt->bindParam(':username', $username);
                     $stmt->bindParam(':first_name', $first_name);
                     $stmt->bindParam(':last_name', $last_name);
@@ -138,10 +156,10 @@ $_SESSION['image'] = "user";
                     $stmt->bindParam(':registration_date_time', $registration_date_time);
                     $stmt->bindParam(':gender', $gender);
                     $stmt->bindParam(':status', $status);
-                    $stmt->bindParam(':image', $image);
                     $stmt->bindParam(':user_id', $id);
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was updated.</div>";
+                        echo "<script>window.location.href = 'customer_read.php';</script>";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                     }
@@ -229,12 +247,15 @@ $_SESSION['image'] = "user";
                         <br>
                         <br>
                         <input type="file" name="image" />
+                        <br>
+                        <br>
+                        <input type="submit" name="deleteimage" value="Delete Image">
                     </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' value='Save Changes' class='btn btn-primary' />
+                        <input type='submit' value='Save Changes' name="submit" class='btn btn-primary' />
                         <a href='customer_read.php' class='btn btn-danger'>Back to read customers</a>
                     </td>
                 </tr>
