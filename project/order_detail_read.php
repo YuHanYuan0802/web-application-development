@@ -16,8 +16,8 @@ include 'config/validate_login.php';
         <?php
         include 'menu/menu.php';
         ?>
-        <div>
-            <p>Read Order Detail</p>
+        <div class="text-center">
+            <h5><strong>Order Detail</strong></h5>
         </div>
 
         <!-- PHP read one record will be here -->
@@ -43,6 +43,9 @@ include 'config/validate_login.php';
             $cusstmt->execute();
             if ($cusrow = $cusstmt->fetch(PDO::FETCH_ASSOC)){
                 extract($cusrow);
+                echo "<div>";
+                echo "<strong>Order ID: " . $id . "</strong>";
+                echo "</div>";
                 echo "<div class = 'd-flex justify-content-between'>";
                 echo "<div>";
                 echo "<strong>Username: " . $username . "</strong>";
@@ -53,10 +56,7 @@ include 'config/validate_login.php';
                 echo "</div>";
                 echo "<br>";
                 echo "<div>";
-                echo "<strong>First name: " . $first_name . "</strong>";
-                echo "</div>";
-                echo "<div>";
-                echo "<strong>Last name: " . $last_name . "</strong>";
+                echo "<strong>Full Name: " . $first_name . "" . $last_name. "</strong>";
                 echo "</div>";
                 echo "<br>";
             }
@@ -84,7 +84,7 @@ include 'config/validate_login.php';
                     echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";
                     $theprice = $decimalpromote;
                 } else {
-                    echo "<td class = 'text-end'>{$decimalprice}</td>";
+                    echo "<td class = 'text-end'>RM {$decimalprice}</td>";
                     $theprice = $decimalprice;
                 }
                 echo "<td class='text-end'>x" . $row['quantity'] . "</td>";
