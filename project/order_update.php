@@ -33,7 +33,7 @@ include 'config/validate_login.php';
         $customer_stmt->execute();
         $customers = $customer_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $product_query = "SELECT id, name FROM products";
+        $product_query = "SELECT id, name, price FROM products ORDER BY id ASC";
         $product_stmt = $con->prepare($product_query);
         $product_stmt->execute();
         $products = $product_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -153,7 +153,7 @@ include 'config/validate_login.php';
                                     <?php
                                     for ($i = 0; $i < count($products); $i++) {
                                         $product_selected = $products[$i]['id'] == $order_details[$x]['product_id'] ? "selected" : "";
-                                        echo "<option value='{$products[$i]['id']}' $product_selected>{$products[$i]['name']}</option>";
+                                        echo "<option value='{$products[$i]['id']}' $product_selected>{$products[$i]['name']}" . " RM " . "{$products[$i]['price']}" . "</option>";
                                     }
                                     ?>
                                 </select>

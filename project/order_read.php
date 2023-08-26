@@ -52,7 +52,7 @@ include 'config/validate_login.php';
             </form>
         </div>';
         // link to create record form
-        echo "<br><div><a href='order_create.php' class='btn btn-primary m-b-1em'>Create New Order</a></div>" . "<br>";
+        echo "<div><a href='order_create.php' class='btn btn-primary m-b-1em'>Create New Order</a></div>" . "<br>";
 
         //check if more than 0 record found
         if ($num > 0) {

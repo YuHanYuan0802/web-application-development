@@ -52,7 +52,7 @@ include 'config/validate_login.php';
             </form>
         </div>';
         // link to create record form
-        echo "<br><div><a href='category_create.php' class='btn btn-primary m-b-1em'>Create New Category</a></div>" . "<br>";
+        echo "<div><a href='category_create.php' class='btn btn-primary m-b-1em'>Create New Category</a></div>" . "<br>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -80,13 +80,13 @@ include 'config/validate_login.php';
 
                 echo "<td>";
                 // read one record
-                echo "<a href='category_read_one.php?id={$category_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
+                echo "<a href='category_read_one.php?id={$category_id}' class='btn btn-info m-r-1em m-1'>Read</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='category_update.php?id={$category_id}' class='btn btn-primary m-r-1em mx-1'>Edit</a>";
+                echo "<a href='category_update.php?id={$category_id}' class='btn btn-primary m-r-1em m-1'>Edit</a>";
 
                 // we will use this links on next part of this post
-                echo "<a href='#' onclick='delete_product({$category_id});'  class='btn btn-danger mx-1'>Delete</a>";
+                echo "<a href='#' onclick='delete_product({$category_id});'  class='btn btn-danger m-1'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
@@ -10,73 +10,76 @@ include 'config/validate_login.php';
 </head>
 
 <body>
-    <?php
-    if ($_POST) {
-        include 'config/database.php';
-        try {
-            // insert query
-            $query = "INSERT INTO contact SET first_name=:firstname, last_name=:lastname, email=:email, phone=:phone, address=:address, message=:message";
-            // prepare query for execution
-            $stmt = $con->prepare($query);
-            $firstname = $_POST['firstname'];
-            $lastname = $_POST['lastname'];
-            $email = $_POST['email'];
-            $phone = $_POST['phone'];
-            $address = $_POST['address'];
-            $message = $_POST['message'];
-            // bind the parameters
-            $stmt->bindParam(':firstname', $firstname);
-            $stmt->bindParam(':lastname', $lastname);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':phone', $phone);
-            $stmt->bindParam(':address', $address);
-            $stmt->bindParam(':message', $message);
-
-            $errorMessage = array();
-
-            if (empty($firstname) || empty($lastname)) {
-                $errorMessage[] = "First name and last name fields are required.";
-            }
-
-            if (empty($email)) {
-                $errorMessage[] = "Email field is empty.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errorMessage[] = "Invalid email format.";
-            }
-
-            if (empty($phone)) {
-                $errorMessage[] = "Phone number field is empty.";
-            }
-
-            if (empty($address)) {
-                $errorMessage[] = "Address field is empty.";
-            }
-
-            if (empty($message)) {
-                $errorMessage[] = "Message field is empty.";
-            }
-
-            if (!empty($errorMessage)) {
-                echo "<div class='alert alert-danger m-3'>";
-                foreach ($errorMessage as $displayErrorMessage) {
-                    echo $displayErrorMessage . "<br>";
-                }
-                echo "</div>";
-            } else if ($stmt->execute()) {
-                echo "<div class='alert alert-success'>Record saved.</div>";
-                $_POST = array();
-            } else {
-                echo "<div class='alert alert-danger'>Unable to save record.</div>";
-            }
-        } catch (PDOException $exception) {
-            die('ERROR: ' . $exception->getMessage());
-        }
-    }
-    ?>
     <div class="container">
+
         <?php
         include 'menu/menu.php';
+
+        if ($_POST) {
+            include 'config/database.php';
+            try {
+                $errorMessage = array();
+
+                if (empty($firstname) || empty($lastname)) {
+                    $errorMessage[] = "First name and last name fields are required.";
+                }
+
+                if (empty($email)) {
+                    $errorMessage[] = "Email field is empty.";
+                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errorMessage[] = "Invalid email format.";
+                }
+
+                if (empty($phone)) {
+                    $errorMessage[] = "Phone number field is empty.";
+                }
+
+                if (empty($address)) {
+                    $errorMessage[] = "Address field is empty.";
+                }
+
+                if (empty($message)) {
+                    $errorMessage[] = "Message field is empty.";
+                }
+
+                if (!empty($errorMessage)) {
+                    echo "<div class='container alert alert-danger m-3'>";
+                    foreach ($errorMessage as $displayErrorMessage) {
+                        echo $displayErrorMessage . "<br>";
+                    }
+                    echo "</div>";
+                } else {
+                    // insert query
+                    $query = "INSERT INTO contact SET first_name=:firstname, last_name=:lastname, email=:email, phone=:phone, address=:address, message=:message";
+                    // prepare query for execution
+                    $stmt = $con->prepare($query);
+                    $firstname = $_POST['firstname'];
+                    $lastname = $_POST['lastname'];
+                    $email = $_POST['email'];
+                    $phone = $_POST['phone'];
+                    $address = $_POST['address'];
+                    $message = $_POST['message'];
+                    // bind the parameters
+                    $stmt->bindParam(':firstname', $firstname);
+                    $stmt->bindParam(':lastname', $lastname);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':phone', $phone);
+                    $stmt->bindParam(':address', $address);
+                    $stmt->bindParam(':message', $message);
+
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record saved.</div>";
+                        $_POST = array();
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to save record.</div>";
+                    }
+                }
+            } catch (PDOException $exception) {
+                die('ERROR: ' . $exception->getMessage());
+            }
+        }
         ?>
+
         <form method="post">
             <div class="row mb-3">
                 <div class="col-md-6">
