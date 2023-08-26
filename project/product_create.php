@@ -169,6 +169,7 @@ $_SESSION['image'] = "product";
                     <td></td>
                     <td>
                         <input type='submit' value='Submit' class='btn btn-primary' />
+                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
                     </td>
                 </tr>
             </table>

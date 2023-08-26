@@ -197,6 +197,7 @@ include 'config/validate_login.php';
                         <td></td>
                         <td>
                             <input type="submit" value="Submit" class="btn btn-primary">
+                            <a href="order_read.php" class="btn btn-danger">Back to Read Order Summary</a>
                         </td>
                     </tr>
                 </table>
