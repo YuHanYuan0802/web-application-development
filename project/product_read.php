@@ -34,7 +34,7 @@ include 'config/validate_login.php';
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
         $query = "SELECT products.image, products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id";
         if (!empty($searchKeyword)) {
-            $query .= " WHERE name LIKE :keyword";
+            $query .= "  WHERE category_name LIKE :keyword OR name LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
         }
         $query .= " ORDER BY products.id ASC";
@@ -49,13 +49,13 @@ include 'config/validate_login.php';
         echo '<div class="p-3">
             <form method="GET" action="">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="search" placeholder="Search product..." value="' . str_replace('%', '', $searchKeyword) . '">
+                    <input type="text" class="form-control" name="search" placeholder="Search product or category..." value="' . str_replace('%', '', $searchKeyword) . '">
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
         </div>';
         // link to create record form
-        echo "<br><div><a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a></div>" . "<br>";
+        echo "<div><a href='product_create.php' class='btn btn-primary m-b-1em'>Create New Product</a></div>" . "<br>";
 
         //check if more than 0 record found
         if ($num > 0) {
@@ -86,7 +86,7 @@ include 'config/validate_login.php';
                 echo "<tr>";
                 echo "<td>{$id}</td>";
                 echo "<td>{$name}</td>";
-                echo "<td><img src='uploads/{$image}' alt='{$name}' width='100px'></td>";
+                echo "<td class='text-center'><img src='uploads/{$image}' alt='{$name}' width='100px'></td>";
                 echo "<td>{$description}</td>";
                 if ($promote_price < $decimalprice && $promote_price > 0) {
                     echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";

@@ -18,8 +18,8 @@ if (!empty($_FILES["image"]["name"])) {
     }
 
     list($width, $height) = $check;
-    if ($width >= 600 || $height >= 600) {
-        $errormessage[] = "Image should be under 600x600.";
+    if ($width > 300 || $height > 300) {
+        $errormessage[] = "Image should be under 300x300.";
     }
 
     $allowed_file_types = array("jpg", "jpeg", "png", "gif");
