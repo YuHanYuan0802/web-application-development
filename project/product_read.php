@@ -85,7 +85,7 @@ include 'config/validate_login.php';
                 // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$id}</td>";
-                echo "<td>{$name}</td>";
+                echo "<td><a href='product_read_one.php?id={$id}'>{$name}</a></td>";
                 echo "<td class='text-center'><img src='uploads/{$image}' alt='{$name}' width='100px'></td>";
                 echo "<td>{$description}</td>";
                 if ($promote_price < $decimalprice && $promote_price > 0) {
@@ -97,8 +97,6 @@ include 'config/validate_login.php';
                 echo "<td>{$expired_date}</td>";
                 echo "<td>{$category_name}</td>";
                 echo "<td>";
-                // read one record
-                echo "<a href='product_read_one.php?id={$id}' class='btn btn-info m-r-1em m-1'>Read</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='product_update.php?id={$id}' class='btn btn-primary m-r-1em m-1'>Edit</a>";

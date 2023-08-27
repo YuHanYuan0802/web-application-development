@@ -88,7 +88,7 @@ include 'config/validate_login.php';
                 // creating new table row per record
                 echo "<tr>";
                 echo "<td>{$user_id}</td>";
-                echo "<td>{$username}</td>";
+                echo "<td><a href='customer_read_one.php?id={$user_id}'>{$username}</a></td>";
                 echo "<td><img src='uploads/{$image}' alt='{$username}' width='100px'</td>";
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
@@ -98,8 +98,6 @@ include 'config/validate_login.php';
                 echo "<td>{$gender}</td>";
                 echo "<td>{$status}</td>";
                 echo "<td>";
-                // read one record
-                echo "<a href='customer_read_one.php?id={$user_id}' class='btn btn-info m-r-1em m-1'>Read</a>";
 
                 // we will use this links on next part of this post
                 echo "<a href='customer_update.php?id={$user_id}' class='btn btn-primary m-r-1em m-1'>Edit</a>";

@@ -80,7 +80,7 @@ include 'config/validate_login.php';
                 extract($row);
                 echo "<tr>";
                 echo "<td>{$order_id}</td>";
-                echo "<td>{$username}</td>";
+                echo "<td><a href='order_detail_read.php?id={$order_id}'>{$username}</a></td>";
                 echo "<td>{$order_date}</td>";
                 while ($totalrow = $totalstmt->fetch(PDO::FETCH_ASSOC)) {
                     if ($totalrow['promote_price'] < $totalrow['price'] && $totalrow['promote_price'] > 0) {
@@ -95,7 +95,6 @@ include 'config/validate_login.php';
                 echo "<td class = 'text-end'>RM {$decimaltotal}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_detail_read.php?id={$order_id}' class='btn btn-info m-r-1em mx-1'>Read</a>";
                 echo "<a href='order_update.php?id={$order_id}' class='btn btn-primary m-r-1em mx-1'>Edit</a>";
                 echo "<a href='#' onclick='delete_order({$order_id});'  class='btn btn-danger mx-1'>Delete</a>";
                 echo "</td>";
