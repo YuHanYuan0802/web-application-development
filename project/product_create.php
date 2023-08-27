@@ -49,7 +49,7 @@ $_SESSION['image'] = "product";
                 }
                 if (empty($promote_price)) {
                     $promote_price = "";
-                } else if(!is_numeric($promote_price)){
+                } else if (!is_numeric($promote_price)) {
                     $errormessage[] = "Please enter number for promote price" . "<br>";
                 }
                 if (empty($manufacture_date)) {
