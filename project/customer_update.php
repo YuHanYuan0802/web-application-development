@@ -164,6 +164,9 @@ $_SESSION['image'] = "user";
                     $stmt->bindParam(':user_id', $id);
                     if ($stmt->execute()) {
                         echo "<div class='alert alert-success'>Record was updated.</div>";
+                        echo "<script>";
+                        echo "window.location.href='customer_read_one.php?id={$id}'";
+                        echo "</script>";
                     } else {
                         echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
                     }
