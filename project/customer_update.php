@@ -146,6 +146,11 @@ $_SESSION['image'] = "user";
                         $stmt->bindParam(':password', $hashpassword);
                     }
                     if (!empty($_FILES['image']['tmp_name'])) {
+                        if ($img == "default_user.png" || $img == "product_image_coming_soon.jpg") {
+                            //no need to delete default image
+                        } else {
+                            unlink('uploads/' . $img);
+                        }
                         $stmt->bindParam(':image', $image);
                     }
                     $stmt->bindParam(':username', $username);

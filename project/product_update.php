@@ -113,6 +113,11 @@ $_SESSION['image'] = "product";
                         $query .= " WHERE id=:id";
                         $stmt = $con->prepare($query);
                     } else {
+                        if ($img == "default_user.png" || $img == "product_image_coming_soon.jpg") {
+                            //no need to delete default image
+                        } else {
+                            unlink('uploads/' . $img);
+                        }
                         $query .= ", image=:image WHERE id=:id";
                         $stmt = $con->prepare($query);
                         $stmt->bindParam(':image', $image);
