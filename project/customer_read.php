@@ -59,8 +59,8 @@ include 'config/validate_login.php';
 
         //check if more than 0 record found
         if ($num > 0) {
-
-            echo "<table id='customer_table' class='table table-hover table-responsive table-bordered'>"; //start table
+            echo "<div class='table-responsive'>";
+            echo "<table id='customer_table' class='table table-hover table-bordered'>"; //start table
 
             //creating our table heading
             echo "<tr>";
@@ -89,7 +89,7 @@ include 'config/validate_login.php';
                 echo "<tr>";
                 echo "<td>{$user_id}</td>";
                 echo "<td><a href='customer_read_one.php?id={$user_id}'>{$username}</a></td>";
-                echo "<td><img src='uploads/{$image}' alt='{$username}' width='100px'</td>";
+                echo "<td><img src='uploads/{$image}' class='img-fluid' alt='{$username}' width='100px'</td>";
                 echo "<td>{$first_name}</td>";
                 echo "<td>{$last_name}</td>";
                 echo "<td>{$email}</td>";
@@ -111,6 +111,7 @@ include 'config/validate_login.php';
 
             // end table
             echo "</table>";
+            echo "</div>";
         } else {
             echo "<div class='alert alert-danger'>No records found.</div>";
         }

@@ -59,8 +59,8 @@ include 'config/validate_login.php';
 
         //check if more than 0 record found
         if ($num > 0) {
-
-            echo "<table id='product_table' class='table table-hover table-responsive table-bordered'>"; //start table
+            echo "<div class='table-responsive'>";
+            echo "<table id='product_table' class='table table-hover table-bordered'>"; //start table
 
             //creating our table heading
             echo "<tr>";
@@ -86,7 +86,7 @@ include 'config/validate_login.php';
                 echo "<tr>";
                 echo "<td>{$id}</td>";
                 echo "<td><a href='product_read_one.php?id={$id}'>{$name}</a></td>";
-                echo "<td class='text-center'><img src='uploads/{$image}' alt='{$name}' width='100px'></td>";
+                echo "<td class='text-center'><img src='uploads/{$image}' class='img-fluid' alt='{$name}' width='100px'></td>";
                 echo "<td>{$description}</td>";
                 if ($promote_price < $decimalprice && $promote_price > 0) {
                     echo "<td class = 'd-flex justify-content-end'><div class = 'mx-1 text-decoration-line-through'>RM {$decimalprice}</div><div class = 'mx-1'>RM {$decimalpromote}</div></td>";
@@ -110,6 +110,7 @@ include 'config/validate_login.php';
 
             // end table
             echo "</table>";
+            echo "</div>";
         } else {
             echo "<div class='alert alert-danger'>No records found.</div>";
         }

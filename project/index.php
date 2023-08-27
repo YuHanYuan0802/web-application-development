@@ -119,7 +119,7 @@ include 'config/validate_login.php';
                 for ($i = 0; $i < $counttop; $i++) {
                     echo "<div class='shadow p-5 m-5 bg-body-tertiary rounded text-start' style='width:25rem;'>";
                     $toprow = $topstmt->fetch(PDO::FETCH_ASSOC);
-                    echo "<img src='uploads/{$toprow['image']}' alt='{$toprow['name']}' width='100px'/>";
+                    echo "<img src='uploads/{$toprow['image']}' class='img-fluid' alt='{$toprow['name']}' width='100px'/>";
                     echo "<h5><strong>" . $toprow['name'] . "</strong></h5>";
                     echo "<h5>Category</h5>";
                     echo "<h5><strong>" . $toprow['category_name'] . "</strong></h5>";
@@ -139,7 +139,7 @@ include 'config/validate_login.php';
                 for ($i = 0; $i < $countnobuy; $i++) {
                     echo "<div class='shadow p-5 m-5 bg-body-tertiary rounded text-start' style='width:25rem;'>";
                     $nobuyrow = $nobuystmt->fetch(PDO::FETCH_ASSOC);
-                    echo "<img src='uploads/{$nobuyrow['image']}' alt='{$nobuyrow['name']}' width='100px'/>";
+                    echo "<img src='uploads/{$nobuyrow['image']}' class='img-fluid' alt='{$nobuyrow['name']}' width='100px'/>";
                     echo "<h5><strong>" . $nobuyrow['name'] . "</strong></h5>";
                     echo "<h5>Category</h5>";
                     echo "<h5><strong>" . $nobuyrow['category_name'] . "</strong></h5>";
