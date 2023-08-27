@@ -44,9 +44,13 @@ $_SESSION['image'] = "product";
                 }
                 if (empty($price)) {
                     $errormessage[] = "Please fill in your price" . "<br>";
+                } else if (!is_numeric($price)) {
+                    $errormessage[] = "Please enter number for price" . "<br>";
                 }
                 if (empty($promote_price)) {
                     $promote_price = "";
+                } else if(!is_numeric($promote_price)){
+                    $errormessage[] = "Please enter number for promote price" . "<br>";
                 }
                 if (empty($manufacture_date)) {
                     $errormessage[] = "Please fill in your manufacture date" . "<br>";
@@ -59,9 +63,6 @@ $_SESSION['image'] = "product";
                 }
                 if ($expired_date <= $manufacture_date) {
                     $errormessage[] = "Expired date cannot smaller than manufacture date" . "<br>";
-                }
-                if (!is_numeric($price)) {
-                    $errormessage[] = "Please enter number for price" . "<br>";
                 }
                 if (!empty($errormessage)) {
                     echo "<div class = 'alert alert-danger'>";
