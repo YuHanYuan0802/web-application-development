@@ -14,25 +14,29 @@ if (!empty($_FILES["image"]["name"])) {
     if ($check !== false) {
         // echo "File is an image";
     } else {
-        $errormessage[] = "Submitted file is not an image.";
+        $errormessage[] = "Submitted file is not an image." . "<br>";
     }
 
     list($width, $height) = $check;
     if ($width > 300 || $height > 300) {
-        $errormessage[] = "Image should be under 300x300.";
+        $errormessage[] = "Image should be under 300x300." . "<br>";
+    }
+
+    if ($width !== $height) {
+        $errormessage[] = "Image should be same width and same height." . "<br>";
     }
 
     $allowed_file_types = array("jpg", "jpeg", "png", "gif");
     if (!in_array($file_type, $allowed_file_types)) {
-        $errormessage[] = "Only JPG, JPEG, PNG, GIF files are allowed.";
+        $errormessage[] = "Only JPG, JPEG, PNG, GIF files are allowed." . "<br>";
     }
 
     if (file_exists($target_file)) {
-        $errormessage[] = "Image already exists. Try to change file name.";
+        $errormessage[] = "Image already exists. Try to change file name." . "<br>";
     }
 
     if ($_FILES["image"]["size"] > (512000)) {
-        $errormessage[] = "Image must be less than 512 KB in size.";
+        $errormessage[] = "Image must be less than 512 KB in size." . "<br>";
     }
 
     if (!is_dir($target_directory)) {
