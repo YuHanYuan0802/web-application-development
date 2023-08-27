@@ -34,7 +34,7 @@ include 'config/validate_login.php';
             $query .= " WHERE username LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
         }
-        $query .= " ORDER BY order_id ASC";
+        $query .= " ORDER BY order_id DESC";
         $stmt = $con->prepare($query);
         if (!empty($searchKeyword)) {
             $stmt->bindParam(':keyword', $searchKeyword);
@@ -72,6 +72,7 @@ include 'config/validate_login.php';
             // retrieve our table contents
             for ($i = 1; $i <= $num; $i++) {
                 $total = 0;
+                //calculate total
                 $totalquery = "SELECT products.name, products.price, products.promote_price, order_detail.quantity FROM order_detail INNER JOIN products ON products.id = order_detail.product_id INNER JOIN order_summary ON order_summary.order_id = order_detail.order_id INNER JOIN customers ON customers.user_id = order_summary.customer_id WHERE order_detail.order_id=:id";
                 $totalstmt = $con->prepare($totalquery);
                 $totalstmt->bindParam(':id', $i);
