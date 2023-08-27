@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
@@ -32,7 +32,7 @@ include 'config/validate_login.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id  WHERE products.id = :id ";
+            $query = "SELECT products.image, products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id  WHERE products.id = :id ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -46,6 +46,7 @@ include 'config/validate_login.php';
 
             // values to fill up our form
             $name = $row['name'];
+            $image = $row['image'];
             $description = $row['description'];
             $price = $row['price'];
             $decimalprice = number_format((float)$price, 2, '.', '');
@@ -72,18 +73,30 @@ include 'config/validate_login.php';
                 <td><?php echo htmlspecialchars($name, ENT_QUOTES);  ?></td>
             </tr>
             <tr>
+                <td>Image</td>
+                <td><img src="uploads/<?php echo $row['image'];  ?>" alt="<?php echo htmlspecialchars($name, ENT_QUOTES) ?>" width="100px"></td>
+            </tr>
+            <tr>
                 <td>Description</td>
                 <td><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></td>
             </tr>
-            <tr>
-                <td>Price</td>
-                <td><?php echo htmlspecialchars($decimalprice, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
-                <td>Promote Price</td>
-                <td><?php echo htmlspecialchars($decimalpromote, ENT_QUOTES);  ?></td>
-            </tr>
-            <tr>
+            <?php
+            if ($promote_price == 0 && $price > $promote_price) {
+                echo "<tr>";
+                echo "<td>Price</td>";
+                echo "<td>RM " . htmlspecialchars($decimalprice, ENT_QUOTES) . "</td>";
+                echo "</tr>";
+            }else {
+                echo "<tr>";
+                echo "<td>Price</td>";
+                echo "<td>RM " . htmlspecialchars($decimalprice, ENT_QUOTES) . "</td>";
+                echo "</tr>";
+                echo "<tr>";
+                echo "<td>Promote Price</td>";
+                echo "<td>RM " . htmlspecialchars($decimalpromote, ENT_QUOTES) . "</td>";
+                echo "</tr>";
+            }
+            ?>
                 <td>Manufacture Date</td>
                 <td><?php echo htmlspecialchars($manuDate, ENT_QUOTES);  ?></td>
             </tr>
