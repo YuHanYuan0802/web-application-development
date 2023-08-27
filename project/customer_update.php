@@ -70,7 +70,6 @@ $_SESSION['image'] = "user";
             include 'upload.php';
             try {
                 // posted values
-                $username = htmlspecialchars(strip_tags($_POST['username']));
                 $first_name = htmlspecialchars(strip_tags($_POST['first_name']));
                 $last_name = htmlspecialchars(strip_tags($_POST['last_name']));
                 $password = $_POST['new_password'];
@@ -84,16 +83,22 @@ $_SESSION['image'] = "user";
 
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
-                $usernamepattern = "/^[0-9A-Za-z]{3,}$/";
-                $finalusername = preg_match($usernamepattern, $username);
                 $pwquery = "SELECT * FROM customers WHERE user_id = $id";
                 $pwstmt = $con->prepare($pwquery);
                 $pwstmt->execute();
                 $pwrow = $pwstmt->fetch(PDO::FETCH_ASSOC);
                 $dbpw = $pwrow['password'];
 
-                if (!$finalusername) {
-                    $errormessage[] = "Please enter at least 3 character for new username" . "<br>";
+                if (empty($first_name)) {
+                    $errormessage[] = "Please fill in your first name" . "<br>";
+                }
+                if (empty($last_name)) {
+                    $errormessage[] = "Please fill in your last name" . "<br>";
+                }
+                if (empty($email)) {
+                    $errormessage[] = "Email field is empty.";
+                } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errormessage[] = "Invalid email format.";
                 }
                 if (!password_verify($old_password, $dbpw) && !empty($old_password)) {
                     $errormessage[] = "Incorrect password. Please try again." . "<br>";
@@ -129,7 +134,7 @@ $_SESSION['image'] = "user";
                             $unlinkstmt->execute();
                         }
                     }
-                    $query = "UPDATE customers SET username=:username, first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
+                    $query = "UPDATE customers SET first_name=:first_name, last_name=:last_name, email=:email, date_of_birth=:date_of_birth, registration_date_time=:registration_date_time, gender=:gender, status=:status";
                     if (!empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['cfm_new_password']) && empty($_FILES['image']['tmp_name'])) {
                         $query .= ", password=:password WHERE user_id=:user_id";
                         $hashpassword = password_hash($password, PASSWORD_DEFAULT);
@@ -153,7 +158,6 @@ $_SESSION['image'] = "user";
                         }
                         $stmt->bindParam(':image', $image);
                     }
-                    $stmt->bindParam(':username', $username);
                     $stmt->bindParam(':first_name', $first_name);
                     $stmt->bindParam(':last_name', $last_name);
                     $stmt->bindParam(':email', $email);
@@ -185,7 +189,7 @@ $_SESSION['image'] = "user";
             <table class='table table-hover table-responsive table-bordered'>
                 <tr>
                     <td>Username</td>
-                    <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' disabled /></td>
                 </tr>
                 <tr>
                     <td>First Name</td>
