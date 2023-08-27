@@ -83,15 +83,32 @@ $_SESSION['image'] = "product";
                 $promote_price = htmlspecialchars(strip_tags($_POST['promote_price']));
                 $category = htmlspecialchars(strip_tags($_POST['category']));
 
+                if (empty($name)) {
+                    $errormessage[] = "Please fill in your name" . "<br>";
+                }
+                if (empty($description)) {
+                    $errormessage[] = "Please fill in your description" . "<br>";
+                }
+                if (empty($price)) {
+                    $errormessage[] = "Please fill in your price" . "<br>";
+                }
+                if (empty($promote_price)) {
+                    $promote_price = "";
+                } else if(!is_numeric($promote_price)){
+                    $errormessage[] = "Please enter number for promote price" . "<br>";
+                }
                 if ($promote_price >= $price) {
-                    $errormessage[] = "Promote price should lower than normal price.";
+                    $errormessage[] = "Promote price should lower than normal price." . "<br>";
+                }
+                if (!is_numeric($price)) {
+                    $errormessage[] = "Please enter number for price" . "<br>";
                 }
                 if (!empty($errormessage)) {
+                    echo "<div class = 'alert alert-danger'>";
                     foreach ($errormessage as $displayerrormessage) {
-                        echo "<div class = 'alert alert-danger'>";
                         echo $displayerrormessage;
-                        echo "</div>";
                     }
+                    echo "</div>";
                 } else {
                     // write update query
                     // in this case, it seemed like we have so many fields to pass and
