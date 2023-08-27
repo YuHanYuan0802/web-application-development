@@ -57,18 +57,14 @@ if (isset($_POST['logout'])) {
                     </ul>
                 </li>
                 <a class="nav-link" href="contact.php">Contact Us</a>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?php
-                        echo "<img src='uploads/{$_SESSION['user_image']}' alt='{$_SESSION['username']}' width='30px'>";
-                        ?>
-                    </a>
-                    <ul class="dropdown-menu text-center">
-                        <form action="" method="post">
-                            <input type="submit" class="btn mx-1" name="logout" value="Log out">
-                        </form>
-                    </ul>
-                </li>
+                <a class="nav-link" href="customer_read.php" role="button" aria-expanded="false">
+                    <?php
+                    echo "<img src='uploads/{$_SESSION['user_image']}' alt='{$_SESSION['username']}' width='30px'>";
+                    ?>
+                </a>
+                <form action="" method="post">
+                    <input type="submit" class="btn mx-1" name="logout" value="Log out">
+                </form>
             </ul>
         </div>
     </div>
