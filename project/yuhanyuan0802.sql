@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Aug 21, 2023 at 08:57 AM
--- Server version: 8.0.31
--- PHP Version: 8.0.26
+-- Host: 127.0.0.1
+-- Generation Time: Aug 27, 2023 at 09:21 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,28 +27,26 @@ SET time_zone = "+00:00";
 -- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `category`;
-CREATE TABLE IF NOT EXISTS `category` (
-  `category_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL,
   `category_name` varchar(20) NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_name` (`category_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`category_id`, `category_name`, `description`) VALUES
-(1, 'Sport equipment', 'Balls, racket, dump bell, etc'),
-(2, 'Food', 'Main dish or side dish'),
-(3, 'Beverage', 'Soft drink, juices, wine, etc'),
-(4, 'Electronic devices', 'Earphone, tracking devices, phone, etc.'),
-(5, 'Daily items', 'Item used in daily life like furniture, personal items, decorations, etc.'),
-(6, 'Music', 'Sound that can be played.'),
-(7, 'Movie', 'Recording of moving images that tells a story.'),
-(8, 'Toy', 'Make for children.');
+(1, 'Processor', 'The processor is a circuit that performs all of the calculations needed to run the computer.'),
+(2, 'Motherboard', 'A motherboard is the main printed circuit board (PCB) in a computer.'),
+(3, 'Power Supply', 'A power supply is an electrical device that supplies electric power to an electrical load.'),
+(4, 'Graphics Card', 'The graphics card, also known as Graphics Processing Unit (GPU), is responsible for calculating images in a computer, which can then be displayed on a monitor.'),
+(5, 'CPU Cooler', 'A component that draws heat away from a CPU chip.'),
+(6, 'RAM', 'RAM is the main memory in a computer.'),
+(7, 'Storage', 'The storage keep the all the data for long term.'),
+(8, 'Case', 'ATX form factor pc case'),
+(9, 'Others', 'Beside pc accessories like furniture.');
 
 -- --------------------------------------------------------
 
@@ -56,17 +54,14 @@ INSERT INTO `category` (`category_id`, `category_name`, `description`) VALUES
 -- Table structure for table `contact`
 --
 
-DROP TABLE IF EXISTS `contact`;
-CREATE TABLE IF NOT EXISTS `contact` (
-  `contact_id` int NOT NULL,
+CREATE TABLE `contact` (
+  `contact_id` int(11) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `email` text NOT NULL,
-  `phone` int NOT NULL,
+  `phone` int(11) NOT NULL,
   `address` text NOT NULL,
-  `message` text NOT NULL,
-  PRIMARY KEY (`contact_id`),
-  UNIQUE KEY `first_name` (`first_name`,`last_name`)
+  `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -75,32 +70,30 @@ CREATE TABLE IF NOT EXISTS `contact` (
 -- Table structure for table `customers`
 --
 
-DROP TABLE IF EXISTS `customers`;
-CREATE TABLE IF NOT EXISTS `customers` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `customers` (
+  `user_id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 NOT NULL DEFAULT 'default_user.png',
+  `image` varchar(100) NOT NULL,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
   `password` text NOT NULL,
   `email` varchar(30) NOT NULL,
   `date_of_birth` date NOT NULL,
-  `registration_date_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `registration_date_time` datetime NOT NULL,
   `gender` enum('male','female') NOT NULL,
-  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customers`
 --
 
 INSERT INTO `customers` (`user_id`, `username`, `image`, `first_name`, `last_name`, `password`, `email`, `date_of_birth`, `registration_date_time`, `gender`, `status`) VALUES
-(1, 'yuhanyuan', 'default_user.png', 'yu', 'hanhan', '$2y$10$qaSjHdXR1Vweix.kb2FjXewTHUYKa78RUy6XIWSyxANKgHGth/MdW', 'yu@gmail.com', '2023-07-25', '2023-07-25 12:08:00', 'male', 'active'),
+(1, 'yuhanyuan', 'default_user.png', 'yu', 'hanhan', '$2y$10$fZCMI2SAtHDZjOr.66ntieCiKhEQBxccj6MyGi2460xoOQo6dpHkq', 'yu@gmail.com', '2023-07-25', '2023-08-24 17:08:39', 'male', 'active'),
 (2, 'limsinkuan', 'default_user.png', 'lim', 'sinkuan', '$2y$10$kvq2zkbC7iwJdL/68MOIS.NI6bHwWTK5Ltk3eY2B1OCUJGrZ18aMa', 'lim@gmail.com', '2023-07-25', '2023-07-30 13:56:23', 'male', 'active'),
 (3, 'haw123', 'default_user.png', 'Haw', 'EngEng', '$2y$10$azfP2yf426md46tNF.Umj.WPKLLm0nr7YBaJAoROBsWzXPRs16ueG', 'haw@gmail.com', '2002-01-01', '2023-08-18 23:45:00', 'male', 'active'),
-(4, 'KienMing123', 'default_user.png', 'Tan', 'KienMing', '$2y$10$REtzKxkS.xgi7oyqKwsD6OdxKVDDkUsptOuTYoWW0ZtJUetyBe0de', 'kienming@gmail.com', '2002-01-01', '2023-08-21 16:06:44', 'male', 'inactive');
+(4, 'KienMing123', 'default_user.png', 'Tan', 'KienMing', '$2y$10$REtzKxkS.xgi7oyqKwsD6OdxKVDDkUsptOuTYoWW0ZtJUetyBe0de', 'kienming@gmail.com', '2002-01-01', '2023-08-21 16:06:44', 'male', 'inactive'),
+(5, 'Chow123', 'default_user.png', 'Chow', 'KuiHeng', '$2y$10$GJzTY1gH2XWyTFKmBCO9OeKmG3LaCuk4IgHYJYT6hTG0EBiWbwWLG', 'Chow123@gmail.com', '2002-01-01', '2023-08-24 18:10:17', 'male', 'active');
 
 -- --------------------------------------------------------
 
@@ -108,16 +101,12 @@ INSERT INTO `customers` (`user_id`, `username`, `image`, `first_name`, `last_nam
 -- Table structure for table `order_detail`
 --
 
-DROP TABLE IF EXISTS `order_detail`;
-CREATE TABLE IF NOT EXISTS `order_detail` (
-  `order_detail_id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quantity` int NOT NULL,
-  PRIMARY KEY (`order_detail_id`),
-  KEY `order_id` (`order_id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `order_detail` (
+  `order_detail_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `order_detail`
@@ -125,17 +114,26 @@ CREATE TABLE IF NOT EXISTS `order_detail` (
 
 INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quantity`) VALUES
 (1, 1, 1, 1),
-(2, 2, 2, 2),
-(3, 2, 3, 3),
-(4, 3, 2, 2),
-(5, 3, 3, 3),
-(6, 4, 6, 6),
-(7, 4, 8, 8),
-(8, 5, 8, 8),
-(9, 5, 4, 4),
-(10, 6, 1, 1),
-(17, 7, 11, 1),
-(18, 7, 8, 1);
+(2, 1, 4, 1),
+(3, 1, 5, 1),
+(4, 1, 7, 1),
+(5, 1, 10, 1),
+(6, 1, 11, 2),
+(7, 1, 12, 1),
+(8, 1, 13, 1),
+(9, 2, 2, 1),
+(10, 2, 3, 1),
+(11, 2, 6, 1),
+(12, 2, 8, 1),
+(13, 2, 9, 1),
+(14, 2, 11, 1),
+(15, 2, 12, 1),
+(16, 2, 13, 1),
+(17, 3, 12, 1),
+(18, 3, 11, 4),
+(21, 4, 12, 2),
+(22, 5, 11, 1),
+(23, 5, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -143,27 +141,22 @@ INSERT INTO `order_detail` (`order_detail_id`, `order_id`, `product_id`, `quanti
 -- Table structure for table `order_summary`
 --
 
-DROP TABLE IF EXISTS `order_summary`;
-CREATE TABLE IF NOT EXISTS `order_summary` (
-  `order_id` int NOT NULL AUTO_INCREMENT,
-  `customer_id` int NOT NULL,
-  `order_date` datetime NOT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `customer_id` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `order_summary` (
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `order_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `order_summary`
 --
 
 INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
-(1, 1, '2023-07-24 04:29:58'),
-(2, 1, '2023-07-24 04:30:36'),
-(3, 2, '2023-08-06 06:21:09'),
-(4, 1, '2023-08-13 14:48:16'),
-(5, 2, '2023-08-13 14:52:00'),
-(6, 3, '2023-08-21 13:34:00'),
-(7, 4, '2023-08-21 15:50:00');
+(1, 2, '2023-08-26 18:48:26'),
+(2, 3, '2023-08-26 18:50:11'),
+(3, 1, '2023-08-26 18:52:08'),
+(4, 5, '2023-08-26 18:53:38'),
+(5, 3, '2023-08-26 19:00:11');
 
 -- --------------------------------------------------------
 
@@ -171,41 +164,125 @@ INSERT INTO `order_summary` (`order_id`, `customer_id`, `order_date`) VALUES
 -- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE IF NOT EXISTS `products` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
-  `category_id` int NOT NULL,
+  `category_id` int(11) NOT NULL,
   `description` text NOT NULL,
-  `image` varchar(100) CHARACTER SET utf8mb4 NOT NULL DEFAULT '"product_image_coming_soon.jpg"',
+  `image` varchar(100) NOT NULL,
   `price` double NOT NULL,
   `promote_price` float NOT NULL,
   `manufacture_date` date NOT NULL,
   `expired_date` date NOT NULL,
   `created` datetime NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+  `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `image`, `price`, `promote_price`, `manufacture_date`, `expired_date`, `created`, `modified`) VALUES
-(1, 'Basketball', 1, 'A ball used in the NBA.', 'ed7ad76e18c25d636476987c146a6126ec77afe4-basketball.jpg', 49.98, 40, '2022-05-12', '0000-00-00', '2015-08-02 12:04:03', '2023-08-21 07:07:31'),
-(2, 'Gatorade', 3, 'This is a very good drink for athletes.', '53d89d4c72810ccd7eb37829efa6472953b6bc57-gatorade.jpg', 1.99, 1, '2023-08-13', '2024-08-14', '2015-08-02 12:14:29', '2023-08-15 02:27:40'),
-(3, 'Eye Glasses', 5, 'It will make you read better.', '6c88630487456ab97a4131099f39bb0056f1c651-glasses.jpg', 6, 5.5, '2022-10-15', '0000-00-00', '2015-08-02 12:15:04', '2023-08-15 02:28:41'),
-(4, 'Trash Can', 5, 'It will help you maintain cleanliness.', '5587ecc2a5a7066631b3c1d3ec00fb337d936635-trashcan.jpg', 3.95, 2, '2022-06-10', '0000-00-00', '2015-08-02 12:16:08', '2023-08-15 02:29:39'),
-(5, 'Mouse', 4, 'Very useful if you love your computer.', '90b01134caa6cb714d4623840d45f9a539d1ec79-mouse.jpg', 11.35, 10, '2023-12-01', '0000-00-00', '2015-08-02 12:17:58', '2023-08-15 02:30:14'),
-(6, 'Earphone', 4, 'You need this one if you love music.', '784acfe8121f68ae9be74228322099e3590692ad-earphone.jpg', 7, 6.7, '2021-07-23', '0000-00-00', '2015-08-02 12:18:21', '2023-08-15 02:30:47'),
-(7, 'Pillow', 5, 'Sleeping well is important.', 'fefb917abedce543dc99cbe086c6ee4ebefb7353-pillow.jpg', 8.99, 7.99, '2022-05-20', '0000-00-00', '2015-08-02 12:18:56', '2023-08-15 02:31:25'),
-(8, 'Coca cola', 3, 'Soft drink', 'd59980a5da135146fdceb31fe3de8feda53ee127-cocacola.jpg', 5, 2.5, '2023-07-07', '2023-07-17', '2023-07-17 08:25:43', '2023-08-15 02:32:31'),
-(9, 'Pepsi', 3, 'A soft drink alternative of Coca Cola.', 'e14075ec8b1c8722b02c737181ff3365f227361e-pepsi.jpg', 2.5, 2, '2022-01-13', '2024-01-28', '2023-08-13 09:46:48', '2023-08-15 02:33:02'),
-(10, 'French Fry', 2, 'Make from Potato', '7dc4220ed4c2c3b1c5068053df13529c21888d3f-d6cf3640302554ca2130ddcba02b1efcdf49e2a1-french_fries.jpg', 5.99, 4, '2020-01-20', '2024-03-22', '2023-08-15 03:56:39', '2023-08-18 15:22:04'),
-(11, 'Chicken Wing', 2, 'Chicken from organic farm.', 'product_image_coming_soon.jpg', 19, 15, '2022-07-21', '2024-06-28', '2023-08-21 05:22:25', '2023-08-21 07:32:06'),
-(12, 'Table', 5, 'Make from sturdy wood.', 'product_image_coming_soon.jpg', 55, 0, '2023-08-21', '2023-09-07', '2023-08-21 08:17:21', '2023-08-21 08:17:21');
+(1, 'Intel Core i9-13900KS', 1, 'The latest Intel processor.', '998e080a75ee32f6745f5de88cddf6952f816c48-intel-i9-139000.jpg', 3243, 3143, '2023-03-29', '2030-12-26', '2023-08-26 17:17:39', '2023-08-26 09:36:23'),
+(2, 'AMD Ryzen 9 7950X3D', 1, 'The latest AMD processor.', '170a162c47bdd24699138e793cd52b62ea53c396-amd-ryzen-9-7950x3d.jpg', 3250, 2983, '2023-02-28', '2030-06-19', '2023-08-26 17:23:27', '2023-08-26 09:38:15'),
+(3, 'MSI B550m-A Pro AMD motherboard', 2, 'The b550m motherboard for AMD socket.', 'd42052a627092f7842108e1894a659670e7f1be4-msi-b550m-amd.jpg', 499, 0, '2020-06-17', '2030-10-26', '2023-08-26 17:44:07', '2023-08-26 09:46:36'),
+(4, 'MSI PRO B660-A LGA-1700 Intel socket', 2, 'The motherboard suitable for Intel\'s processor.', '5e8ba014b6f1d911f8812a8e8a768a872aef1eef-msi-b660-intel.jpg', 489, 0, '2022-08-03', '2030-06-14', '2023-08-26 17:52:15', '2023-08-26 09:52:15'),
+(5, ' 1ST PLAYER STEAMPUNK PS-750SP 80Plus Gold Power Supply', 3, '750w power supply with full modular support.', '0f26d3b7a726057f0a71be37c5c9fd2e74dc1324-power-supply-750w.jpg', 499, 399, '2019-11-18', '2030-06-04', '2023-08-26 17:57:27', '2023-08-26 09:57:27'),
+(6, 'Corsair CX Series 80-Plus Bronze Power-supply', 3, '750w power supply with half modular.', '873c94a4fd439cc0da82aeb54500b226b58c11b9-half-modular-750w-power-supply.jpg', 449, 0, '2016-11-03', '2030-06-21', '2023-08-26 18:05:02', '2023-08-26 10:05:02'),
+(7, 'Asus Dual Geforce RTX-3060-v2 12GB', 4, 'Graphic card RTX-3060 with 12GB vram from Asus.', 'dddede398d05ebae8c8ea001e5dd277fc0da0bd9-asus-dual-rtx-3060-12gb.jpg', 1699, 1599, '2021-02-05', '2030-12-31', '2023-08-26 18:11:18', '2023-08-26 11:10:05'),
+(8, 'Asus Amd Radeon Dual RX-6600-XT 8GB', 4, 'Graphic card from Asus features with 8GB vram.', '5453f1362f3934d5392cfae9fc456705dcbb8857-asus-dual-amd-rx6600-xt-8gb.jpg', 1723, 0, '2021-08-11', '2030-06-09', '2023-08-26 18:17:49', '2023-08-26 10:17:49'),
+(9, 'MSI Core Frozr-s CPU cooler fan', 5, 'CPU cooler from MSI with air cooling technique suitable with AMD socket.', '64414c40be54d7cd8098bd364fddc6ff99fa7155-msi-frozrs-cpu-cooler.jpg', 320, 0, '2020-11-03', '2030-09-28', '2023-08-26 18:25:52', '2023-08-26 10:25:52'),
+(10, 'ID-Cooling Auraflow-x Watercooling', 5, 'CPU cooler from ID-Cooling with water-cooling technique suitable with both AMD and Intel socket.', 'c772dc6e58b31f5323566eff2f23669a6530704a-id-cooling-auraflow-x-cpu-cooler.jpg', 329, 299, '2019-06-07', '2030-05-28', '2023-08-26 18:32:05', '2023-08-26 10:32:05'),
+(11, 'Kingston HyperX-Fury DIMM RAM', 6, 'RAM stick suitable for desktop with 16GB RAM and DDR4 3200MHZ clock speed.', '46a09a9d21c5b3deb51f0aeed66dba84a893da43-kingston-hyper-x-16gb.jpg', 499, 399, '2021-03-24', '2030-05-05', '2023-08-26 18:39:53', '2023-08-26 10:39:53'),
+(12, 'Western Digital 1TB WD Blue SN570', 7, 'SSD from Western Digital with 1TB storage space.', '99984a0b578225593a8a47a1905eada6f33c4080-wd-ssd-1tb.jpg', 239, 195, '2021-12-21', '2030-08-06', '2023-08-26 18:44:08', '2023-08-26 10:44:08'),
+(13, '1ST Player TRILOBITE T3 Casing', 8, 'ATX Pc casing equipped with additional 4 cooling fan at top and side panel.', 'd2e2bef77cf1f8891c0d9862427b849e5b19efa6-1st-t3-case.jpg', 199, 0, '2022-09-02', '2030-07-09', '2023-08-26 18:48:04', '2023-08-26 10:48:04'),
+(14, 'Wood Table', 9, 'Make from high quality wood.', 'product_image_coming_soon.jpg', 199, 0, '2022-09-02', '2030-09-07', '2023-08-26 19:11:05', '2023-08-26 11:11:05'),
+(15, 'Secretlab TITAN Evo Gaming chair', 9, 'Gaming chair from Secretlab.', 'product_image_coming_soon.jpg', 2950, 2550, '2021-09-01', '2030-04-03', '2023-08-26 19:12:54', '2023-08-26 11:12:54'),
+(16, 'Fantech vx7 Pro Gaming Mouse', 9, 'Gaming mouse from Fantech with highest 8400dpi and customizable side keys.', 'product_image_coming_soon.jpg', 85, 0, '2020-03-08', '2030-05-03', '2023-08-26 19:14:57', '2023-08-26 11:14:57'),
+(17, 'Fantech membrane keyboard', 9, 'Membrane keyboard from Fantech with RGB.', 'product_image_coming_soon.jpg', 55, 0, '2020-05-05', '2030-06-06', '2023-08-26 19:15:54', '2023-08-26 11:15:54');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`category_id`),
+  ADD UNIQUE KEY `category_name` (`category_name`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`contact_id`),
+  ADD UNIQUE KEY `first_name` (`first_name`,`last_name`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  ADD PRIMARY KEY (`order_detail_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `order_summary`
+--
+ALTER TABLE `order_summary`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `order_detail`
+--
+ALTER TABLE `order_detail`
+  MODIFY `order_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `order_summary`
+--
+ALTER TABLE `order_summary`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
