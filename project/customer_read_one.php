@@ -72,7 +72,7 @@ include 'config/validate_login.php';
             </tr>
             <tr>
                 <td>First name</td>
-                <td><img src="uploads/<?php echo $image ?>" class="img-fluid" alt="<?php echo $username ?>" width="100px"></td>;
+                <td><img src="uploads/<?php echo $image ?>" class="img-fluid" alt="<?php echo $username ?>" width="100px"></td>
             </tr>
             <tr>
                 <td>First name</td>
@@ -105,10 +105,7 @@ include 'config/validate_login.php';
                 </td>
             </tr>
         </table>
-
-
     </div>
-
 </body>
 
 </html>
