@@ -49,9 +49,9 @@ $_SESSION['image'] = "user";
                     $errormessage[] = "Please enter at least 3 character" . "<br>";
                 }
                 if (empty($email)) {
-                    $errorMessage[] = "Email field is empty.";
-                } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $errorMessage[] = "Invalid email format.";
+                    $errormessage[] = "Email field is empty.";
+                } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $errormessage[] = "Invalid email format.";
                 }
                 if (empty($password)) {
                     $errormessage[] = "Please fill in your password " . "<br>";
