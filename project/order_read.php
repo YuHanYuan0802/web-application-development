@@ -96,8 +96,8 @@ include 'config/validate_login.php';
                 echo "<td class = 'text-end'>RM {$decimaltotal}</td>";
                 echo "<td>";
                 // read one record
-                echo "<a href='order_update.php?id={$order_id}' class='btn btn-primary m-r-1em mx-1'>Edit</a>";
-                echo "<a href='#' onclick='delete_order({$order_id});'  class='btn btn-danger mx-1'>Delete</a>";
+                echo "<a href='order_update.php?id={$order_id}' class='btn btn-primary m-r-1em m-1'>Edit</a>";
+                echo "<a href='#' onclick='delete_order({$order_id});'  class='btn btn-danger m-1'>Delete</a>";
                 echo "</td>";
                 echo "</tr>";
             }
