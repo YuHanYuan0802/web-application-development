@@ -92,11 +92,11 @@ include 'config/validate_login.php';
             </tr>
             <tr>
                 <td>Gender</td>
-                <td><?php echo htmlspecialchars($gender, ENT_QUOTES);  ?></td>
+                <td><?php echo ucfirst(htmlspecialchars($gender, ENT_QUOTES));  ?></td>
             </tr>
             <tr>
                 <td>Status</td>
-                <td><?php echo htmlspecialchars($status, ENT_QUOTES);  ?></td>
+                <td><?php echo ucfirst(htmlspecialchars($status, ENT_QUOTES));  ?></td>
             </tr>
             <tr>
                 <td></td>
