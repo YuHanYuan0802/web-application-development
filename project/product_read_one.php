@@ -74,7 +74,7 @@ include 'config/validate_login.php';
             </tr>
             <tr>
                 <td>Image</td>
-                <td><img src="uploads/<?php echo $row['image'];  ?>" alt="<?php echo htmlspecialchars($name, ENT_QUOTES) ?>" width="100px"></td>
+                <td><img src="uploads/<?php echo $row['image'];  ?>" class="img-fluid" alt="<?php echo htmlspecialchars($name, ENT_QUOTES) ?>" width="100px"></td>
             </tr>
             <tr>
                 <td>Description</td>

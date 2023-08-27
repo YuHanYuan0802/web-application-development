@@ -1,4 +1,4 @@
-<?php 
+<?php
 include 'config/validate_login.php';
 ?>
 <!DOCTYPE HTML>
@@ -32,7 +32,7 @@ include 'config/validate_login.php';
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT user_id, username, first_name, last_name, date_of_birth, registration_date_time, gender, status FROM customers WHERE user_id = :id ";
+            $query = "SELECT image, user_id, username, first_name, last_name, date_of_birth, registration_date_time, gender, status FROM customers WHERE user_id = :id ";
             $stmt = $con->prepare($query);
 
             // Bind the parameter
@@ -46,6 +46,7 @@ include 'config/validate_login.php';
 
             // values to fill up our form
             $username = $row['username'];
+            $image = $row['image'];
             $firstname = $row['first_name'];
             $lastname = $row['last_name'];
             $date_of_birth = $row['date_of_birth'];
@@ -68,6 +69,10 @@ include 'config/validate_login.php';
             <tr>
                 <td>Username</td>
                 <td><?php echo htmlspecialchars($username, ENT_QUOTES);  ?></td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td><img src="uploads/<?php echo $image ?>" class="img-fluid" alt="<?php echo $username ?>" width="100px"></td>;
             </tr>
             <tr>
                 <td>First name</td>
