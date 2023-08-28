@@ -179,15 +179,15 @@ $_SESSION['image'] = "user";
                 <br>
                 <div class="form-group">
                     <label for="regdate">Registration Date & Time:</label>
-                    <input type="text" class="form-control" name="registration_date_time" value="<?php echo date("Y-m-d H:i:s") ?>" >
+                    <input type="text" class="form-control" name="registration_date_time" value="<?php echo date("Y-m-d H:i:s") ?>">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="status">Account Status:</label>
-                    <select class="form-control" id="status" name="status" value="<?php echo isset($_POST["status"]) ? $_POST["status"] : "" ?>">
-                        <option value="active">Active</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
+                    <label for="status">Account Status:</label><br>
+                    <input type="radio" id="active" name="status" value="active" checked>
+                    <label for="active">Active</label><br>
+                    <input type="radio" id="inactive" name="status" value="inactive">
+                    <label for="inactive">Inactive</label><br>
                 </div>
                 <br>
                 <div class="form-group">
