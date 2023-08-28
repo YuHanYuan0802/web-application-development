@@ -172,7 +172,7 @@ include 'config/validate_login.php';
                                     ?>
                                 </select>
                             </td>
-                            <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" /></td>
+                            <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" min="1" /></td>
                             <td><input href='#' onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1' value="Delete" /></td>
                         </tr>
                     <?php
