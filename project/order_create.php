@@ -173,7 +173,7 @@ include 'config/validate_login.php';
                                 </select>
                             </td>
                             <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" min="1" /></td>
-                            <td><input href='#' onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1' value="Delete" /></td>
+                            <td><button onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1'>Delete</button></td>
                         </tr>
                     <?php
                     endfor;
@@ -191,7 +191,7 @@ include 'config/validate_login.php';
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Order Date</td>
-                        <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d H:i:s") ?>" /></td>
+                        <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d H:i:s") ?>" readonly="readonly"/></td>
                     </tr>
                     <tr>
                         <td></td>
