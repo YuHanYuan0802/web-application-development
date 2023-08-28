@@ -80,7 +80,7 @@ session_start();
     <div class="container w-25">
         <form action="" method="post">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">Username/Email</label>
                 <input type="text" class="form-control" id="username" name="username" value="<?php echo isset($_POST['username']) ? $_POST['username'] : ''; ?>" required>
             </div>
             <div class="mb-3">
