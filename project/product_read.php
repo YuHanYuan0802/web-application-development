@@ -69,7 +69,7 @@ include 'config/validate_login.php';
             echo "<th>Image</th>";
             echo "<th>Description</th>";
             echo "<th>Price</th>";
-            echo "<th>manufacture date</th>";
+            echo "<th>Manufacture date</th>";
             echo "<th>Expired date</th>";
             echo "<th>Category</th>";
             echo "<th>Action</th>";
