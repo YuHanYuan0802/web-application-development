@@ -80,6 +80,7 @@ $_SESSION['image'] = "user";
                 $registration_date_time = $_POST['registration_date_time'];
                 $gender = $_POST['gender'];
                 $status = $_POST['status'];
+                $currentdate = date("Y-m-d");
 
                 $pw_pattern = "/^[0-9A-Za-z]{6,}$/";
                 $finalpassword = preg_match($pw_pattern, $password);
@@ -99,6 +100,9 @@ $_SESSION['image'] = "user";
                     $errormessage[] = "Email field is empty.";
                 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $errormessage[] = "Invalid email format.";
+                }
+                if ($date_of_birth > $currentdate) {
+                    $errormessage[] = "Birthday cannot bigger than current date" . "<br>";
                 }
                 if (!password_verify($old_password, $dbpw) && !empty($old_password)) {
                     $errormessage[] = "Incorrect password. Please try again." . "<br>";
