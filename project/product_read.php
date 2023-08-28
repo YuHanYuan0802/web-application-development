@@ -32,7 +32,7 @@ include 'config/validate_login.php';
 
         // select all data
         $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
-        $query = "SELECT products.image, products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, products.expired_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id";
+        $query = "SELECT products.image, products.id, products.name, products.description, products.price, products.promote_price, products.manufacture_date, category.category_name FROM products INNER JOIN category ON products.category_id = category.category_id";
         if (!empty($searchKeyword)) {
             $query .= "  WHERE category_name LIKE :keyword OR name LIKE :keyword";
             $searchKeyword = "%{$searchKeyword}%";
@@ -70,7 +70,6 @@ include 'config/validate_login.php';
             echo "<th>Description</th>";
             echo "<th>Price</th>";
             echo "<th>Manufacture date</th>";
-            echo "<th>Expired date</th>";
             echo "<th>Category</th>";
             echo "<th>Action</th>";
             echo "</tr>";
@@ -94,7 +93,6 @@ include 'config/validate_login.php';
                     echo "<td class = 'text-end'>RM {$decimalprice}</td>";
                 }
                 echo "<td>{$manufacture_date}</td>";
-                echo "<td>{$expired_date}</td>";
                 echo "<td>{$category_name}</td>";
                 echo "<td>";
 
