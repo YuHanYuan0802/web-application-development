@@ -47,7 +47,7 @@ include 'config/validate_login.php';
         $topstmt->execute();
         $counttop = $topstmt->rowCount();
 
-        $nobuyquery = "SELECT products.image, products.name, products.description, category.category_name FROM products INNER JOIN category ON category.category_id=products.category_id WHERE NOT EXISTS(SELECT products.id FROM order_detail WHERE order_detail.product_id=products.id) LIMIT 3";
+        $nobuyquery = "SELECT products.image, products.name, products.description, category.category_name FROM products INNER JOIN category ON category.category_id=products.category_id WHERE NOT EXISTS(SELECT products.id FROM order_detail WHERE order_detail.product_id=products.id)";
         $nobuystmt = $con->prepare($nobuyquery);
         $nobuystmt->execute();
         $countnobuy = $nobuystmt->rowCount();
