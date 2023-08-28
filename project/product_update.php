@@ -82,12 +82,16 @@ $_SESSION['image'] = "product";
                 $price = htmlspecialchars(strip_tags($_POST['price']));
                 $promote_price = htmlspecialchars(strip_tags($_POST['promote_price']));
                 $category = htmlspecialchars(strip_tags($_POST['category']));
+                $currentdate = date("Y-m-d");
 
                 if (empty($name)) {
                     $errormessage[] = "Please fill in your name" . "<br>";
                 }
                 if (empty($description)) {
                     $errormessage[] = "Please fill in your description" . "<br>";
+                }
+                if ($manufacture_date >= $currentdate) {
+                    $errormessage[] = "Manufacture date cannot bigger than current year" . "<br>";
                 }
                 if (empty($price)) {
                     $errormessage[] = "Please fill in your price" . "<br>";

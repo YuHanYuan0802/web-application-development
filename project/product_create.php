@@ -33,6 +33,7 @@ $_SESSION['image'] = "product";
                 $manufacture_date = $_POST['manufacture_date'];
                 $expired_date = $_POST['expired_date'];
                 $category = $_POST['category'];
+                $currentdate = date("Y-m-d");
 
                 $errormessage = array();
 
@@ -55,14 +56,11 @@ $_SESSION['image'] = "product";
                 if (empty($manufacture_date)) {
                     $errormessage[] = "Please fill in your manufacture date" . "<br>";
                 }
-                if (empty($expired_date)) {
-                    $errormessage[] = "Please fill in your expired date" . "<br>";
+                if ($manufacture_date >= $currentdate) {
+                    $errormessage[] = "Manufacture date cannot bigger than current year" . "<br>";
                 }
                 if ($promote_price >= $price) {
                     $errormessage[] = "Promote price cannot be same and more than original price" . "<br>";
-                }
-                if ($expired_date <= $manufacture_date) {
-                    $errormessage[] = "Expired date cannot smaller than manufacture date" . "<br>";
                 }
                 if (!empty($errormessage)) {
                     echo "<div class = 'alert alert-danger'>";
