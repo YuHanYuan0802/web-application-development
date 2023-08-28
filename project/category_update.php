@@ -68,27 +68,46 @@ include 'config/validate_login.php';
         // check if form was submitted
         if ($_POST) {
             try {
-                // write update query
-                // in this case, it seemed like we have so many fields to pass and
-                // it is better to label them and not use question marks
-                $query = "UPDATE category SET category_name=:category_name, description=:description WHERE category_id = :id";
-                // prepare query for excecution
-                $stmt = $con->prepare($query);
-                // posted values
-                $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
-                $description = htmlspecialchars(strip_tags($_POST['description']));
-                // bind the parameters
-                $stmt->bindParam(':category_name', $category_name);
-                $stmt->bindParam(':description', $description);
-                $stmt->bindParam(':id', $id);
-                // Execute the query
-                if ($stmt->execute()) {
-                    echo "<div class='alert alert-success'>Record was updated.</div>";
-                    echo "<script>";
-                    echo "window.location.href='category_read_one.php?id={$id}'";
-                    echo "</script>";
+                $category_name = $_POST['category_name'];
+                $description = $_POST['description'];
+
+                $errormessage = array();
+
+                if (empty($category_name)) {
+                    $errormessage[] = "Please fill in category_name" . "<br>";
+                }
+                if (empty($description)) {
+                    $errormessage[] = "Please fill in your description" . "<br>";
+                }
+                if (!empty($errormessage)) {
+                    echo "<div class = 'alert alert-danger'>";
+                    foreach ($errormessage as $displayerrormessage) {
+                        echo $displayerrormessage;
+                    }
+                    echo "</div>";
                 } else {
-                    echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    // write update query
+                    // in this case, it seemed like we have so many fields to pass and
+                    // it is better to label them and not use question marks
+                    $query = "UPDATE category SET category_name=:category_name, description=:description WHERE category_id = :id";
+                    // prepare query for excecution
+                    $stmt = $con->prepare($query);
+                    // posted values
+                    $category_name = htmlspecialchars(strip_tags($_POST['category_name']));
+                    $description = htmlspecialchars(strip_tags($_POST['description']));
+                    // bind the parameters
+                    $stmt->bindParam(':category_name', $category_name);
+                    $stmt->bindParam(':description', $description);
+                    $stmt->bindParam(':id', $id);
+                    // Execute the query
+                    if ($stmt->execute()) {
+                        echo "<div class='alert alert-success'>Record was updated.</div>";
+                        echo "<script>";
+                        echo "window.location.href='category_read_one.php?id={$id}'";
+                        echo "</script>";
+                    } else {
+                        echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                    }
                 }
             }
             // show errors
