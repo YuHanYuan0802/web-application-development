@@ -163,7 +163,7 @@ include 'config/validate_login.php';
 
                             </td>
                             <td>
-                                <input href='#' onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1' readonly value="Delete" />
+                                <button onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1'>Delete</button>
                             </td>
                         </tr>
                     <?php }
