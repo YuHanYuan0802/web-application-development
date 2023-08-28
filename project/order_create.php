@@ -44,11 +44,11 @@ include 'config/validate_login.php';
                 $statusrow = $statusstmt->fetch(PDO::FETCH_ASSOC);
 
                 $errormessage = array();
-                if ($statusrow['status']=="inactive") {
-                    $errormessage[] = "Customer not active!" . "<br>";
-                }
+                
                 if (empty($customer_id)) {
                     $errormessage[] = "Please select the customer." . "<br>";
+                }else if ($statusrow['status']=="inactive") {
+                    $errormessage[] = "Customer not active!" . "<br>";
                 }
                 foreach ($quantity as $quantity_array) {
                     if (empty($quantity_array)) {
