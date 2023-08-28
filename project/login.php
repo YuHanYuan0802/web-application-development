@@ -23,7 +23,7 @@ session_start();
         try {
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $query = "SELECT * FROM customers WHERE (username = :username)";
+            $query = "SELECT * FROM customers WHERE (username = :username) OR (email = :username)";
 
             $values = [':username' => $username];
             $res = $con->prepare($query);
