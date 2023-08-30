@@ -133,7 +133,7 @@ $_SESSION['image'] = "user";
         ?>
 
 
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" class="form-control" name="username" value="<?php echo isset($_POST["username"]) ? $_POST["username"] : "" ?>" placeholder="Enter username">
