@@ -133,7 +133,7 @@ include 'config/validate_login.php';
 
 
         <div class="text-center shadow p-5 m-5 bg-body-tertiary rounded">
-            <h5>New Products From The Store</h5>
+            <h5>Products Never Buy From The Store</h5>
             <div class="d-flex justify-content-around flex-wrap">
                 <?php
                 for ($i = 0; $i < $countnobuy; $i++) {
