@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2023 at 09:21 AM
+-- Generation Time: Aug 30, 2023 at 07:08 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -89,11 +89,12 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`user_id`, `username`, `image`, `first_name`, `last_name`, `password`, `email`, `date_of_birth`, `registration_date_time`, `gender`, `status`) VALUES
-(1, 'yuhanyuan', 'default_user.png', 'yu', 'hanhan', '$2y$10$fZCMI2SAtHDZjOr.66ntieCiKhEQBxccj6MyGi2460xoOQo6dpHkq', 'yu@gmail.com', '2023-07-25', '2023-08-24 17:08:39', 'male', 'active'),
+(1, 'yuhanyuan', 'default_user.png', 'yu', 'hanhan', '$2y$10$agVXb3XqRLW37ZSrvJrZGupCKle.mJ32YsegiUVlWfV7OYsckZChq', 'yu@gmail.com', '2022-07-21', '2023-08-24 17:08:39', 'male', 'active'),
 (2, 'limsinkuan', 'default_user.png', 'lim', 'sinkuan', '$2y$10$kvq2zkbC7iwJdL/68MOIS.NI6bHwWTK5Ltk3eY2B1OCUJGrZ18aMa', 'lim@gmail.com', '2023-07-25', '2023-07-30 13:56:23', 'male', 'active'),
 (3, 'haw123', 'default_user.png', 'Haw', 'EngEng', '$2y$10$azfP2yf426md46tNF.Umj.WPKLLm0nr7YBaJAoROBsWzXPRs16ueG', 'haw@gmail.com', '2002-01-01', '2023-08-18 23:45:00', 'male', 'active'),
 (4, 'KienMing123', 'default_user.png', 'Tan', 'KienMing', '$2y$10$REtzKxkS.xgi7oyqKwsD6OdxKVDDkUsptOuTYoWW0ZtJUetyBe0de', 'kienming@gmail.com', '2002-01-01', '2023-08-21 16:06:44', 'male', 'inactive'),
-(5, 'Chow123', 'default_user.png', 'Chow', 'KuiHeng', '$2y$10$GJzTY1gH2XWyTFKmBCO9OeKmG3LaCuk4IgHYJYT6hTG0EBiWbwWLG', 'Chow123@gmail.com', '2002-01-01', '2023-08-24 18:10:17', 'male', 'active');
+(5, 'Chow123', 'default_user.png', 'Chow', 'KuiHeng', '$2y$10$GJzTY1gH2XWyTFKmBCO9OeKmG3LaCuk4IgHYJYT6hTG0EBiWbwWLG', 'chow123@gmail.com', '2002-01-01', '2023-08-24 18:10:17', 'male', 'active'),
+(6, 'chong123', 'default_user.png', 'Chong', 'Xukai', '$2y$10$HVILWSxdhDEb9mEuuvp38.gGhbETlgNeK8bqamLoO3BKMG3dDApFG', 'chong@gmail.com', '2002-01-01', '2023-08-28 14:52:03', 'male', 'inactive');
 
 -- --------------------------------------------------------
 
@@ -183,9 +184,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `category_id`, `description`, `image`, `price`, `promote_price`, `manufacture_date`, `expired_date`, `created`, `modified`) VALUES
-(1, 'Intel Core i9-13900KS', 1, 'The latest Intel processor.', '998e080a75ee32f6745f5de88cddf6952f816c48-intel-i9-139000.jpg', 3243, 3143, '2023-03-29', '2030-12-26', '2023-08-26 17:17:39', '2023-08-26 09:36:23'),
-(2, 'AMD Ryzen 9 7950X3D', 1, 'The latest AMD processor.', '170a162c47bdd24699138e793cd52b62ea53c396-amd-ryzen-9-7950x3d.jpg', 3250, 2983, '2023-02-28', '2030-06-19', '2023-08-26 17:23:27', '2023-08-26 09:38:15'),
-(3, 'MSI B550m-A Pro AMD motherboard', 2, 'The b550m motherboard for AMD socket.', 'd42052a627092f7842108e1894a659670e7f1be4-msi-b550m-amd.jpg', 499, 0, '2020-06-17', '2030-10-26', '2023-08-26 17:44:07', '2023-08-26 09:46:36'),
+(1, 'Intel I9-13900KS', 1, 'The latest Intel processor.', '998e080a75ee32f6745f5de88cddf6952f816c48-intel-i9-139000.jpg', 3243, 3143, '2023-03-29', '2030-12-26', '2023-08-26 17:17:39', '2023-08-27 09:44:05'),
+(2, 'AMD Ryzen 9 7950X3D', 1, 'The latest AMD processor.', '170a162c47bdd24699138e793cd52b62ea53c396-amd-ryzen-9-7950x3d.jpg', 3250, 2983, '2023-02-28', '2030-06-19', '2023-08-26 17:23:27', '2023-08-28 06:03:01'),
+(3, 'MSI B550m-A Pro AMD motherboard', 2, 'The b550m motherboard for AMD socket.', 'd42052a627092f7842108e1894a659670e7f1be4-msi-b550m-amd.jpg', 499, 0, '2020-06-17', '2030-10-26', '2023-08-26 17:44:07', '2023-08-27 09:58:00'),
 (4, 'MSI PRO B660-A LGA-1700 Intel socket', 2, 'The motherboard suitable for Intel\'s processor.', '5e8ba014b6f1d911f8812a8e8a768a872aef1eef-msi-b660-intel.jpg', 489, 0, '2022-08-03', '2030-06-14', '2023-08-26 17:52:15', '2023-08-26 09:52:15'),
 (5, ' 1ST PLAYER STEAMPUNK PS-750SP 80Plus Gold Power Supply', 3, '750w power supply with full modular support.', '0f26d3b7a726057f0a71be37c5c9fd2e74dc1324-power-supply-750w.jpg', 499, 399, '2019-11-18', '2030-06-04', '2023-08-26 17:57:27', '2023-08-26 09:57:27'),
 (6, 'Corsair CX Series 80-Plus Bronze Power-supply', 3, '750w power supply with half modular.', '873c94a4fd439cc0da82aeb54500b226b58c11b9-half-modular-750w-power-supply.jpg', 449, 0, '2016-11-03', '2030-06-21', '2023-08-26 18:05:02', '2023-08-26 10:05:02'),
@@ -264,7 +265,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
