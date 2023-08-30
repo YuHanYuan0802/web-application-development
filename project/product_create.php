@@ -35,8 +35,6 @@ $_SESSION['image'] = "product";
                 $category = $_POST['category'];
                 $currentdate = date("Y-m-d");
 
-                $errormessage = array();
-
                 if (empty($name)) {
                     $errormessage[] = "Please fill in your name" . "<br>";
                 }

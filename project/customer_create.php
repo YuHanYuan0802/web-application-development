@@ -41,7 +41,6 @@ $_SESSION['image'] = "user";
                 $finalusername = preg_match($usernamepattern, $username);
                 $currentdate = date("Y-m-d");
 
-                $errormessage = array();
                 if (empty($username)) {
                     $errormessage[] = "Please fill in your username" . "<br>";
                 }
