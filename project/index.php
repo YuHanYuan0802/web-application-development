@@ -38,7 +38,7 @@ include 'config/validate_login.php';
         $lateststmt = $con->prepare($latestquery);
         $lateststmt->execute();
 
-        $mostquery = "SELECT customers.username, order_summary.order_date, COUNT(order_id) AS count FROM order_summary INNER JOIN customers ON customers.user_id=order_summary.order_id GROUP BY customer_id ORDER BY COUNT(order_id) DESC LIMIT 1";
+        $mostquery = "SELECT customers.username, order_summary.order_date, COUNT(order_id) AS count FROM order_summary INNER JOIN customers ON customers.user_id=order_summary.customer_id GROUP BY customer_id ORDER BY COUNT(order_id) DESC LIMIT 1";
         $moststmt = $con->prepare($mostquery);
         $moststmt->execute();
 
