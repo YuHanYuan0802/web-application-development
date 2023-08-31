@@ -5,6 +5,8 @@ include 'config/validate_login.php';
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -52,22 +54,22 @@ include 'config/validate_login.php';
         $nobuystmt->execute();
         $countnobuy = $nobuystmt->rowCount();
         ?>
-        <div class="d-flex justify-content-around">
-            <div class="text-center shadow p-5 m-5 bg-body-tertiary rounded flex-fill">
+        <div class="d-flex justify-content-around flex-wrap">
+            <div class="text-center shadow p-5 m-2 bg-body-tertiary rounded">
                 <?php
                 echo "<h1>$cusnum<h1>";
                 echo "<br>";
                 echo "<h5>Customers Registered<h5>"
                 ?>
             </div>
-            <div class="text-center shadow p-5 m-5 bg-body-tertiary rounded flex-fill">
+            <div class="text-center shadow p-5 m-2 bg-body-tertiary rounded">
                 <?php
                 echo "<h1>$pronum<h1>";
                 echo "<br>";
                 echo "<h5>Products Available<h5>"
                 ?>
             </div>
-            <div class="text-center shadow p-5 m-5 bg-body-tertiary rounded flex-fill">
+            <div class="text-center shadow p-5 m-2 bg-body-tertiary rounded">
                 <?php
                 echo "<h1>$ornum<h1>";
                 echo "<br>";
@@ -75,6 +77,7 @@ include 'config/validate_login.php';
                 ?>
             </div>
         </div>
+
         <div class="text-center shadow p-5 m-5 bg-body-tertiary rounded">
             <?php
             $total = 0;

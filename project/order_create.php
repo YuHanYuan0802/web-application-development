@@ -5,6 +5,8 @@ include 'config/validate_login.php';
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Order</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -44,10 +46,10 @@ include 'config/validate_login.php';
                 $statusrow = $statusstmt->fetch(PDO::FETCH_ASSOC);
 
                 $errormessage = array();
-                
+
                 if (empty($customer_id)) {
                     $errormessage[] = "Please select the customer." . "<br>";
-                }else if ($statusrow['status']=="inactive") {
+                } else if ($statusrow['status'] == "inactive") {
                     $errormessage[] = "Customer not active!" . "<br>";
                 }
                 foreach ($quantity as $quantity_array) {
@@ -191,7 +193,7 @@ include 'config/validate_login.php';
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
                         <td>Order Date</td>
-                        <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d H:i:s") ?>" readonly="readonly"/></td>
+                        <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d H:i:s") ?>" readonly="readonly" /></td>
                     </tr>
                     <tr>
                         <td></td>
