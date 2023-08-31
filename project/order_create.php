@@ -130,79 +130,81 @@ include 'config/validate_login.php';
 
         <!-- html form here where the product information will be entered -->
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
-            <table class='table table-hover table-responsive table-bordered'>
-                <tr>
-                    <td>Customer Name</td>
-                    <td><select name='customer_id' class="form-select">
-                            <option value="">Please select customers</option>
-                            <?php
-                            include 'config/database.php';
-                            $cusquery = "SELECT username, user_id FROM customers ORDER BY user_id ASC";
-                            $cusstmt = $con->prepare($cusquery);
-                            $cusstmt->execute();
-                            $num = $cusstmt->rowCount();
-                            if ($num > 0) {
-                                $option = array();
-                                while ($row = $cusstmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['user_id']] = $row['username'];
-                                }
-                            }
-                            foreach ($option as $user_id => $username) {
-                                echo "<option value = '" . $user_id . "'>" . $username . "</option>";
-                            }
-                            ?>
-                        </select></td>
-                </tr>
-                <table class='table table-hover table-responsive table-bordered' id="row_del">
-                    <tr>
-                        <td class="text-center text-light">#</td>
-                        <td class="text-center">Product</td>
-                        <td class="text-center">Quantity</td>
-                        <td class="text-center">Action</td>
-                    </tr>
-                    <?php for ($x = 0; $x < $selectpro; $x++) : ?>
-                        <tr class="pRow">
-                            <td class="text-center"><?php echo $x + 1; ?></td>
-                            <td class="d-flex">
-                                <select class="form-select mb-3 col" name="product_id[]" aria-label=".form-select-lg example">
-                                    <option value="">Please select product</option>
-                                    <?php
-                                    for ($i = 0; $i < $productsRowCount; $i++) {
-                                        $selected = isset($_POST["product_id"]) && $prorow[$i]['id'] == $product_id[$x] ? "selected" : "";
-                                        echo "<option value='{$prorow[$i]['id']}' $selected >{$prorow[$i]['name']} RM {$prorow[$i]['price']}</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </td>
-                            <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" min="1" /></td>
-                            <td><button onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1'>Delete</button></td>
-                        </tr>
-                    <?php
-                    endfor;
-                    ?>
-                    <tr>
-                        <td>
-
-                        </td>
-                        <td colspan="4">
-                            <input type="button" value="Add More Product" class="btn btn-success add_one" />
-                        </td>
-                    </tr>
-
-                </table>
+            <div class="table-responsive">
                 <table class='table table-hover table-responsive table-bordered'>
                     <tr>
-                        <td>Order Date</td>
-                        <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d H:i:s") ?>" readonly="readonly" /></td>
+                        <td>Customer Name</td>
+                        <td><select name='customer_id' class="form-select">
+                                <option value="">Please select customers</option>
+                                <?php
+                                include 'config/database.php';
+                                $cusquery = "SELECT username, user_id FROM customers ORDER BY user_id ASC";
+                                $cusstmt = $con->prepare($cusquery);
+                                $cusstmt->execute();
+                                $num = $cusstmt->rowCount();
+                                if ($num > 0) {
+                                    $option = array();
+                                    while ($row = $cusstmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $option[$row['user_id']] = $row['username'];
+                                    }
+                                }
+                                foreach ($option as $user_id => $username) {
+                                    echo "<option value = '" . $user_id . "'>" . $username . "</option>";
+                                }
+                                ?>
+                            </select></td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" value="Submit" class="btn btn-primary">
-                            <a href="order_read.php" class="btn btn-danger">Back to Read Order Summary</a>
-                        </td>
-                    </tr>
-                </table>
+                    <table class='table table-hover table-responsive table-bordered' id="row_del">
+                        <tr>
+                            <td class="text-center text-light">#</td>
+                            <td class="text-center">Product</td>
+                            <td class="text-center">Quantity</td>
+                            <td class="text-center">Action</td>
+                        </tr>
+                        <?php for ($x = 0; $x < $selectpro; $x++) : ?>
+                            <tr class="pRow">
+                                <td class="text-center"><?php echo $x + 1; ?></td>
+                                <td class="d-flex">
+                                    <select class="form-select mb-3 col" name="product_id[]" aria-label=".form-select-lg example">
+                                        <option value="">Please select product</option>
+                                        <?php
+                                        for ($i = 0; $i < $productsRowCount; $i++) {
+                                            $selected = isset($_POST["product_id"]) && $prorow[$i]['id'] == $product_id[$x] ? "selected" : "";
+                                            echo "<option value='{$prorow[$i]['id']}' $selected >{$prorow[$i]['name']} RM {$prorow[$i]['price']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="form-control mb-3" name="quantity[]" aria-label=".form-control-lg example" min="1" /></td>
+                                <td><button onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1'>Delete</button></td>
+                            </tr>
+                        <?php
+                        endfor;
+                        ?>
+                        <tr>
+                            <td>
+
+                            </td>
+                            <td colspan="4">
+                                <input type="button" value="Add More Product" class="btn btn-success add_one" />
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table class='table table-hover table-responsive table-bordered'>
+                        <tr>
+                            <td>Order Date</td>
+                            <td><input type="input" name='order_date' class='form-control' value="<?php echo date("Y-m-d H:i:s") ?>" readonly="readonly" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Submit" class="btn btn-primary m-1">
+                                <a href="order_read.php" class="btn btn-danger m-1">Back to Read Order Summary</a>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
         </form>
     </div>
     <!-- end .container -->

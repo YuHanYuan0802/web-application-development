@@ -192,91 +192,93 @@ $_SESSION['image'] = "user";
 
         <!--we have our html form here where new record information can be updated-->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
-            <table class='table table-hover table-responsive table-bordered'>
-                <tr>
-                    <td>Username</td>
-                    <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' disabled /></td>
-                </tr>
-                <tr>
-                    <td>First Name</td>
-                    <td><input type="text" name="first_name" value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control'>
-                </tr>
-                <tr>
-                    <td>Last Name</td>
-                    <td><input type="text" name="last_name" value="<?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?>" class='form-control'>
-                </tr>
-                <tr>
-                    <td>Enter Old Password</td>
-                    <td><input type="password" name="old_password" class='form-control'></td>
-                </tr>
-                <tr>
-                    <td>New Password</td>
-                    <td><input type="password" name="new_password" class='form-control'></td>
-                </tr>
-                <tr>
-                    <td>Confirm New Password</td>
-                    <td><input type="password" name="cfm_new_password" class='form-control'></td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td><input type="text" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES);  ?>" class='form-control'></td>
-                </tr>
-                <tr>
-                    <td>Date of Birth</td>
-                    <td><input type="date" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Registration date and time</td>
-                    <td><input type="datetime-local" name="registration_date_time" value="<?php echo htmlspecialchars($registration_date_time, ENT_QUOTES);  ?>" class="form-control"></td>
-                </tr>
-                <tr>
-                    <td>Gender </td>
-                    <td>
-                        <label><?php echo ucfirst($row['gender']); ?></label></br>
-                        <input type="radio" id="male" name="gender" value="male" <?php if ($row['gender'] == "male") {
-                                                                                        echo "checked";
-                                                                                    } ?> class="form-group">
-                        <label for="male">Male</label><br>
-                        <input type="radio" id="female" name="gender" value="female" <?php if ($row['gender'] == "female") {
+            <div class="table-responsive">
+                <table class='table table-hover table-responsive table-bordered'>
+                    <tr>
+                        <td>Username</td>
+                        <td><input type='text' name='username' value="<?php echo htmlspecialchars($username, ENT_QUOTES);  ?>" class='form-control' disabled /></td>
+                    </tr>
+                    <tr>
+                        <td>First Name</td>
+                        <td><input type="text" name="first_name" value="<?php echo htmlspecialchars($first_name, ENT_QUOTES);  ?>" class='form-control'>
+                    </tr>
+                    <tr>
+                        <td>Last Name</td>
+                        <td><input type="text" name="last_name" value="<?php echo htmlspecialchars($last_name, ENT_QUOTES);  ?>" class='form-control'>
+                    </tr>
+                    <tr>
+                        <td>Enter Old Password</td>
+                        <td><input type="password" name="old_password" class='form-control'></td>
+                    </tr>
+                    <tr>
+                        <td>New Password</td>
+                        <td><input type="password" name="new_password" class='form-control'></td>
+                    </tr>
+                    <tr>
+                        <td>Confirm New Password</td>
+                        <td><input type="password" name="cfm_new_password" class='form-control'></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" name="email" value="<?php echo htmlspecialchars($email, ENT_QUOTES);  ?>" class='form-control'></td>
+                    </tr>
+                    <tr>
+                        <td>Date of Birth</td>
+                        <td><input type="date" name="date_of_birth" value="<?php echo htmlspecialchars($date_of_birth, ENT_QUOTES);  ?>" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Registration date and time</td>
+                        <td><input type="datetime-local" name="registration_date_time" value="<?php echo htmlspecialchars($registration_date_time, ENT_QUOTES);  ?>" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td>Gender </td>
+                        <td>
+                            <label><?php echo ucfirst($row['gender']); ?></label></br>
+                            <input type="radio" id="male" name="gender" value="male" <?php if ($row['gender'] == "male") {
                                                                                             echo "checked";
                                                                                         } ?> class="form-group">
-                        <label for="female">Female</label><br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td>
-                        <label><?php echo ucfirst($row['status']); ?></label></br>
-                        <input type="radio" id="active" name="status" value="active" <?php if ($row['status'] == "active") {
-                                                                                            echo "checked";
-                                                                                        } ?> class="form-group">
-                        <label for="active">Active</label><br>
-                        <input type="radio" id="inactive" name="status" value="inactive" <?php if ($row['status'] == "inactive") {
+                            <label for="male">Male</label><br>
+                            <input type="radio" id="female" name="gender" value="female" <?php if ($row['gender'] == "female") {
                                                                                                 echo "checked";
                                                                                             } ?> class="form-group">
-                        <label for="inactive">Inactive</label><br>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td>
-                        <img src="uploads/<?php echo $img ?>" alt="<?php echo $username ?>" width="100px">
-                        <br>
-                        <br>
-                        <input type="file" name="image" />
-                        <br>
-                        <br>
-                        <input type="submit" name="deleteimage" value="Delete Image">
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type='submit' value='Save Changes' name="submit" class='btn btn-primary' />
-                        <a href='customer_read.php' class='btn btn-danger'>Back to read customers</a>
-                    </td>
-                </tr>
-            </table>
+                            <label for="female">Female</label><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>
+                            <label><?php echo ucfirst($row['status']); ?></label></br>
+                            <input type="radio" id="active" name="status" value="active" <?php if ($row['status'] == "active") {
+                                                                                                echo "checked";
+                                                                                            } ?> class="form-group">
+                            <label for="active">Active</label><br>
+                            <input type="radio" id="inactive" name="status" value="inactive" <?php if ($row['status'] == "inactive") {
+                                                                                                    echo "checked";
+                                                                                                } ?> class="form-group">
+                            <label for="inactive">Inactive</label><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td>
+                            <img src="uploads/<?php echo $img ?>" alt="<?php echo $username ?>" width="100px">
+                            <br>
+                            <br>
+                            <input type="file" name="image" />
+                            <br>
+                            <br>
+                            <input type="submit" name="deleteimage" value="Delete Image">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type='submit' value='Save Changes' name="submit" class='btn btn-primary m-1' />
+                            <a href='customer_read.php' class='btn btn-danger m-1'>Back to read customers</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </form>
 
     </div>

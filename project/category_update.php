@@ -132,8 +132,8 @@ include 'config/validate_login.php';
                 <tr>
                     <td></td>
                     <td>
-                        <input type='submit' value='Save Changes' class='btn btn-primary' />
-                        <a href='category_read.php' class='btn btn-danger'>Back to read category</a>
+                        <input type='submit' value='Save Changes' class='btn btn-primary m-1' />
+                        <a href='category_read.php' class='btn btn-danger m-1'>Back to read category</a>
                     </td>
                 </tr>
             </table>

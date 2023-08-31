@@ -114,64 +114,66 @@ $_SESSION['image'] = "product";
 
         <!-- html form here where the product information will be entered -->
         <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST" enctype="multipart/form-data">
-            <table class='table table-hover table-responsive table-bordered'>
-                <tr>
-                    <td>Name</td>
-                    <td><input type='text' name='name' class='form-control' value="<?php echo isset($_POST["name"]) ? $_POST["name"] : "" ?>" /></td>
-                </tr>
-                <tr>
-                    <td>Description</td>
-                    <td><textarea name='description' class='form-control' value="<?php echo isset($_POST["description"]) ? $_POST["description"] : "" ?>"></textarea></td>
-                </tr>
-                <tr>
-                    <td>Price</td>
-                    <td><input type='text' name='price' class='form-control' value="<?php echo isset($_POST["price"]) ? $_POST["price"] : "" ?>" /></td>
-                </tr>
-                <tr>
-                    <td>Promote Price</td>
-                    <td><input type='text' name='promote_price' class='form-control' value="<?php echo isset($_POST["promote_price"]) ? $_POST["promote_price"] : "" ?>" /></td>
-                </tr>
-                <tr>
-                    <td>Manufacture Date</td>
-                    <td><input type='date' name='manufacture_date' class='form-control' value="<?php echo isset($_POST["manufacture_date"]) ? $_POST["manufacture_date"] : "" ?>" /></td>
-                </tr>
-                <tr>
-                    <td>Expired Date</td>
-                    <td><input type='date' name='expired_date' class='form-control' value="<?php echo isset($_POST["expired_date"]) ? $_POST["expired_date"] : "" ?>" /></td>
-                </tr>
-                <tr>
-                    <td>Select category</td>
-                    <td><select name='category' class="form-select">
-                            <?php
-                            include 'config/database.php';
-                            $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
-                            $catestmt = $con->prepare($catequery);
-                            $catestmt->execute();
-                            $num = $catestmt->rowCount();
-                            if ($num > 0) {
-                                $option = array();
-                                while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['category_id']] = $row['category_name'];
+            <div class="table-responsive">
+                <table class='table table-hover table-responsive table-bordered'>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type='text' name='name' class='form-control' value="<?php echo isset($_POST["name"]) ? $_POST["name"] : "" ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><textarea name='description' class='form-control' value="<?php echo isset($_POST["description"]) ? $_POST["description"] : "" ?>"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td><input type='text' name='price' class='form-control' value="<?php echo isset($_POST["price"]) ? $_POST["price"] : "" ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Promote Price</td>
+                        <td><input type='text' name='promote_price' class='form-control' value="<?php echo isset($_POST["promote_price"]) ? $_POST["promote_price"] : "" ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Manufacture Date</td>
+                        <td><input type='date' name='manufacture_date' class='form-control' value="<?php echo isset($_POST["manufacture_date"]) ? $_POST["manufacture_date"] : "" ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Expired Date</td>
+                        <td><input type='date' name='expired_date' class='form-control' value="<?php echo isset($_POST["expired_date"]) ? $_POST["expired_date"] : "" ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td>Select category</td>
+                        <td><select name='category' class="form-select">
+                                <?php
+                                include 'config/database.php';
+                                $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
+                                $catestmt = $con->prepare($catequery);
+                                $catestmt->execute();
+                                $num = $catestmt->rowCount();
+                                if ($num > 0) {
+                                    $option = array();
+                                    while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $option[$row['category_id']] = $row['category_name'];
+                                    }
                                 }
-                            }
-                            foreach ($option as $category_id => $category_name) {
-                                echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
-                            }
-                            ?>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td><input type="file" name="image" /></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type='submit' value='Submit' class='btn btn-primary' />
-                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
-                    </td>
-                </tr>
-            </table>
+                                foreach ($option as $category_id => $category_name) {
+                                    echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
+                                }
+                                ?>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td><input type="file" name="image" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type='submit' value='Submit' class='btn btn-primary m-1' />
+                            <a href='product_read.php' class='btn btn-danger m-1'>Back to read products</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </form>
 
     </div>

@@ -126,60 +126,61 @@ include 'config/validate_login.php';
         ?>
         <div>
             <form action="" method="post">
-                <table class="table table-hover table-responsive table-bordered" id="row_del">
-                    <tr>
-                        <td>Name</td>
-                        <td><?php echo $displayusername['username']; ?></td>
-                    </tr>
-                    <tr>
-                        <th>NO.</th>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php
-
-                    $product_loop = empty($error) ? count($order_details) : count($noduplicate);
-                    for ($x = 0; $x < $product_loop; $x++) {
-
-                    ?>
-                        <tr class="pRow">
-                            <td class="col-1">
-                                <?php echo $x + 1; ?>
-                            </td>
-                            <td>
-                                <select name="product[]" id="product" class="form-select" value>
-                                    <option value="">Choose a Product</option>
-                                    <?php
-                                    for ($i = 0; $i < count($products); $i++) {
-                                        $product_selected = $products[$i]['id'] == $order_details[$x]['product_id'] ? "selected" : "";
-                                        echo "<option value='{$products[$i]['id']}' $product_selected>{$products[$i]['name']}" . " RM " . "{$products[$i]['price']}" . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="number" class="form-control" name="quantity[]" id="quantity" value="<?php echo $order_details[$x]['quantity'] ?>">
-
-                            </td>
-                            <td>
-                                <button onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1'>Delete</button>
-                            </td>
+                <div class="table-responsive">
+                    <table class="table table-hover table-responsive table-bordered" id="row_del">
+                        <tr>
+                            <td>Name</td>
+                            <td><?php echo $displayusername['username']; ?></td>
                         </tr>
-                    <?php }
-                    ?>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="button" value="Add More Product" class="btn btn-success add_one" />
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
+                        <tr>
+                            <th>NO.</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Actions</th>
+                        </tr>
+                        <?php
 
+                        $product_loop = empty($error) ? count($order_details) : count($noduplicate);
+                        for ($x = 0; $x < $product_loop; $x++) {
+
+                        ?>
+                            <tr class="pRow">
+                                <td class="col-1">
+                                    <?php echo $x + 1; ?>
+                                </td>
+                                <td>
+                                    <select name="product[]" id="product" class="form-select" value>
+                                        <option value="">Choose a Product</option>
+                                        <?php
+                                        for ($i = 0; $i < count($products); $i++) {
+                                            $product_selected = $products[$i]['id'] == $order_details[$x]['product_id'] ? "selected" : "";
+                                            echo "<option value='{$products[$i]['id']}' $product_selected>{$products[$i]['name']}" . " RM " . "{$products[$i]['price']}" . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" name="quantity[]" id="quantity" value="<?php echo $order_details[$x]['quantity'] ?>">
+
+                                </td>
+                                <td>
+                                    <button onclick='deleteRow(this)' class='btn d-flex justify-content-center btn-danger mt-1'>Delete</button>
+                                </td>
+                            </tr>
+                        <?php }
+                        ?>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Add More Product" class="btn btn-success add_one" />
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Update Order</button>
-                    <a href="order_read.php" class="btn btn-danger">Back to Read Order Summary</a>
+                    <button type="submit" class="btn btn-primary m-1">Update Order</button>
+                    <a href="order_read.php" class="btn btn-danger m-1">Back to Read Order Summary</a>
                 </div>
             </form>
             <script>

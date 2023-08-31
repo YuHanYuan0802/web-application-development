@@ -169,67 +169,69 @@ $_SESSION['image'] = "product";
 
         <!--we have our html form here where new record information can be updated-->
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}"); ?>" method="post" enctype="multipart/form-data">
-            <table class='table table-hover table-responsive table-bordered'>
-                <tr>
-                    <td>Name</td>
-                    <td><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
-                </tr>
-                <tr>
-                    <td>Description</td>
-                    <td><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
-                </tr>
-                <tr>
-                    <td>Price</td>
-                    <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
-                </tr>
-                <tr>
-                    <td>Promote Price</td>
-                    <td><input type='text' name='promote_price' value="<?php echo htmlspecialchars($promote_price, ENT_QUOTES);  ?>" class='form-control' /></td>
-                </tr>
-                <tr>
-                    <td>Category</td>
-                    <td>
-                        <select name='category' id="category" class="form-select">
-                            <option value="<?php echo $cate_id ?>"><?php echo $cate_name ?></option>
-                            <?php
-                            include 'config/database.php';
-                            $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
-                            $catestmt = $con->prepare($catequery);
-                            $catestmt->execute();
-                            $num = $catestmt->rowCount();
-                            if ($num > 0) {
-                                $option = array();
-                                while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
-                                    $option[$row['category_id']] = $row['category_name'];
+            <div class="table-responsive">
+                <table class='table table-hover table-responsive table-bordered'>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type='text' name='name' value="<?php echo htmlspecialchars($name, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><textarea name='description' class='form-control'><?php echo htmlspecialchars($description, ENT_QUOTES);  ?></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td><input type='text' name='price' value="<?php echo htmlspecialchars($price, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Promote Price</td>
+                        <td><input type='text' name='promote_price' value="<?php echo htmlspecialchars($promote_price, ENT_QUOTES);  ?>" class='form-control' /></td>
+                    </tr>
+                    <tr>
+                        <td>Category</td>
+                        <td>
+                            <select name='category' id="category" class="form-select">
+                                <option value="<?php echo $cate_id ?>"><?php echo $cate_name ?></option>
+                                <?php
+                                include 'config/database.php';
+                                $catequery = "SELECT category_id, category_name FROM category ORDER BY category_id ASC";
+                                $catestmt = $con->prepare($catequery);
+                                $catestmt->execute();
+                                $num = $catestmt->rowCount();
+                                if ($num > 0) {
+                                    $option = array();
+                                    while ($row = $catestmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $option[$row['category_id']] = $row['category_name'];
+                                    }
                                 }
-                            }
-                            foreach ($option as $category_id => $category_name) {
-                                echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td>
-                        <img src="uploads/<?php echo $img ?>" alt="<?php echo $name ?>" width="100px">
-                        <br>
-                        <br>
-                        <input type="file" name="image" />
-                        <br>
-                        <br>
-                        <input type="submit" name="deleteimage" value="Delete Image">
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type='submit' value='Save Changes' name="submit" class='btn btn-primary' />
-                        <a href='product_read.php' class='btn btn-danger'>Back to read products</a>
-                    </td>
-                </tr>
-            </table>
+                                foreach ($option as $category_id => $category_name) {
+                                    echo "<option value = '" . $category_id . "'>" . $category_name . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td>
+                            <img src="uploads/<?php echo $img ?>" alt="<?php echo $name ?>" width="100px">
+                            <br>
+                            <br>
+                            <input type="file" name="image" />
+                            <br>
+                            <br>
+                            <input type="submit" name="deleteimage" value="Delete Image">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type='submit' value='Save Changes' name="submit" class='btn btn-primary m-1' />
+                            <a href='product_read.php' class='btn btn-danger m-1'>Back to read products</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </form>
 
     </div>
