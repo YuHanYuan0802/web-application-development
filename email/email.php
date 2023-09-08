@@ -43,8 +43,8 @@ try {
 			$mail->isSMTP();
 			$mail->Host	 = "smtp.gmail.com";
 			$mail->SMTPAuth = true;
-			$mail->Username = $sender;	//sender and password can be hardcode.
-			$mail->Password = $password; //password from app password of your sender email. https://support.google.com/mail/answer/185833?hl=en
+			$mail->Username = $sender;	//sender and password can be hardcode. example: 'example@gmail.com'.
+			$mail->Password = $password; //password from app password of your sender email. example: 'yourpassword'. https://support.google.com/mail/answer/185833?hl=en
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port	 = 465;
 
