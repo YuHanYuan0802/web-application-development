@@ -10,6 +10,7 @@ $mail = new PHPMailer(true);
 try {
 	if (isset($_POST['submit'])) {
 		$sender = $_POST['sender'];
+		$password = $_POST['password'];
 		$receipt = $_POST['receipt'];
 		$subject = $_POST['subject'];
 		$body = $_POST['body'];
